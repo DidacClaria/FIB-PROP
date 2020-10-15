@@ -1,3 +1,6 @@
+import java.io.*;
+import java.util.*;
+
 public class prova {
 
     /* This is my first java program.
@@ -5,6 +8,7 @@ public class prova {
      */
 
     public static void main(String []args) {
-        System.out.println("Hello World"); // prints Hello World
+        Scanner text = new Scanner (System.in);
+        System.out.print(text.next()); // prints Hello World
     }
 }

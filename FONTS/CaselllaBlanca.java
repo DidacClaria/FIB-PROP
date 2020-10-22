@@ -1,10 +1,26 @@
+import java.io.*;
+import java.util.*;
+import Casella.java;
+
 public class CasellaBlanca extends Casella {
+    int valor;
 
-    /* This is my first java program.
-     * This will print 'Hello World' as the output
-     */
+    //public functions
 
-    public static void main(String []args) {
-        System.out.println("Hello World"); // prints Hello World
+    //creadores
+    public void CasellaBlanca(int v){
+        this.valor = v;
     }
+
+    //modificadores
+    public void setValor(int v){
+        this.valor = v;
+    }
+
+    //consultores
+    public int getValor(){
+        return valor;
+    }
+
+
 }

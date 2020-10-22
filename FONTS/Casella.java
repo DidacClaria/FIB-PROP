@@ -2,33 +2,36 @@ import java.io.*;
 import java.util.*;
 
 public class Casella {
-    int valor;
-    int numF;
-    int numC;
+    int posX;
+    int posY;
 
-    public Casella ();
+    //public functions
 
-    public int getvalor () {
-        return valor;
+    //creadores
+    public Casella (int x, int y){
+        this.posX = x;
+        this.posY = y;
     }
 
-    public int getnumF () {
-        return numF;
+    //modificadores
+    public void setPosX (int x) {
+        this.posX = x;
     }
 
-    public int getnumC () {
-        return numC;
+    public void setPosY (int y) {
+        this.posY = y;
     }
 
-    public void setvalor (int x) {
-        this.valor = x;
+    //consultores
+    public int getposX () { //consulta posX
+        return posX;
     }
 
-    public void setnumF (int x) {
-        this.numF = x;
+    public int getposY () { //consulta posY
+        return posY;
     }
 
-    public void setnumC (int x) {
-        this.numC = x;
-    }
+
+
+
 }

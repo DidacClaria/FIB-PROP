@@ -1,6 +1,6 @@
+import Usuari.java;
 
-
-public class prova {
+public class ReposKakuro {
 
     /* This is my first java program.
      * This will print 'Hello World' as the output

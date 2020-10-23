@@ -2,11 +2,15 @@ import java.io.*;
 import java.util.*;
 
 public class Casella {
-    int valor;
-    int numF;
-    int numC;
+    private int valor;
+    private int numF;
+    private int numC;
 
-    public Casella ();
+    public Casella () {
+        this.valor = -1; //casella negra amb números
+        this.numF = 0;
+        this.numC = 0;
+    };
 
     public int getvalor () {
         return valor;

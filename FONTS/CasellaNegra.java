@@ -1,10 +1,36 @@
+import java.io.*;
+import java.util.*;
+import Casella.java;
+
 public class CasellaNegra extends Casella {
+    int valorCol;
+    int valorFila;
 
-    /* This is my first java program.
-     * This will print 'Hello World' as the output
-     */
+    //public functions
 
-    public static void main(String []args) {
-        System.out.println("Hello World"); // prints Hello World
+    //creadores
+    public CasellaNegra(int vc, int vf){
+        this.valorCol = vc;
+        this.valorFila = vf;
     }
+
+    //modificadores
+    public void setValorColumna(int c){
+        this.valorCol = c;
+    }
+
+    public void setValorFila(int f){
+        this.valorFila = f;
+    }
+
+    //consultores
+    public int getValorColumna(){
+        return valorCol;
+    }
+
+    public int getValorFila(){
+        return valorFila;
+    }
+
+
 }

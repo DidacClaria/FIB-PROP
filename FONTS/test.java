@@ -4,8 +4,8 @@ import java.util.*;
 public class test {
 
     public static void main (String args[]){
-        String s = "99";
-        int x = Integer.parseInt (s);
-        System.out.println(x);
+        prova t = new prova ();
+        t.read_kakuro ();
+        t.print_kakuro ();
     }
 }

@@ -179,6 +179,7 @@ public class prova {
         return true;
     }
 
+
     private boolean checkV (int x, int y, int valor) {
         int sum = valor;
         int totalC = 0;

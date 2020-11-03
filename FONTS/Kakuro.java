@@ -1,7 +1,8 @@
 import java.io.*;
 import java.util.*;
+import Casella.java;
 
-public class prova {
+public class Kakuro {
     int f;
     int c;
     Casella kakuro [][];

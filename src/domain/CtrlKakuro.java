@@ -52,8 +52,13 @@ public class CtrlKakuro {
 
     }
 
-    public boolean solveKakuro(int numRows, int numColumns, String field){
-        return false;
+    public boolean solveKakuro(){
+        kakuro.read_kakuro();
+        ArrayList <Pair> pos_whites = kakuro.search_whites();
+        return kakuro.solve (pos_whites, 0);
     }
+
+
+
 
 }

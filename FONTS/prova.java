@@ -16,98 +16,85 @@ public class prova {
     }
 */
 
-    public void set_dim_kakuro (String s) {
-        int i = s.indexOf (',');
-        this.f  = Integer.parseInt (s.substring(0, i));
-        this.c  = Integer.parseInt (s.substring(i+1, s.length()));
-        this.kakuro = new Casella[f][c];
-    }
-
     public void read_kakuro () {
         Scanner sca = new Scanner(System.in);
         String s = sca.nextLine(); // Llegir quantes files i quantes columnes;
 
-        set_dim_kakuro (s);
+        String[] input = s.split (",");
+        this.f = Integer.parseInt(input[0]);
+        this.c = Integer.parseInt(input[1]);
+        this.kakuro = new Casella[f][c];
 
         for (int i = 0; i<f; ++i) {
             s = sca.nextLine();
-            int k = 0;
-
+            String[] text = s.split (",");
             for (int j=0; j<c; ++j) {
                 kakuro[i][j] = new Casella();
-                k = read_cell(s, k, i, j);
+
+                String aux = text[j];
+                int l = aux.length();
+
+                switch (l) {
+                    case 1:
+                        if (aux.charAt(0) == '?') kakuro[i][j].set_tipus(0);
+                        else kakuro[i][j].set_tipus(-2);
+                        break;
+                    case 2:
+                        if (aux.charAt(0) == 'F') kakuro[i][j].set_sumF(aux.charAt(1) - '0');
+                        else kakuro[i][j].set_sumC(aux.charAt(1) - '0');
+                        break;
+                    case 3:
+                        int q = Integer.parseInt(aux.substring(1, 3));
+                        if (aux.charAt(0) == 'F') kakuro[i][j].set_sumF(q);
+                        else kakuro[i][j].set_sumC(q);
+                        break;
+                    case 4:
+                        kakuro[i][j].set_sumC(aux.charAt(1) - '0');
+                        kakuro[i][j].set_sumF(aux.charAt(3) - '0');
+                        break;
+                    case 5:
+                        if (aux.charAt(2) == 'F') {
+                            kakuro[i][j].set_sumC(aux.charAt(1) - '0');
+                            kakuro[i][j].set_sumF(Integer.parseInt(aux.substring(3, 5)));
+                        } else {
+                            kakuro[i][j].set_sumC(Integer.parseInt(aux.substring(1, 3)));
+                            kakuro[i][j].set_sumF(aux.charAt(4) - '0');
+                        }
+                        break;
+                    case 6:
+                        kakuro[i][j].set_sumC(Integer.parseInt(aux.substring(1, 3)));
+                        kakuro[i][j].set_sumF(Integer.parseInt(aux.substring(4, 6)));
+                        break;
+                }
             }
         }
 
     }
-
 
     public void print_kakuro () {
         for (int i = 0; i < f; ++i) {
             for (int j = 0; j <c; ++j){
                 if (kakuro[i][j].get_tipus() == -1) {
-                    if (kakuro[i][j].get_sumC() > 0) System.out.print("C" + kakuro[i][j].get_sumC());
-                    if (kakuro[i][j].get_sumF() > 0) System.out.print("F" + kakuro[i][j].get_sumF());
-                    System.out.print("   ");
+                    int count = 0;
+                    if (kakuro[i][j].get_sumC() > 0) {
+                        System.out.print("C" + kakuro[i][j].get_sumC());
+                        if (kakuro[i][j].get_sumC() >= 10) count += 3;
+                        else count += 2;
+                    }
+                    if (kakuro[i][j].get_sumF() > 0) {
+                        System.out.print("F" + kakuro[i][j].get_sumF());
+                        if (kakuro[i][j].get_sumF() >= 10) count += 3;
+                        else count += 2;
+                    }
+
+                    for (int k = 0; k < (10 - count); ++k) System.out.print(" ");
                 }
-                else if (kakuro[i][j].get_tipus() == -2) System.out.print("X   ");
-                else System.out.print(kakuro[i][j].get_tipus() + "    ");
+                else if (kakuro[i][j].get_tipus() == -2) System.out.print("X         ");
+                else System.out.print(kakuro[i][j].get_tipus() + "         ");
 
             }
             System.out.println();
         }
-    }
-
-
-    private int read_cell (String s, int k, int x, int y) {
-        char c = s.charAt(k); // llegim la primera lletra
-        boolean negra_double = false;
-
-        if (c == 'F' || c == 'C') { // si és una casella negra amb números
-            String aux;
-            aux = String.valueOf(s.charAt(++k)); // llegim una posició més, no cal comprovar res perquè segur és un número
-
-            if (k+1 < s.length()) { // tornem a llegir una posició més, aqui cal comprovar si ja és al final
-                ++k;
-                if (s.charAt(k) == 'F') negra_double = true; // negra_double per indicar si és una casella negra amb dos valors (C i F)
-                else if (s.charAt(k) != ',') { // Si torna a ser un número, fem una suma de string
-                    aux += s.charAt(k);
-                    if (k+1 < s.length () && s.charAt(++k) == 'F') negra_double = true;
-                }
-            }
-
-            if (c == 'C') { // Si la primera lletra és C
-                            // Només el cas de que la primera lletra comenci amb C pot tenir dos números
-                            // és a dir, (existeix C12F... i no existex F12C...)
-
-                kakuro[x][y].set_sumC(Integer.valueOf(aux));
-
-                if (negra_double) {
-                    aux = String.valueOf(s.charAt(++k)); // Canviar el valor de aux per al cas de F (repetir el procés anterior)
-                    if (k+1 < s.length()) { // Tornem a llegir una posició més, aqui cal comprovar si ja és al final
-                        if (s.charAt(++k) != ',') { // Si torna a ser un número, fem una suma de string
-                            aux += s.charAt(k);
-                            ++k;
-                        }
-                    }
-                    kakuro[x][y].set_sumF (Integer.valueOf(aux));
-                }
-            }
-            else kakuro[x][y].set_sumF (Integer.valueOf(aux)); // Si la primera lletra és F
-        }
-
-        else if (c == '?') { // casella blanca
-            kakuro[x][y].set_tipus(0); // les caselles que tenen l'atribut tipus = 0 són blanques
-            ++k;
-        }
-
-        else { // casella negra buida
-            kakuro[x][y].set_tipus(-2); // les caselles que tenen l'atribut tipus = -2 són negres buides
-            ++k;
-        }
-
-        return ++k; // Sempre quan arribem aqui, l'element de la posició k sempre és una coma, per tant, cal incrementar
-                    // una posició més per la següent cerca.
     }
 
     public boolean solve_kakuro () {

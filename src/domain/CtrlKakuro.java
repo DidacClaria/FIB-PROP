@@ -48,12 +48,8 @@ public class CtrlKakuro {
 
     }
 
-    public void proposeKakuro(int numRows, int numColumns, String field){
-
-    }
-
-    public boolean solveKakuro(int numRows, int numColumns, String field){
-        return false;
+    public void proposeKakuro(int numRows, int numColumns, String[][] field){
+        kakuro.proposeKakuro(numRows,numColumns,field);
     }
 
 }

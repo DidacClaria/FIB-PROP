@@ -2,19 +2,13 @@ package domain;
 
 public class Kakuro {
     //ATTRIBUTES
-    private CtrlKakuro ctrlKakuro;
-
-    private User author;
-
-    private Game game;
-
-    private Cell[] cells;
-
     private int idKakuro;
 
     private int numRows;
 
     private int numColumns;
+
+    private Cell[][] cells;
 
     private int dificulty;
 
@@ -22,79 +16,55 @@ public class Kakuro {
     public Kakuro() {
     }
 
-    public Kakuro(CtrlKakuro ctrlKakuro, User author, Game game, Cell[] cells, int idKakuro, int numRows, int numColumns, int dificulty) {
-        this.ctrlKakuro = ctrlKakuro;
-        this.author = author;
-        this.game = game;
-        this.cells = cells;
-        this.idKakuro = idKakuro;
-        this.numRows = numRows;
-        this.numColumns = numColumns;
-        this.dificulty = dificulty;
-    }
-
     //GETTERS & SETTERS
-    public CtrlKakuro getCtrlKakuro() {
-        return ctrlKakuro;
-    }
 
-    public void setCtrlKakuro(CtrlKakuro ctrlKakuro) {
-        this.ctrlKakuro = ctrlKakuro;
-    }
 
-    public User getAuthor() {
-        return author;
-    }
-
-    public void setAuthor(User author) {
-        this.author = author;
-    }
-
-    public Game getGame() {
-        return game;
-    }
-
-    public void setGame(Game game) {
-        this.game = game;
-    }
-
-    public Cell[] getCells() {
-        return cells;
-    }
-
-    public void setCells(Cell[] cells) {
-        this.cells = cells;
-    }
-
-    public int getIdKakuro() {
-        return idKakuro;
-    }
-
-    public void setIdKakuro(int idKakuro) {
-        this.idKakuro = idKakuro;
-    }
-
-    public int getNumRows() {
-        return numRows;
-    }
-
-    public void setNumRows(int numRows) {
+    //CLASS METHODS
+    public void proposeKakuro(int numRows, int numColumns, String[][] field){
         this.numRows = numRows;
-    }
-
-    public int getNumColumns() {
-        return numColumns;
-    }
-
-    public void setNumColumns(int numColumns) {
         this.numColumns = numColumns;
-    }
+        this.cells = new Cell[numRows][numColumns];
 
-    public int getDificulty() {
-        return dificulty;
-    }
+        for (int i = 0; i<this.numRows; ++i) {
+            for (int j=0; j<this.numColumns; ++j) {
+                cells[i][j] = new Cell();
 
-    public void setDificulty(int dificulty) {
-        this.dificulty = dificulty;
+                String aux = text[j];
+                int l = aux.length();
+
+                switch (l) {
+                    case 1:
+                        if (aux.charAt(0) == '?') cells[i][j].set_tipus(0);
+                        else cells[i][j].set_tipus(-2);
+                        break;
+                    case 2:
+                        if (aux.charAt(0) == 'F') cells[i][j].set_sumF(aux.charAt(1) - '0');
+                        else cells[i][j].set_sumC(aux.charAt(1) - '0');
+                        break;
+                    case 3:
+                        int q = Integer.parseInt(aux.substring(1, 3));
+                        if (aux.charAt(0) == 'F') cells[i][j].set_sumF(q);
+                        else cells[i][j].set_sumC(q);
+                        break;
+                    case 4:
+                        cells[i][j].set_sumC(aux.charAt(1) - '0');
+                        cells[i][j].set_sumF(aux.charAt(3) - '0');
+                        break;
+                    case 5:
+                        if (aux.charAt(2) == 'F') {
+                            cells[i][j].set_sumC(aux.charAt(1) - '0');
+                            cells[i][j].set_sumF(Integer.parseInt(aux.substring(3, 5)));
+                        } else {
+                            cells[i][j].set_sumC(Integer.parseInt(aux.substring(1, 3)));
+                            cells[i][j].set_sumF(aux.charAt(4) - '0');
+                        }
+                        break;
+                    case 6:
+                        cells[i][j].set_sumC(Integer.parseInt(aux.substring(1, 3)));
+                        cells[i][j].set_sumF(Integer.parseInt(aux.substring(4, 6)));
+                        break;
+                }
+            }
+        }
     }
 }

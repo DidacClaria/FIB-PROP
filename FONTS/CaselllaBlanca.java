@@ -1,6 +1,3 @@
-import java.io.*;
-import java.util.*;
-import Casella.java;
 
 public class CasellaBlanca extends Casella {
     int valor;

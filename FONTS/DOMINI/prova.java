@@ -1,4 +1,5 @@
-import java.io.*;
+package DOMINI;
+
 import java.util.*;
 
 public class prova {
@@ -9,10 +10,10 @@ public class prova {
     public prova () {};
 
 /*
-    public prova (int x, int y) {
+    public DOMINI.prova (int x, int y) {
         this.f = x;
         this.c = y;
-        this.kakuro = new Casella[f][c];
+        this.kakuro = new DOMINI.Casella[f][c];
     }
 */
 

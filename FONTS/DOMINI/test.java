@@ -1,5 +1,4 @@
-import java.io.*;
-import java.util.*;
+package DOMINI;
 
 public class test {
 

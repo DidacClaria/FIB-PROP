@@ -23,9 +23,11 @@ public class CtrlKakuro {
 
     //CONSTRUCTORS
     /**
-     * Default empty Kakuro Controller constructor.
+     * Default Kakuro Controller constructor.
      */
     public CtrlKakuro() {
+        kakuro = new Kakuro();
+        numKakuros = 0;
     }
 
     //CLASS METHODS
@@ -50,7 +52,15 @@ public class CtrlKakuro {
      * @param field It has the information of every individual Cell in the Kakuro.
      */
     public void proposeKakuro(int numRows, int numColumns, String[][] field){
-        kakuro.proposeKakuro(numRows,numColumns,field);
+        Boolean b = kakuro.proposeKakuro(numRows,numColumns,field);
+        if (b) {
+            kakuro.setIdKakuro(numKakuros);
+            numKakuros++;
+            System.out.println("\nI f***ng work!!!");
+        }
+        else {
+
+        }
     }
 
 }

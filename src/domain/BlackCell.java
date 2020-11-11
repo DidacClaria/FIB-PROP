@@ -20,6 +20,36 @@ public class BlackCell extends Cell {
     /**
      * Default empty BlackCell constructor.
      */
-    public BlackCell() {
+    public BlackCell(int columnValue, int rowValue) {
+        this.columnValue=columnValue;
+        this.rowValue=rowValue;
     }
+
+    @Override
+    public int getValue() {
+        return 0;
+    }
+
+    @Override
+    public void setValue(int value) {
+
+    }
+
+    //GETTERS & SETTERS
+    public int getColumnValue() {
+        return columnValue;
+    }
+
+    public void setColumnValue(int columnValue) {
+        this.columnValue = columnValue;
+    }
+
+    public int getRowValue() {
+        return rowValue;
+    }
+
+    public void setRowValue(int rowValue) {
+        this.rowValue = rowValue;
+    }
+
 }

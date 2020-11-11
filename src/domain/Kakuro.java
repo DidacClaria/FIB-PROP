@@ -1,5 +1,7 @@
 package domain;
 
+import java.util.ArrayList;
+
 /**
  * Generic class used to created Kakuros.
  */
@@ -38,6 +40,16 @@ public class Kakuro {
     public Kakuro() {
     }
 
+    //GETTERS & SETTERS
+    public int getIdKakuro() {
+        return idKakuro;
+    }
+
+    public void setIdKakuro(int idKakuro) {
+        this.idKakuro = idKakuro;
+    }
+
+
     //CLASS METHODS
 
     /**
@@ -46,51 +58,155 @@ public class Kakuro {
      * @param numColumns It indicates the number of columns that the Kakuro will have.
      * @param field It has the information of every individual Cell in the Kakuro.
      */
-    public void proposeKakuro(int numRows, int numColumns, String[][] field){
+    public Boolean proposeKakuro(int numRows, int numColumns, String[][] field){
         this.numRows = numRows;
         this.numColumns = numColumns;
         this.cells = new Cell[numRows][numColumns];
 
         for (int i = 0; i<this.numRows; ++i) {
             for (int j=0; j<this.numColumns; ++j) {
-                cells[i][j] = new Cell();
-
-                String aux = text[j];
+                String aux = field[i][j];
                 int l = aux.length();
+                cells[i][j]=new BlackCell(0,0);
 
                 switch (l) {
                     case 1:
-                        if (aux.charAt(0) == '?') cells[i][j].set_tipus(0);
-                        else cells[i][j].set_tipus(-2);
+                        if (aux.charAt(0) == '?') cells[i][j] = new WhiteCell(0);
+                        else if (aux.charAt(0) == '*') cells[i][j] = new BlackCell(0,0);
+                        else cells[i][j]= new WhiteCell(aux.charAt(0)-'0');
                         break;
                     case 2:
-                        if (aux.charAt(0) == 'F') cells[i][j].set_sumF(aux.charAt(1) - '0');
-                        else cells[i][j].set_sumC(aux.charAt(1) - '0');
+                        if (aux.charAt(0) == 'F') cells[i][j].setRowValue(aux.charAt(1) - '0');
+                        else cells[i][j].setColumnValue(aux.charAt(1) - '0');
                         break;
                     case 3:
                         int q = Integer.parseInt(aux.substring(1, 3));
-                        if (aux.charAt(0) == 'F') cells[i][j].set_sumF(q);
-                        else cells[i][j].set_sumC(q);
+                        if (aux.charAt(0) == 'F') cells[i][j].setRowValue(q);
+                        else cells[i][j].setColumnValue(q);
                         break;
                     case 4:
-                        cells[i][j].set_sumC(aux.charAt(1) - '0');
-                        cells[i][j].set_sumF(aux.charAt(3) - '0');
+                        cells[i][j].setColumnValue(aux.charAt(1) - '0');
+                        cells[i][j].setRowValue(aux.charAt(3) - '0');
                         break;
                     case 5:
                         if (aux.charAt(2) == 'F') {
-                            cells[i][j].set_sumC(aux.charAt(1) - '0');
-                            cells[i][j].set_sumF(Integer.parseInt(aux.substring(3, 5)));
+                            cells[i][j].setColumnValue(aux.charAt(1) - '0');
+                            cells[i][j].setRowValue(Integer.parseInt(aux.substring(3, 5)));
                         } else {
-                            cells[i][j].set_sumC(Integer.parseInt(aux.substring(1, 3)));
-                            cells[i][j].set_sumF(aux.charAt(4) - '0');
+                            cells[i][j].setColumnValue(Integer.parseInt(aux.substring(1, 3)));
+                            cells[i][j].setRowValue(aux.charAt(4) - '0');
                         }
                         break;
                     case 6:
-                        cells[i][j].set_sumC(Integer.parseInt(aux.substring(1, 3)));
-                        cells[i][j].set_sumF(Integer.parseInt(aux.substring(4, 6)));
+                        cells[i][j].setColumnValue(Integer.parseInt(aux.substring(1, 3)));
+                        cells[i][j].setRowValue(Integer.parseInt(aux.substring(4, 6)));
                         break;
                 }
             }
         }
+        return solve_kakuro();
     }
+
+    private boolean solve_kakuro () {
+        ArrayList<Pair> pos_whites = search_whites();
+        return solve (pos_whites, 0);
+    }
+
+    //Crear un ArrayList per guardar les posicions de totes les caselles blanques existents al kakuro [][]
+    private ArrayList <Pair> search_whites () {
+        ArrayList <Pair> p = new ArrayList <Pair> ();
+        for (int i = 0; i < numRows; ++i) {
+            for (int j = 0; j < numColumns; ++j) {
+                if (cells[i][j] instanceof WhiteCell) p.add (new Pair(i,j));
+            }
+        }
+        return p;
+    }
+
+    //Una funció recursiva que fa un backtracking
+    //És a dir, mira valors possibles (1...9) i les seves combinacions a cada posició agafada del ArrayList pos_whites
+    private boolean solve (final ArrayList <Pair> pos_whites, int k) {
+        if (k == pos_whites.size()) return true; //El moment quan hagi vist totes les caselles blanques
+
+        // Consultar la posició de la casella blanca
+        Pair aux = pos_whites.get(k);
+        int posX = aux.first();
+        int posY = aux.second();
+        if(cells[posX][posY].getValue()>0){
+            if (checkH(posX,posY,cells[posX][posY].getValue()) && checkV(posX,posY,cells[posX][posY].getValue())){
+                if (solve(pos_whites,k+1)) return true;
+            }
+        }
+        else {
+            // Backtracking
+            for (int i = 1; i <= 9; ++i) {
+                //Comprova la fila i la columna del de cada número (checkH i checkV)
+                if (checkH(posX, posY, i) && checkV(posX, posY, i)) {
+                    cells[posX][posY].setValue(i); // Posar el número a l'atribut tipus (Recordar els 4 tipus: -2, -1, 0 i >0)
+
+                    if (solve(pos_whites, k + 1)) return true; //Mira les combinacions possibles amb el número i
+                        //Retorna cert si existeix solució amb el número i
+
+                    else cells[posX][posY].setValue(0); //Fals si no existeix solució amb el número i
+                    //Per tant, esborrar el número que hem posat
+                }
+            }
+        }
+        return false; //Quan hagi comprovat tots els números possibles 1...9 i no troba cap solució
+    }
+
+    private boolean checkH (int x, int y, int valor) {
+        int sum = valor;
+        int totalF = 0;
+
+        int aux = y-1;
+        if (aux < 0) return true;
+
+        while (cells[x][aux].getValue() > 0) {
+            if (cells[x][aux].getValue() == valor) return false;
+            sum += cells[x][aux].getValue();
+            --aux;
+        }
+
+        totalF = cells[x][aux].getRowValue();
+
+        if (sum > totalF) return false;
+
+        if (y + 1 == numColumns) {
+            if (sum < totalF) return false;
+        }
+        else if (cells[x][y+1].getValue() < 0) {
+            if (sum < totalF) return false;
+        }
+        return true;
+    }
+
+
+    private boolean checkV (int x, int y, int valor) {
+        int sum = valor;
+        int totalC = 0;
+
+        int aux = x-1;
+        if (aux < 0) return true;
+
+        while (cells[aux][y].getValue() > 0)    {
+            if (cells[aux][y].getValue() == valor) return false;
+            sum += cells[aux][y].getValue();
+            --aux;
+        }
+
+        totalC = cells[aux][y].getColumnValue();
+
+        if (sum > totalC) return false;
+
+        if (x+1 == numRows) {
+            if (sum < totalC) return false;
+        }
+        else if (cells[x+1][y].getValue() < 0) {
+            if (sum < totalC) return false;
+        }
+
+        return true;
+    }
+
 }

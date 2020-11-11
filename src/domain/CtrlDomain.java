@@ -37,7 +37,7 @@ public class CtrlDomain {
     //CONSTRUCTOR
 
     /**
-     * Default empty constructor.
+     * Default empty Domain Controller constructor.
      */
     public CtrlDomain() {
     }

@@ -1,35 +1,25 @@
 package domain;
 
+/**
+ * Subclass of Cell used to created BlackCell.
+ */
 public class BlackCell extends Cell {
     //ATTRIBUTES
+    /**
+     * Column value of a black cell.
+     */
     private int columnValue;
 
+    /**
+     * Row value of a black cell.
+     */
     private int rowValue;
 
     //CONSTRUCTORS
+
+    /**
+     * Default empty BlackCell constructor.
+     */
     public BlackCell() {
-    }
-
-    public BlackCell(Kakuro kakuro, int posX, int posY, int columnValue, int rowValue) {
-        super(kakuro, posX, posY);
-        this.columnValue = columnValue;
-        this.rowValue = rowValue;
-    }
-
-    //GETTERS & SETTERS
-    public int getColumnValue() {
-        return columnValue;
-    }
-
-    public void setColumnValue(int columnValue) {
-        this.columnValue = columnValue;
-    }
-
-    public int getRowValue() {
-        return rowValue;
-    }
-
-    public void setRowValue(int rowValue) {
-        this.rowValue = rowValue;
     }
 }

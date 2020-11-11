@@ -2,6 +2,9 @@ package domain;
 
 import java.util.Scanner;
 
+/**
+ * Main class. We will use it in order to simulate an user from the presentation layer sending their actions and data.
+ */
 public class Main {
     public static void main(String[] args) {
         CtrlDomain ctrlDomain = new CtrlDomain();

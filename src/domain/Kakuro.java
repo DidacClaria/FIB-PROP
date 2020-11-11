@@ -1,25 +1,51 @@
 package domain;
 
+/**
+ * Generic class used to created Kakuros.
+ */
 public class Kakuro {
     //ATTRIBUTES
+    /**
+     * This attribute is an identifier of the Kakuro class.
+     */
     private int idKakuro;
 
+    /**
+     * This attribute indicates the number of rows from the Kakuro.
+     */
     private int numRows;
 
+    /**
+     * This attribute indicates the number of columns from the Kakuro.
+     */
     private int numColumns;
 
+    /**
+     * This attribute indicates the information of the individual Cells from the Kakuro.
+     */
     private Cell[][] cells;
 
-    private int dificulty;
+    /**
+     * This attribute indicates the difficulty of rows from the Kakuro.
+     */
+    private int difficulty;
 
     //CONSTRUCTORS
+
+    /**
+     * Default empty Kakuro constructor.
+     */
     public Kakuro() {
     }
 
-    //GETTERS & SETTERS
-
-
     //CLASS METHODS
+
+    /**
+     * This method checks if the Kakuro proposed by the user is valid and it is created.
+     * @param numRows It indicates the number of rows that the Kakuro will have.
+     * @param numColumns It indicates the number of columns that the Kakuro will have.
+     * @param field It has the information of every individual Cell in the Kakuro.
+     */
     public void proposeKakuro(int numRows, int numColumns, String[][] field){
         this.numRows = numRows;
         this.numColumns = numColumns;

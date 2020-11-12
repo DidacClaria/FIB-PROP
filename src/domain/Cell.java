@@ -1,45 +1,26 @@
 package domain;
 
-public class Cell {
-    //ATTRIBUTES
-    private Kakuro kakuro;
-
-    private int posX;
-
-    private int posY;
-
+/**
+ * Generic class used to created Cells.
+ */
+public abstract class Cell {
     //CONSTRUCTORS
+    /**
+     * Default empty Cell constructor.
+     */
     public Cell() {
     }
 
-    public Cell(Kakuro kakuro, int posX, int posY) {
-        this.kakuro = kakuro;
-        this.posX = posX;
-        this.posY = posY;
-    }
+    public abstract int getValue();
 
-    //GETTERS & SETTERS
-    public Kakuro getKakuro() {
-        return kakuro;
-    }
+    public abstract void setValue(int value);
 
-    public void setKakuro(Kakuro kakuro) {
-        this.kakuro = kakuro;
-    }
+    public abstract int getColumnValue();
 
-    public int getPosX() {
-        return posX;
-    }
+    public abstract void setColumnValue(int columnValue);
 
-    public void setPosX(int posX) {
-        this.posX = posX;
-    }
+    public abstract int getRowValue();
 
-    public int getPosY() {
-        return posY;
-    }
+    public abstract void setRowValue(int rowValue);
 
-    public void setPosY(int posY) {
-        this.posY = posY;
-    }
 }

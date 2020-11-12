@@ -37,9 +37,10 @@ public class CtrlDomain {
     //CONSTRUCTOR
 
     /**
-     * Default empty constructor.
+     * Default Domain Controller constructor.
      */
     public CtrlDomain() {
+        ctrlKakuro = new CtrlKakuro();
     }
 
     //CLASS METHODS

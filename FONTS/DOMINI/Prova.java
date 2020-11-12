@@ -1,4 +1,6 @@
 package DOMINI;
+import com.sun.jdi.VMMismatchException;
+
 import java.util.*;
 
 public class Prova {
@@ -22,14 +24,20 @@ public class Prova {
             }
         }
 
-        for(int k = 0; k < 100; ++k) {
-            int randX = (int)(Math.random() * (f - 1)) + 1;
-            int randY = (int)(Math.random() * (f - 1)) + 1;
-            if (kakuro[randX][randY].get_tipus() != -2 && no_alone_sym(randX, randY) && DFS_sym(randX, randY)) {
-                kakuro[randX][randY].set_tipus(-2);
-                kakuro[f - randX][c - randY].set_tipus(-2);
-            }
+        for(int k = 0; k < 1; ++k) generate_random_black(f-1, c-1, 1, 1);
+        correct_format();
+    }
+
+    private void generate_random_black (int rangeX, int rangeY, int miniumX, int miniumY) {
+        int randX = (int) (Math.random() * rangeX) + miniumX;
+        int randY = (int) (Math.random() * rangeY) + miniumY;
+        System.out.println ("rangeX: " + rangeX + "rangeY: " + rangeY + "miniumX: " + miniumX + "miniumY: " + miniumY);
+        System.out.println (randX + " " + randY);
+        if (kakuro[randX][randY].get_tipus() != -2 && no_alone_sym(randX, randY) && DFS_sym(randX, randY)) {
+            kakuro[randX][randY].set_tipus(-2);
+            kakuro[f - randX][c - randY].set_tipus(-2);
         }
+        else generate_random_black(rangeX, rangeY, miniumX, miniumY);
     }
 
     private boolean no_alone_sym(int x, int y) {
@@ -81,6 +89,37 @@ public class Prova {
         if (m[i][j]) return 0;
         if (!m[i][j]) m[i][j] = true;
         return 1 + search_DFS(i - 1, j, m) + search_DFS(i + 1, j, m) + search_DFS(i, j - 1, m) + search_DFS(i, j + 1, m);
+    }
+
+    private void correct_format () {
+        for (int i = 0; i < f; ++i) {
+            for (int j = 0; j < c; ++j) {
+                if (kakuro[i][j].get_tipus() == -2) {
+                    if (wrong_cellH(i, j)) generate_random_black(0, 9, i, j + 1);
+                    if (wrong_cellV(i, j)) generate_random_black(9, 0, i + 1, j);
+                }
+            }
+        }
+    }
+
+    private boolean wrong_cellH (int x, int y) {
+        boolean wrong = true;
+        if (y+10 >= c) return false;
+        for (int i = y+1; i <= (y+10); ++i) {
+            //System.out.println ("H" + " " + i);
+            if (kakuro[x][i].get_tipus() == -2) wrong = false;
+        }
+        return wrong;
+    }
+
+    private boolean wrong_cellV (int x, int y) {
+        boolean wrong = true;
+        if (x+10 >= f) return false;
+        for (int i = x+1; i <= (x+10); ++i) {
+            //System.out.println ("V" + " " + i);
+            if (kakuro[i][y].get_tipus() == -2) wrong = false;
+        }
+        return wrong;
     }
 
     public void read_kakuro () {

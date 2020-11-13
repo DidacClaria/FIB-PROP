@@ -10,8 +10,11 @@ public class Test {
         p.print_kakuro();
         */
 
-        Prova p = new Prova (20, 20);
+        /*
+        Prova p = new Prova (6, 6);
         p.print_kakuro();
+        */
+
 
     }
 

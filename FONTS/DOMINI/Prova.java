@@ -1,6 +1,7 @@
 package DOMINI;
 import com.sun.jdi.VMMismatchException;
 
+import java.lang.reflect.Array;
 import java.util.*;
 
 public class Prova {
@@ -24,20 +25,19 @@ public class Prova {
             }
         }
 
-        for(int k = 0; k < 1; ++k) generate_random_black(f-1, c-1, 1, 1);
+        for(int k = 0; k < 10000; ++k) generate_random_black(f-1, c-1, 1, 1);
         correct_format();
     }
 
     private void generate_random_black (int rangeX, int rangeY, int miniumX, int miniumY) {
         int randX = (int) (Math.random() * rangeX) + miniumX;
         int randY = (int) (Math.random() * rangeY) + miniumY;
-        System.out.println ("rangeX: " + rangeX + "rangeY: " + rangeY + "miniumX: " + miniumX + "miniumY: " + miniumY);
-        System.out.println (randX + " " + randY);
+        //System.out.println ("rangeX: " + rangeX + "rangeY: " + rangeY + "miniumX: " + miniumX + "miniumY: " + miniumY);
+        //System.out.println (randX + " " + randY);
         if (kakuro[randX][randY].get_tipus() != -2 && no_alone_sym(randX, randY) && DFS_sym(randX, randY)) {
             kakuro[randX][randY].set_tipus(-2);
             kakuro[f - randX][c - randY].set_tipus(-2);
         }
-        else generate_random_black(rangeX, rangeY, miniumX, miniumY);
     }
 
     private boolean no_alone_sym(int x, int y) {
@@ -95,31 +95,72 @@ public class Prova {
         for (int i = 0; i < f; ++i) {
             for (int j = 0; j < c; ++j) {
                 if (kakuro[i][j].get_tipus() == -2) {
-                    if (wrong_cellH(i, j)) generate_random_black(0, 9, i, j + 1);
-                    if (wrong_cellV(i, j)) generate_random_black(9, 0, i + 1, j);
+                    if (wrong_cellH(i, j)) correct_cellH(i, j);
+                    if (wrong_cellV(i, j)) correct_cellV(i, j);
                 }
             }
         }
     }
 
     private boolean wrong_cellH (int x, int y) {
-        boolean wrong = true;
         if (y+10 >= c) return false;
         for (int i = y+1; i <= (y+10); ++i) {
             //System.out.println ("H" + " " + i);
-            if (kakuro[x][i].get_tipus() == -2) wrong = false;
+            if (kakuro[x][i].get_tipus() == -2) return false;
         }
-        return wrong;
+        return true;
     }
 
     private boolean wrong_cellV (int x, int y) {
-        boolean wrong = true;
         if (x+10 >= f) return false;
         for (int i = x+1; i <= (x+10); ++i) {
             //System.out.println ("V" + " " + i);
-            if (kakuro[i][y].get_tipus() == -2) wrong = false;
+            if (kakuro[i][y].get_tipus() == -2) return false;
         }
-        return wrong;
+        return true;
+    }
+
+    private void correct_cellH (int x, int y) {
+        ArrayList<Pair> safe = new ArrayList<Pair>();
+        for (int i = y+1; i <= (y+10); ++i) {
+            //System.out.println ("H" + " " + i);
+            if (no_alone_sym(x, i) && DFS_sym(x, i)) safe.add(new Pair(x, i));
+        }
+        if (safe.isEmpty()) restart();
+        else {
+            int k = (int) (Math.random() * safe.size());
+            Pair aux = safe.get(k);
+            int posX = aux.first();
+            int posY = aux.second();
+            kakuro[posX][posY].set_tipus(-2);
+            kakuro[f - posX][c - posY].set_tipus(-2);
+        }
+    }
+
+    private void correct_cellV (int x, int y) {
+        ArrayList<Pair> safe = new ArrayList<Pair>();
+        for (int i = x+1; i <= (x+10); ++i) {
+            //System.out.println ("H" + " " + i);
+            if (no_alone_sym(i, y) && DFS_sym(i, y)) safe.add(new Pair(i, y));
+        }
+        if (safe.isEmpty()) restart();
+        else {
+            int k = (int) (Math.random() * safe.size());
+            Pair aux = safe.get(k);
+            int posX = aux.first();
+            int posY = aux.second();
+            kakuro[posX][posY].set_tipus(-2);
+            kakuro[f - posX][c - posY].set_tipus(-2);
+        }
+    }
+
+    private void restart () {
+        for(int i = 1; i < f; ++i) {
+            for(int j = 1; j < c; ++j) kakuro[i][j].set_tipus(0);
+        }
+
+        for(int k = 0; k < 1; ++k) generate_random_black(f-1, c-1, 1, 1);
+        correct_format();
     }
 
     public void read_kakuro () {

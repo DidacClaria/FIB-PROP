@@ -163,6 +163,16 @@ public class Prova {
         correct_format();
     }
 
+    private void generate_numbers () {
+
+
+
+
+    }
+
+
+
+
     public void read_kakuro () {
         Scanner sca = new Scanner(System.in);
         String s = sca.nextLine(); // Llegir quantes files i quantes columnes;
@@ -237,7 +247,7 @@ public class Prova {
 
                     for (int k = 0; k < (9 - count); ++k) System.out.print(" ");
                 }
-                else if (kakuro[i][j].get_tipus() == -2) System.out.print("X        ");
+                else if (kakuro[i][j].get_tipus() == -2) System.out.print("*        ");
                 else System.out.print(kakuro[i][j].get_tipus() + "        ");
 
             }

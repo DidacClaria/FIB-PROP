@@ -58,7 +58,7 @@ public class Kakuro {
      * @param numColumns It indicates the number of columns that the Kakuro will have.
      * @param field It has the information of every individual Cell in the Kakuro.
      */
-    public Boolean proposeKakuro(int numRows, int numColumns, String[][] field){
+    public boolean proposeKakuro(int numRows, int numColumns, String[][] field){
         this.numRows = numRows;
         this.numColumns = numColumns;
         this.cells = new Cell[numRows][numColumns];
@@ -104,16 +104,16 @@ public class Kakuro {
                 }
             }
         }
-        return solve_kakuro();
+        return solveKakuro();
     }
 
-    private boolean solve_kakuro () {
-        ArrayList<Pair> pos_whites = search_whites();
-        return solve (pos_whites, 0);
+    private boolean solveKakuro () {
+        ArrayList<Pair> posWhites = searchWhites();
+        return solve (posWhites, 0);
     }
 
     //Crear un ArrayList per guardar les posicions de totes les caselles blanques existents al kakuro [][]
-    private ArrayList <Pair> search_whites () {
+    private ArrayList <Pair> searchWhites () {
         ArrayList <Pair> p = new ArrayList <Pair> ();
         for (int i = 0; i < numRows; ++i) {
             for (int j = 0; j < numColumns; ++j) {
@@ -125,16 +125,16 @@ public class Kakuro {
 
     //Una funció recursiva que fa un backtracking
     //És a dir, mira valors possibles (1...9) i les seves combinacions a cada posició agafada del ArrayList pos_whites
-    private boolean solve (final ArrayList <Pair> pos_whites, int k) {
-        if (k == pos_whites.size()) return true; //El moment quan hagi vist totes les caselles blanques
+    private boolean solve (final ArrayList <Pair> posWhites, int k) {
+        if (k == posWhites.size()) return true; //El moment quan hagi vist totes les caselles blanques
 
         // Consultar la posició de la casella blanca
-        Pair aux = pos_whites.get(k);
+        Pair aux = posWhites.get(k);
         int posX = aux.first();
         int posY = aux.second();
         if(cells[posX][posY].getValue()>0){
             if (checkH(posX,posY,cells[posX][posY].getValue()) && checkV(posX,posY,cells[posX][posY].getValue())){
-                if (solve(pos_whites,k+1)) return true;
+                if (solve(posWhites,k+1)) return true;
             }
         }
         else {
@@ -144,7 +144,7 @@ public class Kakuro {
                 if (checkH(posX, posY, i) && checkV(posX, posY, i)) {
                     cells[posX][posY].setValue(i); // Posar el número a l'atribut tipus (Recordar els 4 tipus: -2, -1, 0 i >0)
 
-                    if (solve(pos_whites, k + 1)) return true; //Mira les combinacions possibles amb el número i
+                    if (solve(posWhites, k + 1)) return true; //Mira les combinacions possibles amb el número i
                         //Retorna cert si existeix solució amb el número i
 
                     else cells[posX][posY].setValue(0); //Fals si no existeix solució amb el número i
@@ -155,15 +155,15 @@ public class Kakuro {
         return false; //Quan hagi comprovat tots els números possibles 1...9 i no troba cap solució
     }
 
-    private boolean checkH (int x, int y, int valor) {
-        int sum = valor;
+    private boolean checkH (int x, int y, int value) {
+        int sum = value;
         int totalF = 0;
 
         int aux = y-1;
         if (aux < 0) return true;
 
         while (cells[x][aux].getValue() > 0) {
-            if (cells[x][aux].getValue() == valor) return false;
+            if (cells[x][aux].getValue() == value) return false;
             sum += cells[x][aux].getValue();
             --aux;
         }
@@ -182,15 +182,15 @@ public class Kakuro {
     }
 
 
-    private boolean checkV (int x, int y, int valor) {
-        int sum = valor;
+    private boolean checkV (int x, int y, int value) {
+        int sum = value;
         int totalC = 0;
 
         int aux = x-1;
         if (aux < 0) return true;
 
         while (cells[aux][y].getValue() > 0)    {
-            if (cells[aux][y].getValue() == valor) return false;
+            if (cells[aux][y].getValue() == value) return false;
             sum += cells[aux][y].getValue();
             --aux;
         }

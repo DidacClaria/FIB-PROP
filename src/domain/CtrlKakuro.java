@@ -51,16 +51,16 @@ public class CtrlKakuro {
      * @param numColumns It indicates the number of columns that the Kakuro will have.
      * @param field It has the information of every individual Cell in the Kakuro.
      */
-    public void proposeKakuro(int numRows, int numColumns, String[][] field){
+    public boolean proposeKakuro(int numRows, int numColumns, String[][] field){
         Boolean b = kakuro.proposeKakuro(numRows,numColumns,field);
         if (b) {
             kakuro.setIdKakuro(numKakuros);
             numKakuros++;
-            System.out.println("\nI f***ng work!!!");
         }
         else {
 
         }
+        return b;
     }
 
 }

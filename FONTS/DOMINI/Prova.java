@@ -9,6 +9,8 @@ public class Prova {
     int c;
     Casella[][] kakuro;
 
+    private int solutions;
+
     public Prova() {
     }
 
@@ -16,6 +18,7 @@ public class Prova {
         this.f = x;
         this.c = y;
         this.kakuro = new Casella[f][c];
+        this.solutions = 0;
 
         for(int i = 0; i < f; ++i) {
             for(int j = 0; j < c; ++j) {
@@ -25,8 +28,25 @@ public class Prova {
             }
         }
 
-        for(int k = 0; k < 10000; ++k) generate_random_black(f-1, c-1, 1, 1);
+        for(int k = 0; k < 10; ++k) generate_random_black(f-1, c-1, 1, 1);
         correct_format();
+
+        for(int i = 0; i < f; ++i) {
+            for(int j = 0; j < c; ++j) {
+                if (kakuro[i][j].get_tipus() == -2 && ((i+1 < f && kakuro[i+1][j].get_tipus() == 0) || (j+1 < c && kakuro[i][j+1].get_tipus() == 0)))
+                    kakuro[i][j].set_tipus(-1);
+            }
+        }
+
+        generate_white_numbers();
+        generate_black_numbers();
+        while (solve_kakuro_multiple()) {
+            clear_white_cells();
+            generate_white_numbers();
+            generate_black_numbers();
+            this.solutions = 0;
+        }
+
     }
 
     private void generate_random_black (int rangeX, int rangeY, int miniumX, int miniumY) {
@@ -34,7 +54,7 @@ public class Prova {
         int randY = (int) (Math.random() * rangeY) + miniumY;
         //System.out.println ("rangeX: " + rangeX + "rangeY: " + rangeY + "miniumX: " + miniumX + "miniumY: " + miniumY);
         //System.out.println (randX + " " + randY);
-        if (kakuro[randX][randY].get_tipus() != -2 && no_alone_sym(randX, randY) && DFS_sym(randX, randY)) {
+        if (kakuro[randX][randY].get_tipus() == 0 && no_alone_sym(randX, randY) && DFS_sym(randX, randY)) {
             kakuro[randX][randY].set_tipus(-2);
             kakuro[f - randX][c - randY].set_tipus(-2);
         }
@@ -163,15 +183,59 @@ public class Prova {
         correct_format();
     }
 
-    private void generate_numbers () {
-
-
-
-
+    private void generate_white_numbers () {
+        for (int i = 0; i < f; ++i) {
+            for (int j = 0; j < c; ++j) {
+                if (kakuro[i][j].get_tipus() == 0) {
+                    ArrayList <Integer> possible_numbers = list_RC_numbers(i ,j);
+                    int pos = (int)(Math.random() * possible_numbers.size());
+                    kakuro[i][j].set_tipus(possible_numbers.get(pos));
+                }
+            }
+        }
     }
 
+    private void generate_black_numbers () {
+        for (int i = 0; i < f; ++i) {
+            for (int j = 0; j < c; ++j) {
+                if (kakuro[i][j].get_tipus() == -1) {
+                    kakuro[i][j].set_sumF(calculate_sumF(i, j));
+                    kakuro[i][j].set_sumC(calculate_sumC(i, j));
+                }
+            }
+        }
+    }
 
+    private ArrayList<Integer> list_RC_numbers (int x, int y) {
+        ArrayList<Integer> list = new ArrayList<>(Arrays.asList(1,2,3,4,5,6,7,8,9));
+        int i;
+        for (i = x-1; kakuro[i][y].get_tipus() > 0; --i) list.remove(Integer.valueOf(kakuro[i][y].get_tipus()));
+        for (i = x+1; i < f && kakuro[i][y].get_tipus() > 0; ++i) list.remove(Integer.valueOf(kakuro[i][y].get_tipus()));
+        for (i = y-1; kakuro[x][i].get_tipus() > 0; --i) list.remove(Integer.valueOf(kakuro[x][i].get_tipus()));
+        for (i = y+1; i < c && kakuro[x][i].get_tipus() > 0; ++i) list.remove(Integer.valueOf(kakuro[x][i].get_tipus()));
 
+        return list;
+    }
+
+    private int calculate_sumF (int x, int y) {
+        int sumF = 0;
+        for (int i = y+1; i < c && kakuro[x][i].get_tipus() > 0; ++i) sumF += kakuro[x][i].get_tipus();
+        return sumF;
+    }
+
+    private int calculate_sumC (int x, int y) {
+        int sumC = 0;
+        for (int i = x+1; i < f && kakuro[i][y].get_tipus() > 0; ++i) sumC += kakuro[i][y].get_tipus();
+        return sumC;
+    }
+
+    private void clear_white_cells () {
+        for(int i = 1; i < f; ++i) {
+            for(int j = 1; j < c; ++j) {
+                if (kakuro[i][j].get_tipus() > 0) kakuro[i][j].set_tipus(0);
+            }
+        }
+    }
 
     public void read_kakuro () {
         Scanner sca = new Scanner(System.in);
@@ -260,6 +324,11 @@ public class Prova {
         return solve (pos_whites, 0);
     }
 
+    public boolean solve_kakuro_multiple () {
+        ArrayList <Pair> pos_whites = search_whites();
+        return solve_multiple (pos_whites, 0);
+    }
+
     //Crear un ArrayList per guardar les posicions de totes les caselles blanques existents al kakuro [][]
     private ArrayList <Pair> search_whites () {
         ArrayList <Pair> p = new ArrayList <Pair> ();
@@ -305,6 +374,26 @@ public class Prova {
             }
         }
         return false; //Quan hagi comprovat tots els números possibles 1...9 i no troba cap solució
+    }
+
+    private boolean solve_multiple (final ArrayList <Pair> pos_whites, int k) {
+        if (k == pos_whites.size()) {
+            ++this.solutions;
+            return true;
+        }
+
+        Pair aux = pos_whites.get(k);
+        int posX = aux.first();
+        int posY = aux.second();
+
+        for (int i = 1; i <= 9; ++i) {
+            if (checkH(posX, posY, i) && checkV(posX, posY, i)) {
+                kakuro[posX][posY].set_tipus(i);
+                if (solve_multiple(pos_whites, k + 1) && solutions == 2) return true;
+                else kakuro[posX][posY].set_tipus(0);
+            }
+        }
+        return false;
     }
 
     private boolean checkH (int x, int y, int valor) {

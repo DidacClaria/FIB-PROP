@@ -44,9 +44,9 @@ public class Kakuro {
     }
 
     /**
-     *
-     * @param x
-     * @param y
+     * Kakuro constructor that generates a kakuro with random black cells and it has unique solution
+     * @param x It indicates the number of rows that the Kakuro will have.
+     * @param y It indicates the number of columns that the Kakuro will have.
      */
     public Kakuro(int x, int y) {
         this.numRows = x;
@@ -76,19 +76,40 @@ public class Kakuro {
         }
     }
 
-    private void generate_random_black (int rangeX, int rangeY, int miniumX, int miniumY) {
-        int randX = (int) (Math.random() * rangeX) + miniumX;
-        int randY = (int) (Math.random() * rangeY) + miniumY;
+    /**
+     * This method generates randomly black cells in the kakuro
+     * @param rangeX It indicates the range of number that can be generated horizontally (Row)
+     * @param rangeY It indicates the range of number that can be generated vertically (Column)
+     * @param minimumX It indicates the minimum of number that can be generated horizontally (Row)
+     * @param minimumY It indicates the minimum of number that can be generated vertically (Column)
+     */
+    private void generate_random_black (int rangeX, int rangeY, int minimumX, int minimumY) {
+        int randX = (int) (Math.random() * rangeX) + minimumX;
+        int randY = (int) (Math.random() * rangeY) + minimumY;
         if (cells[randX][randY] instanceof WhiteCell && no_alone_sym(randX, randY) && DFS_sym(randX, randY)) {
             cells[randX][randY] = new BlackCell(0,0);
             cells[numRows - randX][numColumns - randY] = new BlackCell(0,0);
         }
     }
 
+    /**
+     * This method checks if the position indicated in the parameters is correct or not
+     * @param x It indicates the position of the x-axis of the cell
+     * @param y It indicates the position of the y-axis of the cell
+     * @return TRUE if the position indicated in the parameters and his 180º symmetrical position comply the rule of the kakuro
+     * FALSE if the position indicated in the parameters and his 180º symmetrical position comply the rule of the kakuro
+     */
     private boolean no_alone_sym(int x, int y) {
         return no_alone(x, y) && no_alone(numRows - x, numColumns - y);
     }
 
+    /**
+     * The immersion function of "no_alone_sym"
+     * @param x It indicates the position of the x-axis of the cell
+     * @param y It indicates the position of the y-axis of the cell
+     * @return TRUE if the position indicated in the parameters complies the rule of the kakuro
+     * FALSE if the position indicated in the parameters complies the rule of the kakuro
+     */
     private boolean no_alone(int x, int y) {
         if (cells[x - 1][y] instanceof WhiteCell && cells[x - 2][y] instanceof BlackCell) return false;
         if (x + 1 == numRows - 1 && cells[x + 1][y] instanceof WhiteCell) return false;
@@ -101,6 +122,13 @@ public class Kakuro {
         return true;
     }
 
+    /**
+     * This method uses Depth-First-Search to check if all the white cells of the kakuro are connected
+     * @param x It indicates the position of the x-axis of the cell
+     * @param y It indicates the position of the y-axis of the cell
+     * @return TRUE if all the white cells are connected
+     * FALSE if all the white cells are not connected
+     */
     private boolean DFS_sym(int x, int y) {
         boolean[][] m = new boolean[numRows][numColumns];
         int visited = numRows * numColumns;
@@ -129,6 +157,13 @@ public class Kakuro {
         return visited == search_DFS(posX, posY, m);
     }
 
+    /**
+     * Depth-First-Search
+     * @param i It indicates the position of the x-axis of the cell
+     * @param j It indicates the position of the y-axis of the cell
+     * @param m A matrix of the white cells visited
+     * @return It returns the number of white cells visited
+     */
     private int search_DFS(int i, int j, boolean[][] m) {
         if (i >= numRows || j >= numColumns) return 0;
         if (m[i][j]) return 0;
@@ -136,6 +171,9 @@ public class Kakuro {
         return 1 + search_DFS(i - 1, j, m) + search_DFS(i + 1, j, m) + search_DFS(i, j - 1, m) + search_DFS(i, j + 1, m);
     }
 
+    /**
+     * This method corrects the forma
+     */
     private void correct_format () {
         for (int i = 0; i < numRows; ++i) {
             for (int j = 0; j < numColumns; ++j) {

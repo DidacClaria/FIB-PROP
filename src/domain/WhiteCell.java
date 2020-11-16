@@ -10,10 +10,10 @@ public class WhiteCell extends Cell {
      */
     private int value;
 
-    //CONSTRUCTORS
 
+    //CONSTRUCTORS
     /**
-     * Default empty WhiteCell constructor.
+     * WhiteCell with value constructor.
      * @param value It indicates the value of the WhiteCell from 1-9. If the value is 0 it means it doesn't have any value.
      */
     public WhiteCell(int value) {

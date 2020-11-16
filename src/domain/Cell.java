@@ -4,12 +4,6 @@ package domain;
  * Generic class used to created Cells.
  */
 public abstract class Cell {
-    //CONSTRUCTORS
-    /**
-     * Default empty Cell constructor.
-     */
-    public Cell() {
-    }
 
     public abstract int getValue();
 

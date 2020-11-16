@@ -14,7 +14,7 @@ public class Main {
     public static void main(String[] args) {
         a = new CtrlDomain();
 
-        System.out.println("\n1 - Propose Kakuro:");
+        System.out.println("\n1 - Propose Kakuro");
         System.out.println("2 - Generate Kakuro");
 
         System.out.print("\nCHOOSE ONE OPTION: ");

@@ -67,6 +67,7 @@ public class Kakuro {
         for(int k = 0; k < 100; ++k) generate_random_black(numRows-1, numColumns-1, 1, 1);
         correct_format();
 
+
         boolean aux = generate_white_numbers();
         while (!aux) aux = generate_white_numbers();
         generate_black_numbers();
@@ -77,6 +78,8 @@ public class Kakuro {
             generate_black_numbers();
             this.solutions = 0;
         }
+
+
     }
 
     /**
@@ -117,10 +120,13 @@ public class Kakuro {
         if (cells[x - 1][y] instanceof WhiteCell && cells[x - 2][y] instanceof BlackCell) return false;
         if (x + 1 == numRows - 1 && cells[x + 1][y] instanceof WhiteCell) return false;
         if (x + 1 < numRows && cells[x + 1][y] instanceof WhiteCell && cells[x + 2][y] instanceof BlackCell) return false;
+        if (x + 1 < numRows && cells[x + 1][y] instanceof WhiteCell && cells[x + 2][y] instanceof WhiteCell && x+2 == numRows-x) return false;
 
         if (cells[x][y - 1] instanceof WhiteCell && cells[x][y - 2] instanceof BlackCell) return false;
         if (y + 1 == numColumns - 1 && cells[x][y + 1] instanceof WhiteCell) return false;
         if (y + 1 < numColumns && cells[x][y + 1] instanceof WhiteCell && cells[x][y + 2] instanceof BlackCell) return false;
+        if (y + 1 < numColumns && cells[x][y + 1] instanceof WhiteCell && cells[x][y + 2] instanceof WhiteCell && y+2 == numColumns-y) return false;
+
 
         return true;
     }

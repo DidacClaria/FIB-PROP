@@ -28,7 +28,7 @@ public class Prova {
             }
         }
 
-        for(int k = 0; k < 10; ++k) generate_random_black(f-1, c-1, 1, 1);
+        for(int k = 0; k < 1000; ++k) generate_random_black(f-1, c-1, 1, 1);
         correct_format();
 
         for(int i = 0; i < f; ++i) {

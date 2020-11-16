@@ -33,6 +33,9 @@ public class Kakuro {
      */
     private int difficulty;
 
+    /**
+     * This attribute indicates the possible solutions of the kakuro (1 unique and 2 multiple)
+     */
     private int solutions;
 
     //CONSTRUCTORS
@@ -104,7 +107,7 @@ public class Kakuro {
     }
 
     /**
-     * The immersion function of "no_alone_sym"
+     * Immersion function of "no_alone_sym"
      * @param x It indicates the position of the x-axis of the cell
      * @param y It indicates the position of the y-axis of the cell
      * @return TRUE if the position indicated in the parameters complies the rule of the kakuro
@@ -172,7 +175,7 @@ public class Kakuro {
     }
 
     /**
-     * This method corrects the forma
+     * This method corrects those black cells which have more than 9 white cells
      */
     private void correct_format () {
         for (int i = 0; i < numRows; ++i) {
@@ -185,6 +188,13 @@ public class Kakuro {
         }
     }
 
+    /**
+     * This method checks horizontally the white cells of the position indicated in the parameters
+     * @param x It indicates the position of the x-axis of the cell
+     * @param y It indicates the position of the y-axis of the cell
+     * @return TRUE if there are more than 9 horizontal white cells
+     * FALSE it there are less than 9 horizontal white cells
+     */
     private boolean wrong_cellH (int x, int y) {
         if (y+10 >= numColumns) return false;
         for (int i = y+1; i <= (y+10); ++i) {
@@ -194,6 +204,13 @@ public class Kakuro {
         return true;
     }
 
+    /**
+     * This method checks vertically the white cells of the position indicated in the parameters
+     * @param x It indicates the position of the x-axis of the cell
+     * @param y It indicates the position of the y-axis of the cell
+     * @return TRUE if there are more than 9 vertical white cells
+     * FALSE it there are less than 9 vertical white cells
+     */
     private boolean wrong_cellV (int x, int y) {
         if (x+10 >= numRows) return false;
         for (int i = x+1; i <= (x+10); ++i) {
@@ -203,6 +220,11 @@ public class Kakuro {
         return true;
     }
 
+    /**
+     * This method adds randomly in the horizontal position of the cell indicated in the parameters
+     * @param x It indicates the position of the x-axis of the cell
+     * @param y It indicates the position of the y-axis of the cell
+     */
     private void correct_cellH (int x, int y) {
         ArrayList<Pair> safe = new ArrayList<Pair>();
         for (int i = y+1; i <= (y+10); ++i) {
@@ -219,6 +241,11 @@ public class Kakuro {
         }
     }
 
+    /**
+     * This method adds randomly in the vertical position of the cell indicated in the parameters
+     * @param x It indicates the position of the x-axis of the cell
+     * @param y It indicates the position of the y-axis of the cell
+     */
     private void correct_cellV (int x, int y) {
         ArrayList<Pair> safe = new ArrayList<Pair>();
         for (int i = x+1; i <= (x+10); ++i) {
@@ -235,6 +262,9 @@ public class Kakuro {
         }
     }
 
+    /**
+     * This method restarts the kakuro format generator if it can not correct the wrong black cells
+     */
     private void restart () {
         for(int i = 1; i < numRows; ++i) {
             for(int j = 1; j < numColumns; ++j) cells[i][j] = new WhiteCell(0);
@@ -244,6 +274,11 @@ public class Kakuro {
         correct_format();
     }
 
+    /**
+     * This methods adds randomly a number between 1 and 9 in each white cell of the kakuro
+     * @return TRUE if all the white cells are filled with a number
+     * FALSE if all the white cells are not filled with a number
+     */
     private boolean generate_white_numbers () {
         for (int i = 1; i < numRows; ++i) {
             for (int j = 1; j < numColumns; ++j) {
@@ -261,6 +296,9 @@ public class Kakuro {
         return true;
     }
 
+    /**
+     * This methods calculates the vertical and horizontal sum of all black cells which have white cells
+     */
     private void generate_black_numbers () {
         for (int i = 0; i < numRows; ++i) {
             for (int j = 0; j < numColumns; ++j) {
@@ -272,6 +310,12 @@ public class Kakuro {
         }
     }
 
+    /**
+     * This method checks if the possible safe numbers (not repeated) in a white cell
+     * @param x It indicates the position of the x-axis of the cell
+     * @param y It indicates the position of the y-axis of the cell
+     * @return It returns an array of the possible safe numbers (not repeated) of a white cell
+     */
     private ArrayList<Integer> list_RC_numbers (int x, int y) {
         ArrayList<Integer> list = new ArrayList<>(Arrays.asList(1,2,3,4,5,6,7,8,9));
         int i;
@@ -283,18 +327,33 @@ public class Kakuro {
         return list;
     }
 
+    /**
+     * This method calculates the sum of all horizontal white cells in a black cell
+     * @param x It indicates the position of the x-axis of the cell
+     * @param y It indicates the position of the y-axis of the cell
+     * @return It returns the sum of all horizontal white cells in a black cell
+     */
     private int calculate_sumF (int x, int y) {
         int sumF = 0;
         for (int i = y+1; i < numColumns && cells[x][i] instanceof WhiteCell; ++i) sumF += cells[x][i].getValue();
         return sumF;
     }
 
+    /**
+     * This method calculates the sum of all vertical white cells in a black cell
+     * @param x It indicates the position of the x-axis of the cell
+     * @param y It indicates the position of the y-axis of the cell
+     * @return It returns the sum of all vertical white cells in a black cell
+     */
     private int calculate_sumC (int x, int y) {
         int sumC = 0;
         for (int i = x+1; i < numRows && cells[i][y] instanceof WhiteCell; ++i) sumC += cells[i][y].getValue();
         return sumC;
     }
 
+    /**
+     * This method clears the value of all white cells to 0
+     */
     private void clear_white_cells () {
         for(int i = 1; i < numRows; ++i) {
             for(int j = 1; j < numColumns; ++j) {
@@ -304,10 +363,19 @@ public class Kakuro {
     }
 
     //GETTERS & SETTERS
+
+    /**
+     * Consultant function
+     * @return It returns the id of the kakuro
+     */
     public int getIdKakuro() {
         return idKakuro;
     }
 
+    /**
+     * Modifier function
+     * @param idKakuro It indicates the id of the kakuro
+     */
     public void setIdKakuro(int idKakuro) {
         this.idKakuro = idKakuro;
     }
@@ -320,6 +388,8 @@ public class Kakuro {
      * @param numRows It indicates the number of rows that the Kakuro will have.
      * @param numColumns It indicates the number of columns that the Kakuro will have.
      * @param field It has the information of every individual Cell in the Kakuro.
+     * @return TRUE if there is a solution of the kakuro proposed
+     * FALSE if there isn't a solution of the kakuro proposed
      */
     public Boolean proposeKakuro(int numRows, int numColumns, String[][] field){
         this.numRows = numRows;
@@ -374,6 +444,10 @@ public class Kakuro {
         return solve_kakuro();
     }
 
+    /**
+     * Consultant function
+     * @return It returns a matrix of the information of all the cells of the kakuro
+     */
     public String [][] list_kakuro () {
         String [][] l = new String [numRows][numColumns];
         String aux;
@@ -396,16 +470,30 @@ public class Kakuro {
         return l;
     }
 
+    /**
+     * Solver_kakuro
+     * @return TRUE if there is a solution of the kakuro proposed
+     * FALSE if there isn't a solution of the kakuro proposed
+     */
     private boolean solve_kakuro () {
         ArrayList<Pair> pos_whites = search_whites();
         return solve (pos_whites, 0);
     }
 
+    /**
+     * Multiple_solver_kakuro
+     * @return TRUE if there are multiple solution of the kakuro
+     * FALSE if there is unique solution
+     */
     public boolean solve_kakuro_multiple () {
         ArrayList <Pair> pos_whites = search_whites();
         return solve_multiple (pos_whites, 0);
     }
 
+    /**
+     * Auxiliar Function
+     * @return it creates an ArrayList to save the positions of all existing white cells in the kakuro
+     */
     //Crear un ArrayList per guardar les posicions de totes les caselles blanques existents al kakuro [][]
     private ArrayList <Pair> search_whites () {
         ArrayList <Pair> p = new ArrayList <Pair> ();
@@ -417,8 +505,13 @@ public class Kakuro {
         return p;
     }
 
-    //Una funció recursiva que fa un backtracking
-    //És a dir, mira valors possibles (1...9) i les seves combinacions a cada posició agafada del ArrayList pos_whites
+    /**
+     * Backtracking recursive function
+     * @param pos_whites It indicates the positions of all existing white cells in the kakuro
+     * @param k It indicated the iterator of the pos_whites
+     * @return TRUE if it exists a solution
+     * FALSE if it doesn't exist a solution
+     */
     private boolean solve (final ArrayList <Pair> pos_whites, int k) {
         if (k == pos_whites.size()) return true; //El moment quan hagi vist totes les caselles blanques
 
@@ -449,6 +542,13 @@ public class Kakuro {
         return false; //Quan hagi comprovat tots els números possibles 1...9 i no troba cap solució
     }
 
+    /**
+     * Backtracking recursive function
+     * @param pos_whites It indicates the positions of all existing white cells in the kakuro
+     * @param k It indicated the iterator of the pos_whites
+     * @return TRUE if it exists multiple solution
+     * FALSE if there is only one solution
+     */
     private boolean solve_multiple (final ArrayList <Pair> pos_whites, int k) {
         if (k == pos_whites.size()) {
             ++this.solutions;
@@ -469,7 +569,14 @@ public class Kakuro {
         return false;
     }
 
-
+    /**
+     * This method checks if the number to be added complies the rule of kakuro
+     * @param x It indicates the position of the x-axis of the cell
+     * @param y It indicates the position of the y-axis of the cell
+     * @param valor It indicates the number to be added in a white cell
+     * @return TRUE if there is not any repeated number in all horizontal white cells and if they correspond with the sum of their black cell
+     * FALSE if not
+     */
     private boolean checkH (int x, int y, int valor) {
         int sum = valor;
         int totalF = 0;
@@ -496,7 +603,14 @@ public class Kakuro {
         return true;
     }
 
-
+    /**
+     * This method checks if the number to be added complies the rule of kakuro
+     * @param x It indicates the position of the x-axis of the cell
+     * @param y It indicates the position of the y-axis of the cell
+     * @param valor It indicates the number to be added in a white cell
+     * @return TRUE if there is not any repeated number in all vertical white cells and if they correspond with the sum of their black cell
+     * FALSE if not
+     */
     private boolean checkV (int x, int y, int valor) {
         int sum = valor;
         int totalC = 0;

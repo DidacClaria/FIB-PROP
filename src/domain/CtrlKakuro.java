@@ -57,6 +57,10 @@ public class CtrlKakuro {
         else System.out.println("No Solution Found Out");
     }
 
+    /**
+     * Consultant function
+     * @return It returns a matrix of the information of all the cells of the kakuro
+     */
     public String [][] list_kakuro () {
         return kakuro.list_kakuro();
     }

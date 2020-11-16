@@ -5,19 +5,19 @@ import java.lang.*;
 public class Test {
     public static void main (String[] args) {
 
-/*
+
         Prova p = new Prova ();
         p.read_kakuro();
         boolean s = p.solve_kakuro_multiple();
         if (s) System.out.println ("Multiple Solution");
         else System.out.println ("Unique");
         p.print_kakuro();
-*/
 
 
-        Prova p = new Prova (5, 5);
+/*
+        Prova p = new Prova (10, 10);
         p.print_kakuro();
-
+*/
 
         /*
         Map <Integer, Map <Integer, ArrayList<ArrayList<Integer> > > > table = new HashMap <Integer, Map <Integer, ArrayList<ArrayList<Integer> > > > ();

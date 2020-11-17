@@ -45,7 +45,6 @@ public class CtrlDomain {
 
     //CLASS METHODS
 
-
     /**
      * If the proposed Kakuro by the User at the Presentation Layer is valid, it is saved at the Persistence Layer and it's added to the collection of Kakuros that a User has.
      * @param numRows indicates the number of rows that the field has
@@ -69,8 +68,8 @@ public class CtrlDomain {
      * Consultant function
      * @return It returns a matrix of the information of all the cells of the kakuro
      */
-    public String [][] list_kakuro () {
-        return ctrlKakuro.list_kakuro();
+    public String [][] listKakuro () {
+        return ctrlKakuro.listKakuro();
     }
 
 }

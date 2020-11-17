@@ -61,8 +61,8 @@ public class CtrlKakuro {
      * Consultant function
      * @return It returns a matrix of the information of all the cells of the kakuro
      */
-    public String [][] list_kakuro () {
-        return kakuro.list_kakuro();
+    public String [][] listKakuro () {
+        return kakuro.listKakuro();
     }
 
 }

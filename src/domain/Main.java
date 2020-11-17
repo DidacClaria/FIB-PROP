@@ -24,21 +24,21 @@ public class Main {
         switch (option) {
             case 1:
                 System.out.println("\nEnter your kakuro:");
-                read_kakuro();
+                readKakuro();
                 a.proposeKakuro(f,c,kakuro);
-                print_kakuro();
+                printKakuro();
                 break;
             case 2:
                 System.out.println("\nEnter the size of kakuro you want to generate:");
                 f = sca.nextInt();
                 c = sca.nextInt();
                 a.generateKakuro(f,c);
-                print_kakuro();
+                printKakuro();
                 break;
         }
     }
 
-    public static void read_kakuro () {
+    public static void readKakuro () {
         Scanner sca = new Scanner(System.in);
         String s = sca.nextLine(); // Llegir quantes files i quantes columnes;
 
@@ -56,8 +56,8 @@ public class Main {
         }
     }
 
-    public static void print_kakuro () {
-        String aux [][] = a.list_kakuro();
+    public static void printKakuro () {
+        String aux [][] = a.listKakuro();
         System.out.println(f + "," + c);
 
         for (int i = 0; i < aux.length; ++i) {

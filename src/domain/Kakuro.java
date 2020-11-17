@@ -64,18 +64,18 @@ public class Kakuro {
             }
         }
 
-        for(int k = 0; k < 100; ++k) generate_random_black(numRows-1, numColumns-1, 1, 1);
-        correct_format();
+        for(int k = 0; k < 100; ++k) generateRandomBlack(numRows-1, numColumns-1, 1, 1);
+        correctFormat();
 
 
-        boolean aux = generate_white_numbers();
-        while (!aux) aux = generate_white_numbers();
-        generate_black_numbers();
-        while (solve_kakuro_multiple()) {
-            clear_white_cells();
-            aux = generate_white_numbers();
-            while (!aux) aux = generate_white_numbers();
-            generate_black_numbers();
+        boolean aux = generateWhiteNumbers();
+        while (!aux) aux = generateWhiteNumbers();
+        generateBlackNumbers();
+        while (solveKakuroMultiple()) {
+            clearWhiteCells();
+            aux = generateWhiteNumbers();
+            while (!aux) aux = generateWhiteNumbers();
+            generateBlackNumbers();
             this.solutions = 0;
         }
 
@@ -89,10 +89,10 @@ public class Kakuro {
      * @param minimumX It indicates the minimum of number that can be generated horizontally (Row)
      * @param minimumY It indicates the minimum of number that can be generated vertically (Column)
      */
-    private void generate_random_black (int rangeX, int rangeY, int minimumX, int minimumY) {
+    private void generateRandomBlack (int rangeX, int rangeY, int minimumX, int minimumY) {
         int randX = (int) (Math.random() * rangeX) + minimumX;
         int randY = (int) (Math.random() * rangeY) + minimumY;
-        if (cells[randX][randY] instanceof WhiteCell && no_alone_sym(randX, randY) && DFS_sym(randX, randY)) {
+        if (cells[randX][randY] instanceof WhiteCell && noAloneSym(randX, randY) && dfsSym(randX, randY)) {
             cells[randX][randY] = new BlackCell(0,0);
             cells[numRows - randX][numColumns - randY] = new BlackCell(0,0);
         }
@@ -105,18 +105,18 @@ public class Kakuro {
      * @return TRUE if the position indicated in the parameters and his 180º symmetrical position comply the rule of the kakuro
      * FALSE if the position indicated in the parameters and his 180º symmetrical position comply the rule of the kakuro
      */
-    private boolean no_alone_sym(int x, int y) {
-        return no_alone(x, y) && no_alone(numRows - x, numColumns - y);
+    private boolean noAloneSym(int x, int y) {
+        return noAlone(x, y) && noAlone(numRows - x, numColumns - y);
     }
 
     /**
-     * Immersion function of "no_alone_sym"
+     * Immersion function of "noAloneSym"
      * @param x It indicates the position of the x-axis of the cell
      * @param y It indicates the position of the y-axis of the cell
      * @return TRUE if the position indicated in the parameters complies the rule of the kakuro
      * FALSE if the position indicated in the parameters complies the rule of the kakuro
      */
-    private boolean no_alone(int x, int y) {
+    private boolean noAlone(int x, int y) {
         if (cells[x - 1][y] instanceof WhiteCell && cells[x - 2][y] instanceof BlackCell) return false;
         if (x + 1 == numRows - 1 && cells[x + 1][y] instanceof WhiteCell) return false;
         if (x + 1 < numRows && cells[x + 1][y] instanceof WhiteCell && cells[x + 2][y] instanceof BlackCell) return false;
@@ -138,7 +138,7 @@ public class Kakuro {
      * @return TRUE if all the white cells are connected
      * FALSE if all the white cells are not connected
      */
-    private boolean DFS_sym(int x, int y) {
+    private boolean dfsSym(int x, int y) {
         boolean[][] m = new boolean[numRows][numColumns];
         int visited = numRows * numColumns;
         int posX = 0;
@@ -163,7 +163,7 @@ public class Kakuro {
         m[x][y] = true;
         m[numRows - x][numColumns - y] = true;
         visited -= 2;
-        return visited == search_DFS(posX, posY, m);
+        return visited == searchDFS(posX, posY, m);
     }
 
     /**
@@ -173,22 +173,22 @@ public class Kakuro {
      * @param m A matrix of the white cells visited
      * @return It returns the number of white cells visited
      */
-    private int search_DFS(int i, int j, boolean[][] m) {
+    private int searchDFS(int i, int j, boolean[][] m) {
         if (i >= numRows || j >= numColumns) return 0;
         if (m[i][j]) return 0;
         if (!m[i][j]) m[i][j] = true;
-        return 1 + search_DFS(i - 1, j, m) + search_DFS(i + 1, j, m) + search_DFS(i, j - 1, m) + search_DFS(i, j + 1, m);
+        return 1 + searchDFS(i - 1, j, m) + searchDFS(i + 1, j, m) + searchDFS(i, j - 1, m) + searchDFS(i, j + 1, m);
     }
 
     /**
      * This method corrects those black cells which have more than 9 white cells
      */
-    private void correct_format () {
+    private void correctFormat () {
         for (int i = 0; i < numRows; ++i) {
             for (int j = 0; j < numColumns; ++j) {
                 if (cells[i][j] instanceof BlackCell) {
-                    if (wrong_cellH(i, j)) correct_cellH(i, j);
-                    if (wrong_cellV(i, j)) correct_cellV(i, j);
+                    if (wrongCellH(i, j)) correctCellH(i, j);
+                    if (wrongCellV(i, j)) correctCellV(i, j);
                 }
             }
         }
@@ -201,7 +201,7 @@ public class Kakuro {
      * @return TRUE if there are more than 9 horizontal white cells
      * FALSE it there are less than 9 horizontal white cells
      */
-    private boolean wrong_cellH (int x, int y) {
+    private boolean wrongCellH (int x, int y) {
         if (y+10 >= numColumns) return false;
         for (int i = y+1; i <= (y+10); ++i) {
             //System.out.println ("H" + " " + i);
@@ -217,7 +217,7 @@ public class Kakuro {
      * @return TRUE if there are more than 9 vertical white cells
      * FALSE it there are less than 9 vertical white cells
      */
-    private boolean wrong_cellV (int x, int y) {
+    private boolean wrongCellV (int x, int y) {
         if (x+10 >= numRows) return false;
         for (int i = x+1; i <= (x+10); ++i) {
             //System.out.println ("V" + " " + i);
@@ -231,10 +231,10 @@ public class Kakuro {
      * @param x It indicates the position of the x-axis of the cell
      * @param y It indicates the position of the y-axis of the cell
      */
-    private void correct_cellH (int x, int y) {
+    private void correctCellH (int x, int y) {
         ArrayList<Pair> safe = new ArrayList<Pair>();
         for (int i = y+1; i <= (y+10); ++i) {
-            if (no_alone_sym(x, i) && DFS_sym(x, i)) safe.add(new Pair(x, i));
+            if (noAloneSym(x, i) && dfsSym(x, i)) safe.add(new Pair(x, i));
         }
         if (safe.isEmpty()) restart();
         else {
@@ -252,10 +252,10 @@ public class Kakuro {
      * @param x It indicates the position of the x-axis of the cell
      * @param y It indicates the position of the y-axis of the cell
      */
-    private void correct_cellV (int x, int y) {
+    private void correctCellV (int x, int y) {
         ArrayList<Pair> safe = new ArrayList<Pair>();
         for (int i = x+1; i <= (x+10); ++i) {
-            if (no_alone_sym(i, y) && DFS_sym(i, y)) safe.add(new Pair(i, y));
+            if (noAloneSym(i, y) && dfsSym(i, y)) safe.add(new Pair(i, y));
         }
         if (safe.isEmpty()) restart();
         else {
@@ -276,8 +276,8 @@ public class Kakuro {
             for(int j = 1; j < numColumns; ++j) cells[i][j] = new WhiteCell(0);
         }
 
-        for(int k = 0; k < 1000; ++k) generate_random_black(numRows-1, numColumns-1, 1, 1);
-        correct_format();
+        for(int k = 0; k < 1000; ++k) generateRandomBlack(numRows-1, numColumns-1, 1, 1);
+        correctFormat();
     }
 
     /**
@@ -285,17 +285,17 @@ public class Kakuro {
      * @return TRUE if all the white cells are filled with a number
      * FALSE if all the white cells are not filled with a number
      */
-    private boolean generate_white_numbers () {
+    private boolean generateWhiteNumbers () {
         for (int i = 1; i < numRows; ++i) {
             for (int j = 1; j < numColumns; ++j) {
                 if (cells[i][j] instanceof WhiteCell) {
-                    ArrayList <Integer> possible_numbers = list_RC_numbers(i ,j);
-                    if (possible_numbers.size() == 0) {
-                        clear_white_cells();
+                    ArrayList <Integer> possibleNumbers = listRCNumbers(i ,j);
+                    if (possibleNumbers.size() == 0) {
+                        clearWhiteCells();
                         return false;
                     }
-                    int pos = (int)(Math.random() * possible_numbers.size());
-                    cells[i][j].setValue(possible_numbers.get(pos));
+                    int pos = (int)(Math.random() * possibleNumbers.size());
+                    cells[i][j].setValue(possibleNumbers.get(pos));
                 }
             }
         }
@@ -305,12 +305,12 @@ public class Kakuro {
     /**
      * This methods calculates the vertical and horizontal sum of all black cells which have white cells
      */
-    private void generate_black_numbers () {
+    private void generateBlackNumbers () {
         for (int i = 0; i < numRows; ++i) {
             for (int j = 0; j < numColumns; ++j) {
                 if (cells[i][j] instanceof BlackCell) {
-                    cells[i][j].setRowValue(calculate_sumF(i, j));
-                    cells[i][j].setColumnValue(calculate_sumC(i, j));
+                    cells[i][j].setRowValue(calculateSumF(i, j));
+                    cells[i][j].setColumnValue(calculateSumC(i, j));
                 }
             }
         }
@@ -322,7 +322,7 @@ public class Kakuro {
      * @param y It indicates the position of the y-axis of the cell
      * @return It returns an array of the possible safe numbers (not repeated) of a white cell
      */
-    private ArrayList<Integer> list_RC_numbers (int x, int y) {
+    private ArrayList<Integer> listRCNumbers (int x, int y) {
         ArrayList<Integer> list = new ArrayList<>(Arrays.asList(1,2,3,4,5,6,7,8,9));
         int i;
         for (i = x-1; cells[i][y] instanceof WhiteCell; --i) list.remove(Integer.valueOf(cells[i][y].getValue()));
@@ -339,7 +339,7 @@ public class Kakuro {
      * @param y It indicates the position of the y-axis of the cell
      * @return It returns the sum of all horizontal white cells in a black cell
      */
-    private int calculate_sumF (int x, int y) {
+    private int calculateSumF (int x, int y) {
         int sumF = 0;
         for (int i = y+1; i < numColumns && cells[x][i] instanceof WhiteCell; ++i) sumF += cells[x][i].getValue();
         return sumF;
@@ -351,7 +351,7 @@ public class Kakuro {
      * @param y It indicates the position of the y-axis of the cell
      * @return It returns the sum of all vertical white cells in a black cell
      */
-    private int calculate_sumC (int x, int y) {
+    private int calculateSumC (int x, int y) {
         int sumC = 0;
         for (int i = x+1; i < numRows && cells[i][y] instanceof WhiteCell; ++i) sumC += cells[i][y].getValue();
         return sumC;
@@ -360,7 +360,7 @@ public class Kakuro {
     /**
      * This method clears the value of all white cells to 0
      */
-    private void clear_white_cells () {
+    private void clearWhiteCells () {
         for(int i = 1; i < numRows; ++i) {
             for(int j = 1; j < numColumns; ++j) {
                 if (cells[i][j] instanceof WhiteCell) cells[i][j].setValue(0);
@@ -447,14 +447,14 @@ public class Kakuro {
                 }
             }
         }
-        return solve_kakuro();
+        return solveKakuro();
     }
 
     /**
      * Consultant function
      * @return It returns a matrix of the information of all the cells of the kakuro
      */
-    public String [][] list_kakuro () {
+    public String [][] listKakuro () {
         String [][] l = new String [numRows][numColumns];
         String aux;
 
@@ -477,23 +477,23 @@ public class Kakuro {
     }
 
     /**
-     * Solver_kakuro
+     * Kakuro solver
      * @return TRUE if there is a solution of the kakuro proposed
      * FALSE if there isn't a solution of the kakuro proposed
      */
-    private boolean solve_kakuro () {
-        ArrayList<Pair> pos_whites = search_whites();
-        return solve (pos_whites, 0);
+    private boolean solveKakuro () {
+        ArrayList<Pair> posWhites = searchWhites();
+        return solve (posWhites, 0);
     }
 
     /**
-     * Multiple_solver_kakuro
+     * Multiple kakuro solver
      * @return TRUE if there are multiple solution of the kakuro
      * FALSE if there is unique solution
      */
-    public boolean solve_kakuro_multiple () {
-        ArrayList <Pair> pos_whites = search_whites();
-        return solve_multiple (pos_whites, 0);
+    public boolean solveKakuroMultiple() {
+        ArrayList <Pair> posWhites = searchWhites();
+        return solveMultiple (posWhites, 0);
     }
 
     /**
@@ -501,7 +501,7 @@ public class Kakuro {
      * @return it creates an ArrayList to save the positions of all existing white cells in the kakuro
      */
     //Crear un ArrayList per guardar les posicions de totes les caselles blanques existents al kakuro [][]
-    private ArrayList <Pair> search_whites () {
+    private ArrayList <Pair> searchWhites () {
         ArrayList <Pair> p = new ArrayList <Pair> ();
         for (int i = 0; i < numRows; ++i) {
             for (int j = 0; j < numColumns; ++j) {
@@ -513,21 +513,21 @@ public class Kakuro {
 
     /**
      * Backtracking recursive function
-     * @param pos_whites It indicates the positions of all existing white cells in the kakuro
-     * @param k It indicated the iterator of the pos_whites
+     * @param posWhites It indicates the positions of all existing white cells in the kakuro
+     * @param k It indicated the iterator of the posWhites
      * @return TRUE if it exists a solution
      * FALSE if it doesn't exist a solution
      */
-    private boolean solve (final ArrayList <Pair> pos_whites, int k) {
-        if (k == pos_whites.size()) return true; //El moment quan hagi vist totes les caselles blanques
+    private boolean solve (final ArrayList <Pair> posWhites, int k) {
+        if (k == posWhites.size()) return true; //El moment quan hagi vist totes les caselles blanques
 
         // Consultar la posició de la casella blanca
-        Pair aux = pos_whites.get(k);
+        Pair aux = posWhites.get(k);
         int posX = aux.first();
         int posY = aux.second();
         if(cells[posX][posY].getValue()>0){
             if (checkH(posX,posY,cells[posX][posY].getValue()) && checkV(posX,posY,cells[posX][posY].getValue())){
-                if (solve(pos_whites,k+1)) return true;
+                if (solve(posWhites,k+1)) return true;
             }
         }
         else {
@@ -537,7 +537,7 @@ public class Kakuro {
                 if (checkH(posX, posY, i) && checkV(posX, posY, i)) {
                     cells[posX][posY].setValue(i); // Posar el número a l'atribut tipus (Recordar els 4 tipus: -2, -1, 0 i >0)
 
-                    if (solve(pos_whites, k + 1)) return true; //Mira les combinacions possibles amb el número i
+                    if (solve(posWhites, k + 1)) return true; //Mira les combinacions possibles amb el número i
                         //Retorna cert si existeix solució amb el número i
 
                     else cells[posX][posY].setValue(0); //Fals si no existeix solució amb el número i
@@ -550,25 +550,25 @@ public class Kakuro {
 
     /**
      * Backtracking recursive function
-     * @param pos_whites It indicates the positions of all existing white cells in the kakuro
-     * @param k It indicated the iterator of the pos_whites
+     * @param posWhites It indicates the positions of all existing white cells in the kakuro
+     * @param k It indicated the iterator of the posWhites
      * @return TRUE if it exists multiple solution
      * FALSE if there is only one solution
      */
-    private boolean solve_multiple (final ArrayList <Pair> pos_whites, int k) {
-        if (k == pos_whites.size()) {
+    private boolean solveMultiple (final ArrayList <Pair> posWhites, int k) {
+        if (k == posWhites.size()) {
             ++this.solutions;
             return true;
         }
 
-        Pair aux = pos_whites.get(k);
+        Pair aux = posWhites.get(k);
         int posX = aux.first();
         int posY = aux.second();
 
         for (int i = 1; i <= 9; ++i) {
             if (checkH(posX, posY, i) && checkV(posX, posY, i)) {
                 cells[posX][posY].setValue(i);
-                if (solve_multiple(pos_whites, k + 1) && solutions == 2) return true;
+                if (solveMultiple(posWhites, k + 1) && solutions == 2) return true;
                 else cells[posX][posY].setValue(0);
             }
         }

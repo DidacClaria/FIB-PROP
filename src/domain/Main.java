@@ -13,28 +13,29 @@ public class Main {
 
     public static void main(String[] args) {
         a = new CtrlDomain();
+        while (true){
+            System.out.println("\n1 - Propose Kakuro");
+            System.out.println("2 - Generate Kakuro");
 
-        System.out.println("\n1 - Propose Kakuro");
-        System.out.println("2 - Generate Kakuro");
+            System.out.print("\nCHOOSE ONE OPTION: ");
+            Scanner sca = new Scanner(System.in);
+            int option = sca.nextInt();
 
-        System.out.print("\nCHOOSE ONE OPTION: ");
-        Scanner sca = new Scanner(System.in);
-        int option = sca.nextInt();
-
-        switch (option) {
-            case 1:
-                System.out.println("\nEnter your kakuro:");
-                readKakuro();
-                a.proposeKakuro(f,c,kakuro);
-                printKakuro();
-                break;
-            case 2:
-                System.out.println("\nEnter the size of kakuro you want to generate:");
-                f = sca.nextInt();
-                c = sca.nextInt();
-                a.generateKakuro(f,c);
-                printKakuro();
-                break;
+            switch (option) {
+                case 1:
+                    System.out.println("\nEnter your kakuro:");
+                    readKakuro();
+                    a.proposeKakuro(f,c,kakuro);
+                    printKakuro();
+                    break;
+                case 2:
+                    System.out.println("\nEnter the size of kakuro you want to generate:");
+                    f = sca.nextInt();
+                    c = sca.nextInt();
+                    a.generateKakuro(f,c);
+                    printKakuro();
+                    break;
+            }
         }
     }
 

@@ -6,6 +6,7 @@ import java.util.Scanner;
  * Main class. We will use it in order to simulate an user from the presentation layer sending their actions and data.
  */
 public class Main {
+
     public static int f, c;
     public static String[][] kakuro;
     public static CtrlDomain a;
@@ -13,7 +14,7 @@ public class Main {
     public static void main(String[] args) {
         a = new CtrlDomain();
 
-        System.out.println("\n1 - Propose Kakuro:");
+        System.out.println("\n1 - Propose Kakuro");
         System.out.println("2 - Generate Kakuro");
 
         System.out.print("\nCHOOSE ONE OPTION: ");

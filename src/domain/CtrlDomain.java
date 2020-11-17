@@ -65,6 +65,10 @@ public class CtrlDomain {
         ctrlKakuro.generateKakuro(numRows, numColumns);
     }
 
+    /**
+     * Consultant function
+     * @return It returns a matrix of the information of all the cells of the kakuro
+     */
     public String [][] list_kakuro () {
         return ctrlKakuro.list_kakuro();
     }

@@ -34,15 +34,11 @@ public class CtrlKakuro {
 
     /**
      * This method uses a generation algorithm of a Kakuro, according to the following parameters.
-     * @param dificulty It indicates the level of dificulty of the Kakuro (It will go from 0 to 2).
      * @param numRows It indicates the number of rows that the Kakuro will have.
      * @param numColumns It indicates the number of columns that the Kakuro will have.
-     * @param numFilledCells It indicates the number of WhiteCells with an assigned value that the Kakuro will have.
-     * @param numBlackCells It indicates the number of BlackCells that the Kakuro will have.
-     * @param numWhiteCells It indicates the number of WhiteCells that the Kakuro will have.
      */
-    public void generateKakuro(String dificulty, int numRows, int numColumns, int numFilledCells, int numBlackCells, int numWhiteCells){
-
+    public void generateKakuro(int numRows, int numColumns){
+        kakuro = new Kakuro(numRows, numColumns);
     }
 
     /**
@@ -51,16 +47,22 @@ public class CtrlKakuro {
      * @param numColumns It indicates the number of columns that the Kakuro will have.
      * @param field It has the information of every individual Cell in the Kakuro.
      */
-    public boolean proposeKakuro(int numRows, int numColumns, String[][] field){
+    public void proposeKakuro(int numRows, int numColumns, String[][] field){
         Boolean b = kakuro.proposeKakuro(numRows,numColumns,field);
         if (b) {
             kakuro.setIdKakuro(numKakuros);
             numKakuros++;
+            System.out.println("\nProposed Successfully");
         }
-        else {
+        else System.out.println("No Solution Found Out");
+    }
 
-        }
-        return b;
+    /**
+     * Consultant function
+     * @return It returns a matrix of the information of all the cells of the kakuro
+     */
+    public String [][] list_kakuro () {
+        return kakuro.list_kakuro();
     }
 
 }

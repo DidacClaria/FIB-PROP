@@ -56,4 +56,21 @@ public class CtrlDomain {
         ctrlKakuro.proposeKakuro(numRows,numColumns,field);
     }
 
+    /**
+     * This method uses a generation algorithm of a Kakuro, according to the following parameters.
+     * @param numRows It indicates the number of rows that the Kakuro will have.
+     * @param numColumns It indicates the number of columns that the Kakuro will have.
+     */
+    public void generateKakuro(int numRows, int numColumns){
+        ctrlKakuro.generateKakuro(numRows, numColumns);
+    }
+
+    /**
+     * Consultant function
+     * @return It returns a matrix of the information of all the cells of the kakuro
+     */
+    public String [][] list_kakuro () {
+        return ctrlKakuro.list_kakuro();
+    }
+
 }

@@ -63,7 +63,7 @@ public class Main {
         for (int i = 0; i < aux.length; ++i) {
             for (int j = 0; j <aux[0].length; ++j){
                 System.out.print(aux[i][j]);
-                if (j != aux[0].length - 1) System.out.print(",");
+                if (j != aux[0].length - 1) System.out.print(" ,");
             }
             System.out.println();
         }

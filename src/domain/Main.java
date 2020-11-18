@@ -7,9 +7,9 @@ import java.util.Scanner;
  */
 public class Main {
 
-    public static int f, c;
-    public static String[][] kakuro;
-    public static CtrlDomain a;
+    private static int f, c;
+    private static String[][] kakuro;
+    private static CtrlDomain a;
 
     public static void main(String[] args) {
         a = new CtrlDomain();
@@ -39,6 +39,9 @@ public class Main {
         }
     }
 
+    /**
+     * Auxiliar method used to read the kakuro format
+     */
     public static void readKakuro () {
         Scanner sca = new Scanner(System.in);
         String s = sca.nextLine(); // Llegir quantes files i quantes columnes;
@@ -57,6 +60,9 @@ public class Main {
         }
     }
 
+    /**
+     * Auxiliar method used to print or represent the kakuro in console
+     */
     public static void printKakuro () {
         String aux [][] = a.listKakuro();
         System.out.println(f + "," + c);

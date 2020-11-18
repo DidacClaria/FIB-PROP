@@ -1,5 +1,7 @@
 package domain;
 
+import java.util.ArrayList;
+
 /**
  * Kakuro controller class. Used to collect and manage the use cases of a Kakuro.
  */
@@ -9,7 +11,12 @@ public class CtrlKakuro {
     /**
      * Domain controller. Used to communicate back the result of the class methods.
      */
-    private CtrlDomain ctrlDomain;
+    private final CtrlDomain ctrlDomain;
+
+    /**
+     * Collection of the kakuros on the system.
+     */
+    private final ArrayList<Kakuro> kakuros;
 
     /**
      * Kakuro class. Is the instance of the kakuro currently running in the system.
@@ -24,10 +31,12 @@ public class CtrlKakuro {
     //CONSTRUCTORS
     /**
      * Default Kakuro Controller constructor.
+     * @param ctrlDomain Is the reference of the Domain Controller.
      */
-    public CtrlKakuro() {
-        kakuro = new Kakuro();
-        numKakuros = 0;
+    public CtrlKakuro(CtrlDomain ctrlDomain) {
+        this.ctrlDomain = ctrlDomain;
+        this.kakuros = new ArrayList<Kakuro>();
+        this.numKakuros = 0;
     }
 
     //CLASS METHODS
@@ -39,6 +48,7 @@ public class CtrlKakuro {
      */
     public void generateKakuro(int numRows, int numColumns){
         kakuro = new Kakuro(numRows, numColumns);
+        kakuros.add(kakuro);
     }
 
     /**
@@ -48,10 +58,12 @@ public class CtrlKakuro {
      * @param field It has the information of every individual Cell in the Kakuro.
      */
     public void proposeKakuro(int numRows, int numColumns, String[][] field){
+        kakuro = new Kakuro();
         Boolean b = kakuro.proposeKakuro(numRows,numColumns,field);
         if (b) {
             kakuro.setIdKakuro(numKakuros);
             numKakuros++;
+            kakuros.add(kakuro);
             System.out.println("\nProposed Successfully");
         }
         else System.out.println("No Solution Found Out");

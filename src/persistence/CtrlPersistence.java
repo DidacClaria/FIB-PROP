@@ -11,14 +11,16 @@ public class CtrlPersistence {
     /**
      * Domain Controller.
      */
-    private CtrlDomain ctrlDomain;
+    private final CtrlDomain ctrlDomain;
 
     //CONSTRUCTOR
 
     /**
      * Default empty Persistence Controller constructor.
+     * @param ctrlDomain Is the reference of the Domain Controller.
      */
-    public CtrlPersistence() {
+    public CtrlPersistence(CtrlDomain ctrlDomain) {
+        this.ctrlDomain = ctrlDomain;
     }
 
 }

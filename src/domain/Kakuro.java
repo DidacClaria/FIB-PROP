@@ -34,9 +34,14 @@ public class Kakuro {
     private int difficulty;
 
     /**
-     * This attribute indicates the possible solutions of the kakuro (1 unique and 2 multiple)
+     * This attribute indicates the possible solutions of the Kakuro (1 unique and 2 multiple)
      */
     private int solutions;
+
+    /**
+     * This attribute indicates the name of the author of the Kakuro.
+     */
+    private String author;
 
     //CONSTRUCTORS
 
@@ -81,6 +86,26 @@ public class Kakuro {
 
 
     }
+
+    //GETTERS & SETTERS
+
+    /**
+     * Consultant function
+     * @return It returns the id of the kakuro
+     */
+    public int getIdKakuro() {
+        return idKakuro;
+    }
+
+    /**
+     * Modifier function
+     * @param idKakuro It indicates the id of the kakuro
+     */
+    public void setIdKakuro(int idKakuro) {
+        this.idKakuro = idKakuro;
+    }
+
+    //CLASS METHODS
 
     /**
      * This method generates randomly black cells in the kakuro
@@ -368,27 +393,6 @@ public class Kakuro {
         }
     }
 
-    //GETTERS & SETTERS
-
-    /**
-     * Consultant function
-     * @return It returns the id of the kakuro
-     */
-    public int getIdKakuro() {
-        return idKakuro;
-    }
-
-    /**
-     * Modifier function
-     * @param idKakuro It indicates the id of the kakuro
-     */
-    public void setIdKakuro(int idKakuro) {
-        this.idKakuro = idKakuro;
-    }
-
-
-    //CLASS METHODS
-
     /**
      * This method checks if the Kakuro proposed by the user is valid and it is created.
      * @param numRows It indicates the number of rows that the Kakuro will have.
@@ -500,7 +504,6 @@ public class Kakuro {
      * Auxiliar Function
      * @return it creates an ArrayList to save the positions of all existing white cells in the kakuro
      */
-    //Crear un ArrayList per guardar les posicions de totes les caselles blanques existents al kakuro [][]
     private ArrayList <Pair> searchWhites () {
         ArrayList <Pair> p = new ArrayList <Pair> ();
         for (int i = 0; i < numRows; ++i) {

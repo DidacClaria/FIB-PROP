@@ -21,29 +21,48 @@ public class WhiteCell extends Cell {
     }
 
     //GETTERS & SETTERS
+    /**
+     * Getter of the value of a white cell
+     * @return value of a white cell
+     */
     public int getValue() {
         return value;
     }
 
+    /**
+     * Setter of the value of a white cell
+     */
     public void setValue(int value) {
         this.value = value;
     }
 
+    /**
+     * Neutral behaviour if the operation getColumnValue in the abstract class is called by the wrong subclass.
+     */
     @Override
     public int getColumnValue() {
         return 0;
     }
 
+    /**
+     * Neutral behaviour if the operation setColumnValue in the abstract class is called by the wrong subclass.
+     */
     @Override
     public void setColumnValue(int columnValue) {
 
     }
 
+    /**
+     * Neutral behaviour if the operation getRowValue in the abstract class is called by the wrong subclass.
+     */
     @Override
     public int getRowValue() {
         return 0;
     }
 
+    /**
+     * Neutral behaviour if the operation setRowValue in the abstract class is called by the wrong subclass.
+     */
     @Override
     public void setRowValue(int rowValue) {
 

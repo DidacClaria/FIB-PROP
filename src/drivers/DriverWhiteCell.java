@@ -45,7 +45,7 @@ public class DriverWhiteCell {
         System.out.println("First we will try to set 2 as the column value of a Black Cell");
         whitecell.setColumnValue(2);
         System.out.println("The setter was called and now with the getter we will see it's actual value: " + whitecell.getColumnValue());
-        System.out.println("This happens because Cell is an abstract class and the behaviour of the used methods are overriden.");
+        System.out.println("This happens because Cell is an abstract class and the behaviour of the used methods are overridden.");
     }
 
     private static void setWhiteCellValue() {
@@ -76,8 +76,9 @@ public class DriverWhiteCell {
         System.out.println("1. Create a new WhiteCell");
         System.out.println("2. Set new value to the WhiteCell");
         System.out.println("3. Get value of the WhiteCell");
-        System.out.println("4. Show Usage");
-        System.out.println("5. Exit");
+        System.out.println("4. Try the BlackCell overridden methods");
+        System.out.println("5. Show Usage");
+        System.out.println("6. Exit");
         System.out.println("###############################################");
     }
 

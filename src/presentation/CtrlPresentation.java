@@ -10,13 +10,15 @@ public class CtrlPresentation {
     /**
      * Domain Controller.
      */
-    private CtrlDomain ctrlDomain;
+    private final CtrlDomain ctrlDomain;
 
     //CONSTRUCTOR
     /**
      * Default empty Presentation Controller constructor.
+     * @param ctrlDomain Is the reference of the Domain Controller.
      */
-    public CtrlPresentation() {
+    public CtrlPresentation(CtrlDomain ctrlDomain) {
+        this.ctrlDomain = ctrlDomain;
     }
 
 }

@@ -13,6 +13,7 @@ public class Combinacio {
      */
     private HashMap<Integer, ArrayList<ArrayList<Integer>> > comb;
 
+
     /**
      * Combinacio constructor generates the HashMap with the combinations
      */

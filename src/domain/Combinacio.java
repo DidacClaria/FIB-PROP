@@ -17,7 +17,6 @@ public class Combinacio {
      * Combinacio constructor generates the HashMap with the combinations
      */
     public Combinacio(){
-        HashMap<Integer, ArrayList< ArrayList<Integer> > > comb = new HashMap<>();
         int x1, x2, x3, x4, x5, x6, x7, x8, x9, suma;
         ArrayList<Integer> aux = new ArrayList<>();
         ArrayList<ArrayList<Integer>> aux2 = new ArrayList<>();

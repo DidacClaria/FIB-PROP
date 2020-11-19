@@ -47,8 +47,16 @@ public class CtrlKakuro {
      * @param numColumns It indicates the number of columns that the Kakuro will have.
      */
     public void generateKakuro(int numRows, int numColumns){
-        kakuro = new Kakuro(numRows, numColumns);
-        kakuros.add(kakuro);
+        if (numColumns>= 3 && numRows>=3 && numColumns<=10 && numRows<=10){
+            kakuro = new Kakuro(numRows, numColumns);
+            kakuros.add(kakuro);
+        }
+        else if (numColumns<=10 && numRows<=10) {
+            throw new ArithmeticException("The size of the Kakuro is too small");
+        }
+        else {
+            throw new ArithmeticException("The size of the Kakuro is too big");
+        }
     }
 
     /**
@@ -58,15 +66,41 @@ public class CtrlKakuro {
      * @param field It has the information of every individual Cell in the Kakuro.
      */
     public void proposeKakuro(int numRows, int numColumns, String[][] field){
-        kakuro = new Kakuro();
-        Boolean b = kakuro.proposeKakuro(numRows,numColumns,field);
-        if (b) {
-            kakuro.setIdKakuro(numKakuros);
-            numKakuros++;
-            kakuros.add(kakuro);
-            System.out.println("\nProposed Successfully");
+        boolean validField = false;
+        for (String[] row:field){
+            for (String cell: row){
+                if (!(cell.equals("*") || cell.equals("?"))){
+                    validField=false;
+                    String[] parts = cell.split("(?<=\\D)(?=\\d)|(?<=\\d)(?=\\D)");
+                    try{
+                        if (parts[0].equals("F") && parts[1].length()<3 && parts[2]==null) validField =true;
+                        else if (parts[0].equals("C") && parts[1].length()<3 && parts[2]==null) validField =true;
+                        else if (parts[0].equals("C") && parts[2].equals("F") && (parts[1].length()<3 || parts[3].length()<3)) validField=true;
+
+                    } catch (ArrayIndexOutOfBoundsException ignored){
+                        if (parts[0].equals("F") && parts[1].length()<3) validField = true;
+                        else validField = parts[0].equals("C") && parts[1].length() <= 3;
+                    }
+                }
+                else validField=true;
+                if (!validField) break;
+            }
         }
-        else System.out.println("No Solution Found Out");
+        if (validField){
+            if (numColumns>= 3 && numRows>=3){
+                kakuro = new Kakuro();
+                Boolean b = kakuro.proposeKakuro(numRows,numColumns,field);
+                if (b) {
+                    kakuro.setIdKakuro(numKakuros);
+                    numKakuros++;
+                    kakuros.add(kakuro);
+                    System.out.println("\nProposed Successfully");
+                }
+                else System.out.println("No Solution Found Out");
+            }
+            else throw new ArithmeticException("The size of the Kakuro is too small");
+        }
+        else throw new ArithmeticException("The proposed field is not valid");
     }
 
     /**

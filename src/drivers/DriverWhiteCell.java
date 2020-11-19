@@ -7,17 +7,13 @@ public class DriverWhiteCell {
     static WhiteCell whitecell;
     static Scanner scanner;
 
-    public DriverWhiteCell(){
-        this.whitecell= new WhiteCell(0);
-        this.scanner = new Scanner(System.in);
-    }
-
-    public static void main(String args[]){
-        DriverWhiteCell driverWhiteCell= new DriverWhiteCell();
-        driverWhiteCell.showUsage();
+    public static void main(String[] args){
+        whitecell= new WhiteCell(0);
+        scanner = new Scanner(System.in);
+        showUsage();
         String s;
         try {
-            while (!(s = driverWhiteCell.scanner.nextLine()).equals("0")) {
+            while (!(s = scanner.nextLine()).equals("0")) {
                 switch (s){
                     case "1":
                         createWhiteCell();

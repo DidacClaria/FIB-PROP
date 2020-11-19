@@ -64,7 +64,7 @@ public class Main {
      * Auxiliar method used to print or represent the kakuro in console
      */
     public static void printKakuro () {
-        String aux [][] = a.listKakuro();
+        String[][] aux = a.listKakuro();
         System.out.println(f + "," + c);
 
         for (int i = 0; i < aux.length; ++i) {

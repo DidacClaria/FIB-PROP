@@ -1,5 +1,7 @@
 package domain;
 
+import java.util.ArrayList;
+
 /**
  * Game controller class. Used to collect and manage the use cases of a Game.
  */
@@ -8,36 +10,35 @@ public class CtrlGame {
     /**
      * Domain controller. Used to communicate back the result of the class methods.
      */
-    private CtrlDomain ctrlDomain;
+    private final CtrlDomain ctrlDomain;
+
+    /**
+     * Collection of games in the system.
+     */
+    private final ArrayList<Game> games;
 
     /**
      * Game class. Is the instance of the game currently running in the system.
      */
-    private Game game;
+    private Game activeGame;
+
+    /**
+     * Number of games in the system.
+     */
+    private int numGames;
 
     //CONSTRUCTOR
 
     /**
      * Default empty Game Controller constructor.
+     * @param ctrlDomain Is the reference of the Domain Controller.
      */
-    public CtrlGame() {
+    public CtrlGame(CtrlDomain ctrlDomain) {
+        this.ctrlDomain = ctrlDomain;
+        this.games = new ArrayList<Game>();
     }
 
-    //CLASS METHODS
-
-    /**
-     * It returns the global ranking of punctuations from the system.
-     */
-    public void consultRanking(){
-
-    }
-
-    /**
-     * It returns all the punctuations of the current User in all their Games.
-     */
-    public void consultPersonalStats(){
-
-    }
+    //WIP CLASS METHODS
 
     /**
      * The execution of a Game is on.
@@ -55,4 +56,16 @@ public class CtrlGame {
 
     }
 
+    /**
+     * It returns the global ranking of punctuations from the system.
+     */
+    public void listRanking() {
+    }
+
+    /**
+     * It returns all the punctuations of the current User in all their Games.
+     */
+    public void listPersonalStats() {
+
+    }
 }

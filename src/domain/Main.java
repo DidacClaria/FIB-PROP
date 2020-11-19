@@ -7,38 +7,42 @@ import java.util.Scanner;
  */
 public class Main {
 
-    public static int f, c;
-    public static String[][] kakuro;
-    public static CtrlDomain a;
+    private static int f, c;
+    private static String[][] kakuro;
+    private static CtrlDomain a;
 
     public static void main(String[] args) {
         a = new CtrlDomain();
+        while (true){
+            System.out.println("\n1 - Propose Kakuro");
+            System.out.println("2 - Generate Kakuro");
 
-        System.out.println("\n1 - Propose Kakuro");
-        System.out.println("2 - Generate Kakuro");
+            System.out.print("\nCHOOSE ONE OPTION: ");
+            Scanner sca = new Scanner(System.in);
+            int option = sca.nextInt();
 
-        System.out.print("\nCHOOSE ONE OPTION: ");
-        Scanner sca = new Scanner(System.in);
-        int option = sca.nextInt();
-
-        switch (option) {
-            case 1:
-                System.out.println("\nEnter your kakuro:");
-                read_kakuro();
-                a.proposeKakuro(f,c,kakuro);
-                print_kakuro();
-                break;
-            case 2:
-                System.out.println("\nEnter the size of kakuro you want to generate:");
-                f = sca.nextInt();
-                c = sca.nextInt();
-                a.generateKakuro(f,c);
-                print_kakuro();
-                break;
+            switch (option) {
+                case 1:
+                    System.out.println("\nEnter your kakuro:");
+                    readKakuro();
+                    a.proposeKakuro(f,c,kakuro);
+                    printKakuro();
+                    break;
+                case 2:
+                    System.out.println("\nEnter the size of kakuro you want to generate:");
+                    f = sca.nextInt();
+                    c = sca.nextInt();
+                    a.generateKakuro(f,c);
+                    printKakuro();
+                    break;
+            }
         }
     }
 
-    public static void read_kakuro () {
+    /**
+     * Auxiliar method used to read the kakuro format
+     */
+    public static void readKakuro () {
         Scanner sca = new Scanner(System.in);
         String s = sca.nextLine(); // Llegir quantes files i quantes columnes;
 
@@ -56,8 +60,11 @@ public class Main {
         }
     }
 
-    public static void print_kakuro () {
-        String aux [][] = a.list_kakuro();
+    /**
+     * Auxiliar method used to print or represent the kakuro in console
+     */
+    public static void printKakuro () {
+        String[][] aux = a.listKakuro();
         System.out.println(f + "," + c);
 
         for (int i = 0; i < aux.length; ++i) {

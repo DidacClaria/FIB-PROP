@@ -32,6 +32,10 @@ public class Stat {
      * Default empty Stat constructor.
      */
     public Stat() {
+        this.time = 0;
+        this.numHints= 0;
+        this.score = 0;
+        this.completed = false;
     }
 
 }

@@ -12,27 +12,27 @@ public class CtrlDomain {
     /**
      * Persistence Controller.
      */
-    private CtrlPersistence ctrlPersistence;
+    private final CtrlPersistence ctrlPersistence;
 
     /**
      * Presentation Controller.
      */
-    private CtrlPresentation ctrlPresentation;
+    private final CtrlPresentation ctrlPresentation;
 
     /**
      * User Controller. Used to manage and collect all the User use cases.
      */
-    private CtrlUser ctrlUser;
+    private final CtrlUser ctrlUser;
 
     /**
      * Game Controller. Used to manage and collect all the Game use cases.
      */
-    private CtrlGame ctrlGame;
+    private final CtrlGame ctrlGame;
 
     /**
      * Kakuro Controller. Used to manage and collect all the Kakuro use cases.
      */
-    private CtrlKakuro ctrlKakuro;
+    private final CtrlKakuro ctrlKakuro;
 
     //CONSTRUCTOR
 
@@ -40,11 +40,14 @@ public class CtrlDomain {
      * Default Domain Controller constructor.
      */
     public CtrlDomain() {
-        ctrlKakuro = new CtrlKakuro();
+        ctrlPresentation = new CtrlPresentation(this);
+        ctrlPersistence = new CtrlPersistence(this);
+        ctrlGame = new CtrlGame(this);
+        ctrlKakuro = new CtrlKakuro(this);
+        ctrlUser = new CtrlUser(this);
     }
 
     //CLASS METHODS
-
 
     /**
      * If the proposed Kakuro by the User at the Presentation Layer is valid, it is saved at the Persistence Layer and it's added to the collection of Kakuros that a User has.
@@ -69,8 +72,57 @@ public class CtrlDomain {
      * Consultant function
      * @return It returns a matrix of the information of all the cells of the kakuro
      */
-    public String [][] list_kakuro () {
-        return ctrlKakuro.list_kakuro();
+    public String [][] listKakuro () {
+        return ctrlKakuro.listKakuro();
+    }
+
+    //WIP USE CASES
+
+    /**
+     * Function used to create new Users into the system
+     * @param name indicates the name of the new user
+     * @param password indicates the password of the user
+     */
+    public void createUser(String name, String password){
+        ctrlUser.createUser(name);
+    }
+
+    /**
+     * Function used to swap the current User with the new one indicated
+     * @param name indicates the name of the user to load
+     */
+    public void loadUser(String name){
+        ctrlUser.loadUser(name);
+    }
+
+    /**
+     * Function used to simulate a game for a kakuro
+     * @param idGame indicates the identifier of the kakuro to load and play
+     */
+    public void playKakuro(int idGame){
+        ctrlGame.playKakuro(idGame);
+    }
+
+    /**
+     * Function used to save the current state of a game.
+     * @param idGame indicates the identifier of the kakuro to save
+     */
+    public void saveGame(int idGame){
+        ctrlGame.saveGame(idGame);
+    }
+
+    /**
+     * Consultant function of the ranking of punctuations that all the different users made in their games.
+     */
+    public void listRanking(){
+        ctrlGame.listRanking();
+    }
+
+    /**
+     * Consultant function of the personal ranking of punctuations for one user from all his games.
+     */
+    public void listPersonalStats(){
+        ctrlGame.listPersonalStats();
     }
 
 }

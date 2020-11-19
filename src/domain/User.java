@@ -1,5 +1,7 @@
 package domain;
 
+import java.util.ArrayList;
+
 /**
  * Generic class used to created Users.
  */
@@ -7,19 +9,9 @@ public class User {
 
     //ATTRIBUTES
     /**
-     * User Controller. Used to send feedback to the Domain Controller.
+     * Collection of all the Games that a User started playing.
      */
-    private CtrlUser ctrlUser;
-
-    /**
-     * This attribute has the record of all the Kakuros created by this user.
-     */
-    private Kakuro[] createdKakuros;
-
-    /**
-     * This attribute has the record of all the Games that a User started playing.
-     */
-    private Game[] gamesPlayed;
+    private ArrayList<Game> gamesPlayed;
 
     /**
      * Name of the User. It identifies it.
@@ -32,6 +24,7 @@ public class User {
      * Default empty User constructor.
      */
     public User() {
+        this.gamesPlayed = new ArrayList<Game>();
     }
 
 }

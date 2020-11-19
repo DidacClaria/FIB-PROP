@@ -6,11 +6,6 @@ package domain;
 public class Game {
     //ATTRIBUTES
     /**
-     * Game Controller. Used to send results to the Domain Controller.
-     */
-    private CtrlGame ctrlGame;
-
-    /**
      * The scenario of a Game it is a Kakuro field.
      */
     private Kakuro gameScenario;

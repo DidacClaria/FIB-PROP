@@ -2,24 +2,25 @@ package persistence;
 
 import domain.CtrlDomain;
 
+/**
+ * Persistence Controller Class.
+ */
 public class CtrlPersistence {
     //ATTRIBUTES
-    private CtrlDomain ctrlDomain;
+
+    /**
+     * Domain Controller.
+     */
+    private final CtrlDomain ctrlDomain;
 
     //CONSTRUCTOR
-    public CtrlPersistence() {
-    }
 
+    /**
+     * Default empty Persistence Controller constructor.
+     * @param ctrlDomain Is the reference of the Domain Controller.
+     */
     public CtrlPersistence(CtrlDomain ctrlDomain) {
         this.ctrlDomain = ctrlDomain;
     }
 
-    //GETTERS & SETTERS
-    public CtrlDomain getCtrlDomain() {
-        return ctrlDomain;
-    }
-
-    public void setCtrlDomain(CtrlDomain ctrlDomain) {
-        this.ctrlDomain = ctrlDomain;
-    }
 }

@@ -1,45 +1,44 @@
 package domain;
 
-public class Cell {
-    //ATTRIBUTES
-    private Kakuro kakuro;
+/**
+ * Generic abstract class used to created Cells.
+ */
+public abstract class Cell {
 
-    private int posX;
+    /**
+     * Abstract getter operation
+     * @return value of a WhiteCell
+     */
+    public abstract int getValue();
 
-    private int posY;
+    /**
+     * Abstract setter operation
+     * @param value indicates the new value of a WhiteCell
+     */
+    public abstract void setValue(int value);
 
-    //CONSTRUCTORS
-    public Cell() {
-    }
+    /**
+     * Abstract getter operation
+     * @return column value of a BlackCell
+     */
+    public abstract int getColumnValue();
 
-    public Cell(Kakuro kakuro, int posX, int posY) {
-        this.kakuro = kakuro;
-        this.posX = posX;
-        this.posY = posY;
-    }
+    /**
+     * Abstract setter operation
+     * @param columnValue indicates the new columnValue of a BlackCell
+     */
+    public abstract void setColumnValue(int columnValue);
 
-    //GETTERS & SETTERS
-    public Kakuro getKakuro() {
-        return kakuro;
-    }
+    /**
+     * Abstract getter operation
+     * @return row value of a BlackCell
+     */
+    public abstract int getRowValue();
 
-    public void setKakuro(Kakuro kakuro) {
-        this.kakuro = kakuro;
-    }
+    /**
+     * Abstract setter operation
+     * @param rowValue indicates the new rowValue of a BlackCell
+     */
+    public abstract void setRowValue(int rowValue);
 
-    public int getPosX() {
-        return posX;
-    }
-
-    public void setPosX(int posX) {
-        this.posX = posX;
-    }
-
-    public int getPosY() {
-        return posY;
-    }
-
-    public void setPosY(int posY) {
-        this.posY = posY;
-    }
 }

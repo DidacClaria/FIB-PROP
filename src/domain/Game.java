@@ -1,67 +1,36 @@
 package domain;
 
+/**
+ * Generic class used to created Games.
+ */
 public class Game {
     //ATTRIBUTES
-    private CtrlGame ctrlGame;
-
+    /**
+     * The scenario of a Game it is a Kakuro field.
+     */
     private Kakuro gameScenario;
 
+    /**
+     * This attribute indicates the User player of the Game.
+     */
     private User player;
 
+    /**
+     * This instance has all the individual stats of a Game.
+     */
     private Stat stat;
 
+    /**
+     * This is an identifier of the Game class.
+     */
     private int idGame;
 
     //CONSTRUCTORS
+
+    /**
+     * Default empty Game constructor.
+     */
     public Game() {
     }
 
-    public Game(CtrlGame ctrlGame, Kakuro gameScenario, User player, Stat stat, int idGame) {
-        this.ctrlGame = ctrlGame;
-        this.gameScenario = gameScenario;
-        this.player = player;
-        this.stat = stat;
-        this.idGame = idGame;
-    }
-
-    //GETTERS & SETTERS
-    public CtrlGame getCtrlGame() {
-        return ctrlGame;
-    }
-
-    public void setCtrlGame(CtrlGame ctrlGame) {
-        this.ctrlGame = ctrlGame;
-    }
-
-    public Kakuro getGameScenario() {
-        return gameScenario;
-    }
-
-    public void setGameScenario(Kakuro gameScenario) {
-        this.gameScenario = gameScenario;
-    }
-
-    public User getPlayer() {
-        return player;
-    }
-
-    public void setPlayer(User player) {
-        this.player = player;
-    }
-
-    public Stat getStat() {
-        return stat;
-    }
-
-    public void setStat(Stat stat) {
-        this.stat = stat;
-    }
-
-    public int getIdGame() {
-        return idGame;
-    }
-
-    public void setIdGame(int idGame) {
-        this.idGame = idGame;
-    }
 }

@@ -1,79 +1,41 @@
 package domain;
 
+/**
+ * Generic class used to created Stats.
+ */
 public class Stat {
 
     //ATTRIBUTES
-    private Game game;
-
+    /**
+     * This attribute has the record of the time passed during a Game.
+     */
     private int time;
 
+    /**
+     * This attributes has the record of the number of hints that the user asked for.
+     */
     private int numHints;
 
+    /**
+     * This attribute has the value of the final score of a Game.
+     */
     private int score;
 
-    private boolean automatic;
-
+    /**
+     * This attribute indicates if the Game is already completed or not.
+     */
     private boolean completed;
 
     //CONSTRUCTORS
+
+    /**
+     * Default empty Stat constructor.
+     */
     public Stat() {
+        this.time = 0;
+        this.numHints= 0;
+        this.score = 0;
+        this.completed = false;
     }
 
-    public Stat(Game game, int time, int numHints, int score, boolean automatic, boolean completed) {
-        this.game = game;
-        this.time = time;
-        this.numHints = numHints;
-        this.score = score;
-        this.automatic = automatic;
-        this.completed = completed;
-    }
-
-    //GETTERS & SETTERS
-    public Game getGame() {
-        return game;
-    }
-
-    public void setGame(Game game) {
-        this.game = game;
-    }
-
-    public int getTime() {
-        return time;
-    }
-
-    public void setTime(int time) {
-        this.time = time;
-    }
-
-    public int getNumHints() {
-        return numHints;
-    }
-
-    public void setNumHints(int numHints) {
-        this.numHints = numHints;
-    }
-
-    public int getScore() {
-        return score;
-    }
-
-    public void setScore(int score) {
-        this.score = score;
-    }
-
-    public boolean isAutomatic() {
-        return automatic;
-    }
-
-    public void setAutomatic(boolean automatic) {
-        this.automatic = automatic;
-    }
-
-    public boolean isCompleted() {
-        return completed;
-    }
-
-    public void setCompleted(boolean completed) {
-        this.completed = completed;
-    }
 }

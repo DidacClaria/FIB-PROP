@@ -2,24 +2,23 @@ package presentation;
 
 import domain.CtrlDomain;
 
+/**
+ * Presentation Controller Class.
+ */
 public class CtrlPresentation {
     //ATTRIBUTES
-    private CtrlDomain ctrlDomain;
+    /**
+     * Domain Controller.
+     */
+    private final CtrlDomain ctrlDomain;
 
     //CONSTRUCTOR
-    public CtrlPresentation() {
-    }
-
+    /**
+     * Default empty Presentation Controller constructor.
+     * @param ctrlDomain Is the reference of the Domain Controller.
+     */
     public CtrlPresentation(CtrlDomain ctrlDomain) {
         this.ctrlDomain = ctrlDomain;
     }
 
-    //GETTERS & SETTERS
-    public CtrlDomain getCtrlDomain() {
-        return ctrlDomain;
-    }
-
-    public void setCtrlDomain(CtrlDomain ctrlDomain) {
-        this.ctrlDomain = ctrlDomain;
-    }
 }

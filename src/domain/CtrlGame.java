@@ -1,56 +1,71 @@
 package domain;
 
+import java.util.ArrayList;
+
+/**
+ * Game controller class. Used to collect and manage the use cases of a Game.
+ */
 public class CtrlGame {
     //ATTRIBUTES
-    private CtrlDomain ctrlDomain;
+    /**
+     * Domain controller. Used to communicate back the result of the class methods.
+     */
+    private final CtrlDomain ctrlDomain;
 
-    private Game game;
+    /**
+     * Collection of games in the system.
+     */
+    private final ArrayList<Game> games;
+
+    /**
+     * Game class. Is the instance of the game currently running in the system.
+     */
+    private Game activeGame;
+
+    /**
+     * Number of games in the system.
+     */
+    private int numGames;
 
     //CONSTRUCTOR
-    public CtrlGame() {
-    }
 
-    public CtrlGame(CtrlDomain ctrlDomain, Game game) {
+    /**
+     * Default empty Game Controller constructor.
+     * @param ctrlDomain Is the reference of the Domain Controller.
+     */
+    public CtrlGame(CtrlDomain ctrlDomain) {
         this.ctrlDomain = ctrlDomain;
-        this.game = game;
+        this.games = new ArrayList<Game>();
     }
 
-    //GETTERS & SETTERS
-    public CtrlDomain getCtrlDomain() {
-        return ctrlDomain;
-    }
+    //WIP CLASS METHODS
 
-    public void setCtrlDomain(CtrlDomain ctrlDomain) {
-        this.ctrlDomain = ctrlDomain;
-    }
-
-    public Game getGame() {
-        return game;
-    }
-
-    public void setGame(Game game) {
-        this.game = game;
-    }
-
-    //CLASS METHODS
-    public void consultRanking(){
-
-    }
-
-    public void consultPersonalStats(){
-
-    }
-
+    /**
+     * The execution of a Game is on.
+     * @param idGame is the identification of the current game.
+     */
     public void playKakuro(int idGame){
 
     }
 
+    /**
+     * The execution of a Game it stops and the current state is saved.
+     * @param idGame is the identification of the current game.
+     */
     public void saveGame(int idGame){
 
     }
 
-    public void askHint(int idGame){
-
+    /**
+     * It returns the global ranking of punctuations from the system.
+     */
+    public void listRanking() {
     }
 
+    /**
+     * It returns all the punctuations of the current User in all their Games.
+     */
+    public void listPersonalStats() {
+
+    }
 }

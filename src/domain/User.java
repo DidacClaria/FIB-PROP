@@ -1,57 +1,30 @@
 package domain;
 
+import java.util.ArrayList;
+
+/**
+ * Generic class used to created Users.
+ */
 public class User {
 
     //ATTRIBUTES
-    private Kakuro[] createdKakuros;
+    /**
+     * Collection of all the Games that a User started playing.
+     */
+    private ArrayList<Game> gamesPlayed;
 
-    private Game[] gamesPlayed;
-
-    private CtrlUser ctrlUser;
-
+    /**
+     * Name of the User. It identifies it.
+     */
     private String name;
 
     //CONSTRUCTORS
+
+    /**
+     * Default empty User constructor.
+     */
     public User() {
+        this.gamesPlayed = new ArrayList<Game>();
     }
 
-    public User(Kakuro[] createdKakuros, Game[] gamesPlayed, CtrlUser ctrlUser, String name) {
-        this.createdKakuros = createdKakuros;
-        this.gamesPlayed = gamesPlayed;
-        this.ctrlUser = ctrlUser;
-        this.name = name;
-    }
-
-    //GETTERS & SETTERS
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public Kakuro[] getCreatedKakuros() {
-        return createdKakuros;
-    }
-
-    public void setCreatedKakuros(Kakuro[] createdKakuros) {
-        this.createdKakuros = createdKakuros;
-    }
-
-    public Game[] getGamesPlayed() {
-        return gamesPlayed;
-    }
-
-    public void setGamesPlayed(Game[] gamesPlayed) {
-        this.gamesPlayed = gamesPlayed;
-    }
-
-    public CtrlUser getCtrlUser() {
-        return ctrlUser;
-    }
-
-    public void setCtrlUser(CtrlUser ctrlUser) {
-        this.ctrlUser = ctrlUser;
-    }
 }

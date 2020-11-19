@@ -15,12 +15,6 @@ public class KakuroTEST {
     @Test
     public void generate_random_black_test(){
         System.out.println("generate_random_black");
-        int numR = 5, numC = 5;
-        String [][] field = {{"*","C16","C6","*","*"}, {"F9","0","0","C13","*"},{"F16","0","0","0","C16"},{"*","F12","0","0","0"}
-                {"*","*","F14","0","0"}};
-        boolean prop = proposeKakuro(numR,numC,field);
-        assertTrue(prop);
-
     }
 
 

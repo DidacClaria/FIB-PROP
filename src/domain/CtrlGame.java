@@ -45,7 +45,7 @@ public class CtrlGame {
      * @param idGame is the identification of the current game.
      */
     public void playKakuro(int idGame){
-
+        throw new ArithmeticException("Not implemented yet");
     }
 
     /**
@@ -53,19 +53,20 @@ public class CtrlGame {
      * @param idGame is the identification of the current game.
      */
     public void saveGame(int idGame){
-
+        throw new ArithmeticException("Not implemented yet");
     }
 
     /**
      * It returns the global ranking of punctuations from the system.
      */
     public void listRanking() {
+        throw new ArithmeticException("Not implemented yet");
     }
 
     /**
      * It returns all the punctuations of the current User in all their Games.
      */
     public void listPersonalStats() {
-
+        throw new ArithmeticException("Not implemented yet");
     }
 }

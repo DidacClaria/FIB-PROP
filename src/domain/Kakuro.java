@@ -2,6 +2,7 @@ package domain;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 
 /**
  * Generic class used to created Kakuros.
@@ -120,6 +121,8 @@ public class Kakuro {
         if (cells[randX][randY] instanceof WhiteCell && noAloneSym(randX, randY) && dfsSym(randX, randY)) {
             cells[randX][randY] = new BlackCell(0,0);
             cells[numRows - randX][numColumns - randY] = new BlackCell(0,0);
+            System.out.print(randX);
+            System.out.print(randY);
         }
     }
 

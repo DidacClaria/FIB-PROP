@@ -4,7 +4,6 @@ import domain.CtrlKakuro;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.net.URL;
 import java.util.Scanner;
 
 public class DriverCtrlKakuro {

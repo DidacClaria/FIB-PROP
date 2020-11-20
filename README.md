@@ -28,14 +28,14 @@ make mainRun
 or
 ```shell script
 make mainRunjar
-``
+```
 
 Then if you also want to test the drivers or the unit tests from the JUNIT (version 4.12) library, you can do it with the following commands:
 
 ```shell script
-make driversWhiteCellRunjar
-make driversCtrlKakuroRunjar
-make testWhiteCellRunjar
-make testBlackCellRunjar
-make testKakuroRunjar
+make driverWhiteCellRunjar
+make driverCtrlKakuroRunjar
+make testWhiteCellRun
+make testBlackCellRun
+make testKakuroRun
 ```

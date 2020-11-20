@@ -41,7 +41,7 @@ public class CtrlUser {
      * @param name It indicates the name of the User.
      */
     public void createUser(String name){
-
+        throw new ArithmeticException("Not implemented yet");
     }
 
     /**
@@ -49,5 +49,6 @@ public class CtrlUser {
      * @param name It indicates the name of the user to load.
      */
     public void loadUser(String name) {
+        throw new ArithmeticException("Not implemented yet");
     }
 }

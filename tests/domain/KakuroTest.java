@@ -11,9 +11,6 @@ import static org.junit.Assert.*;
 
 public class KakuroTest {
 
-
-
-
     /**
      * Test of getIdKakuro method of class Kakuro
      */
@@ -72,30 +69,6 @@ public class KakuroTest {
     }
 
     /**
-     * Test of solve method of class Kakuro
-     */
-    /*
-    @Test
-    public void solve_test(){
-        System.out.println("solve");
-        Kakuro = new Kakuro(5,5);
-        ArrayList <Pair> pos_w = new ArrayList<>();
-        pos_w.add(new Pair(2,2));
-        pos_w.add(new Pair(2,3));
-        pos_w.add(new Pair(3,2));
-        pos_w.add(new Pair(3,3));
-        pos_w.add(new Pair(3,4));
-        pos_w.add(new Pair(4,3));
-        pos_w.add(new Pair(4,4));
-        pos_w.add(new Pair(4,5));
-        pos_w.add(new Pair(5,4));
-        pos_w.add(new Pair(5,5));
-        boolean resol = Kakuro.solve(pos_w,0);
-        assertTrue(resol);
-
-    }
-    */
-    /**
      * Test of proposeKakuro method of class Kakuro
      */
     @Test
@@ -109,29 +82,5 @@ public class KakuroTest {
         assertTrue(prop);
 
     }
-
-    /**
-     * Test of DFS_sym method of class Kakuro
-     */
-    /*
-    @Test
-    public void DFS_sym(){
-        System.out.println("solve");
-        Kakuro = new Kakuro(5,5);
-        ArrayList <Pair> pos_w = new ArrayList<>();
-        pos_w.add(new Pair(2,2));
-        pos_w.add(new Pair(2,3));
-        pos_w.add(new Pair(3,2));
-        pos_w.add(new Pair(3,3));
-        pos_w.add(new Pair(3,4));
-        pos_w.add(new Pair(4,3));
-        pos_w.add(new Pair(4,4));
-        pos_w.add(new Pair(4,5));
-        pos_w.add(new Pair(5,4));
-        pos_w.add(new Pair(5,5));
-        boolean connect = Kakuro.DFS_sym(2,2);
-        assertTrue(connect);
-    }
-    */
 
 }

@@ -18,40 +18,40 @@ mainRun: main
 	cd out; java domain.Main; cd ..
 
 drivers: main
-	javac -d out $(DRIVERS)/*.java
+	cd src; javac -d ../out drivers/*.java; cd ..
 
 driverWhiteCell.jar: drivers
-	cd out; jar cfe drivers/driverWhiteCell.jar drivers.driverWhiteCell drivers/*.class; cd ..
+	cd out; jar cfe drivers/DriverWhiteCell.jar drivers.DriverWhiteCell drivers/*.class domain/*.class persistence/*.class presentation/*.class; cd ..
 
-driversWhiteCellRunjar: driverWhiteCell.jar
-	cd out; java -jar drivers/driverWhiteCell.jar; cd ..
+driverWhiteCellRunjar: driverWhiteCell.jar
+	cd out; java -jar drivers/DriverWhiteCell.jar; cd ..
 
 driverCtrlKakuro.jar: drivers
-	cd out; jar cfe drivers/driverCtrlKakuro.jar drivers.driverCtrlKakuro drivers/*.class; cd ..
+	cd out; jar cfe drivers/DriverCtrlKakuro.jar drivers.DriverCtrlKakuro drivers/*.class drivers/*.class domain/*.class persistence/*.class presentation/*.class; cd ..
 
-driversCtrlKakuroRunjar: driverCtrlKakuro.jar
-	cd out; java -jar drivers/driverCtrlKakuro.jar; cd ..
+driverCtrlKakuroRunjar: driverCtrlKakuro.jar
+	cd out; java -jar drivers/DriverCtrlKakuro.jar; cd ..
 
-tests: main
-	javac -d out $(TESTS)/*.java
+tests: tests/domain/*.java
+	javac -cp lib/junit-4.12.jar -d ./out/ tests/domain/*.java src/domain/*.java src/persistence/*.java src/presentation/*.java
 
 testWhiteCell.jar: tests
-	cd out; jar cfe tests/testWhiteCell.jar tests.testWhiteCell tests/*.class; cd ..
+	cd out; jar cfe domain/WhiteCellTest.jar domain.WhiteCellTest domain/*.class persistence/*.class presentation/*.class; cd ..
 
-testWhiteCellRunjar: testWhiteCell.jar
-	cd out; java -jar tests/testWhiteCell.jar; cd ..
+testWhiteCellRun: tests
+	cd out; java -cp ../lib/junit-4.12.jar:../lib/hamcrest-core-1.3.jar:. org.junit.runner.JUnitCore domain.WhiteCellTest; cd ..
 
 testBlackCell.jar: tests
-	cd out; jar cfe tests/testBlackCell.jar tests.testBlackCell tests/*.class; cd ..
+	cd out; jar cfe domain/BlackCellTest.jar domain.BlackCellTest domain/*.class persistence/*.class presentation/*.class; cd ..
 
-testBlackCellRunjar: testBlackCell.jar
-	cd out; java -jar tests/testBlackCell.jar; cd ..
+testBlackCellRun: tests
+	cd out; java -cp ../lib/junit-4.12.jar:../lib/hamcrest-core-1.3.jar:. org.junit.runner.JUnitCore domain.BlackCellTest; cd ..
 
 testKakuro.jar: tests
-	cd out; jar cfe tests/testKakuro.jar tests.testKakuro tests/*.class; cd ..
+	cd out; jar cfe domain/KakuroTest.jar domain.KakuroTest domain/*.class persistence/*.class presentation/*.class; cd ..
 
-testKakuroRunjar: testKakuro.jar
-	cd out; java -jar tests/testKakuro.jar; cd ..
+testKakuroRun: tests
+	cd out; java -cp ../lib/junit-4.12.jar:../lib/hamcrest-core-1.3.jar:. org.junit.runner.JUnitCore domain.KakuroTest; cd ..
 
 clean:
 	rm -rf out/domain out/persistence out/presentation out/drivers out/tests

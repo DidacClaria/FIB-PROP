@@ -495,7 +495,7 @@ public class Kakuro {
      * @return TRUE if there are multiple solution of the kakuro
      * FALSE if there is unique solution
      */
-    public boolean solveKakuroMultiple() {
+    private boolean solveKakuroMultiple() {
         ArrayList <Pair> posWhites = searchWhites();
         return solveMultiple (posWhites, 0);
     }

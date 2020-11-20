@@ -9,49 +9,49 @@ main:
 	javac -d out $(PERSISTENCE)/*.java $(PRESENTATION)/*.java $(DOMAIN)/*.java
 
 main.jar: main
-	jar cvmf out/domain/Main.jar "Main-Class: domain.Main" -C out/domain/ .
+	cd out; jar cfe domain/Main.jar domain.Main domain/*.class persistence/*.class presentation/*.class; cd ..
 
 mainRunjar: main.jar
-	jar cfe out/domain/Main.jar domain.Main out/domain/*.class
+	cd out; java -jar domain/Main.jar; cd ..
 
 mainRun: main
-	java -cp ./out;. domain.Main
+	cd out; java domain.Main; cd ..
 
 drivers: main
 	javac -d out $(DRIVERS)/*.java
 
 driverWhiteCell.jar: drivers
-	jar cvf out/drivers/driverWhiteCell.jar -C out/drivers/ .
+	cd out; jar cfe drivers/driverWhiteCell.jar drivers.driverWhiteCell drivers/*.class; cd ..
 
 driversWhiteCellRunjar: driverWhiteCell.jar
-	java -jar out/drivers/driverWhiteCell.jar
+	cd out; java -jar drivers/driverWhiteCell.jar; cd ..
 
 driverCtrlKakuro.jar: drivers
-	jar cvf out/drivers/driverCtrlKakuro.jar -C out/drivers/ .
+	cd out; jar cfe drivers/driverCtrlKakuro.jar drivers.driverCtrlKakuro drivers/*.class; cd ..
 
 driversCtrlKakuroRunjar: driverCtrlKakuro.jar
-	java -jar out/drivers/driversCtrlKakuro.jar
+	cd out; java -jar drivers/driverCtrlKakuro.jar; cd ..
 
 tests: main
 	javac -d out $(TESTS)/*.java
 
 testWhiteCell.jar: tests
-	jar cvf out/tests/testWhiteCell.jar -C out/tests/ .
+	cd out; jar cfe tests/testWhiteCell.jar tests.testWhiteCell tests/*.class; cd ..
 
 testWhiteCellRunjar: testWhiteCell.jar
-	java -jar out/tests/testWhiteCell.jar
+	cd out; java -jar tests/testWhiteCell.jar; cd ..
 
 testBlackCell.jar: tests
-	jar cvf out/tests/testBlackCell.jar -C out/tests/ .
+	cd out; jar cfe tests/testBlackCell.jar tests.testBlackCell tests/*.class; cd ..
 
 testBlackCellRunjar: testBlackCell.jar
-	java -jar out/tests/testBlackCell.jar	
+	cd out; java -jar tests/testBlackCell.jar; cd ..
 
 testKakuro.jar: tests
-	jar cvf out/tests/testKakuro.jar -C out/tests/ .
+	cd out; jar cfe tests/testKakuro.jar tests.testKakuro tests/*.class; cd ..
 
 testKakuroRunjar: testKakuro.jar
-	java -jar out/tests/testKakuro.jar
+	cd out; java -jar tests/testKakuro.jar; cd ..
 
 clean:
 	rm -rf out/domain out/persistence out/presentation out/drivers out/tests

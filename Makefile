@@ -32,7 +32,7 @@ driverCtrlKakuro.jar: drivers
 driverCtrlKakuroRunjar: driverCtrlKakuro.jar
 	cd out; java -jar drivers/DriverCtrlKakuro.jar; cd ..
 
-tests: tests/domain/*.java
+tests: tests/domain/*.java main
 	javac -cp lib/junit-4.12.jar -d ./out/ tests/domain/*.java src/domain/*.java src/persistence/*.java src/presentation/*.java
 
 testWhiteCell.jar: tests

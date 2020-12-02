@@ -1,13 +1,12 @@
 package domain;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
+import java.util.*;
 
 /**
  * Generic class used to created Kakuros.
  */
 public class Kakuro {
+
     //ATTRIBUTES
     /**
      * This attribute is an identifier of the Kakuro class.
@@ -38,6 +37,8 @@ public class Kakuro {
      * This attribute indicates the possible solutions of the Kakuro (1 unique and 2 multiple)
      */
     private int solutions;
+
+    HashMap<Integer, ArrayList<Integer>> notes;
 
     /**
      * This attribute indicates the name of the author of the Kakuro.
@@ -503,19 +504,62 @@ public class Kakuro {
         return solveMultiple (posWhites, 0);
     }
 
+    private Pair search_SN_blackTOP (int x, int y) {
+        int columValue, num_whites = 0;
+        while (cells[x][y] instanceof WhiteCell) --x;
+        columValue = cells[x][y].getColumnValue();
+        while (x+1 < numRows && cells[x+1][y] instanceof WhiteCell) {
+            ++x;
+            ++num_whites;
+        }
+        return new Pair (columValue, num_whites);
+    }
+
+    private Pair search_SN_blackLEFT (int x, int y) {
+        int rowValue, num_whites = 0;
+        while (cells[x][y] instanceof WhiteCell) --y;
+        rowValue = cells[x][y].getRowValue();
+        while (y+1 < numColumns && cells[x][y+1] instanceof WhiteCell) {
+            ++y;
+            ++num_whites;
+        }
+        return new Pair (rowValue, num_whites);
+    }
+
+
     /**
      * Auxiliar Function
      * @return it creates an ArrayList to save the positions of all existing white cells in the kakuro
      */
-    private ArrayList <Pair> searchWhites () {
-        ArrayList <Pair> p = new ArrayList <Pair> ();
+    private ArrayList<Pair> searchWhites () {
+      ArrayList<Pair> aux = new ArrayList<>();
         for (int i = 0; i < numRows; ++i) {
             for (int j = 0; j < numColumns; ++j) {
-                if (cells[i][j] instanceof WhiteCell) p.add (new Pair(i,j));
+                if (cells[i][j] instanceof WhiteCell) aux.add(new Pair (i,j));
             }
         }
-        return p;
+        return aux;
     }
+
+    private PriorityQueue<Integer> searchWhites2 () {
+        notes = new HashMap<>();
+        Combination comb = new Combination();
+        PriorityQueue<Integer> pq = new PriorityQueue<>();
+        for (int i = 0; i < numRows; ++i) {
+            for (int j = 0; j < numColumns; ++j) {
+                if (cells[i][j] instanceof WhiteCell) {
+                    Pair top = search_SN_blackTOP(i, j);
+                    Pair left = search_SN_blackLEFT(i, j);
+                    ArrayList<Integer> aux = comb.getCombination(top.first(), top.second(), left.first(), left.second());
+                    notes.put(i*100+j, aux);
+                    pq.add(aux.size()*10000 + (i*100+j));
+                }
+            }
+        }
+        return pq;
+    }
+
+    private
 
     /**
      * Backtracking recursive function
@@ -525,6 +569,7 @@ public class Kakuro {
      * FALSE if it doesn't exist a solution
      */
     private boolean solve (final ArrayList <Pair> posWhites, int k) {
+        /*
         if (k == posWhites.size()) return true; //El moment quan hagi vist totes les caselles blanques
 
         // Consultar la posició de la casella blanca
@@ -552,6 +597,23 @@ public class Kakuro {
             }
         }
         return false; //Quan hagi comprovat tots els números possibles 1...9 i no troba cap solució
+        */
+
+        PriorityQueue<Integer> pq = searchWhites2();
+        Integer aux = pq.peek();
+        while (aux / 10000 == 1) {
+            int posX = (aux % 10000) / 100;
+            int posY = (aux % 10000) % 100;
+
+            ArrayList<Integer> sol = notes.get(aux%10000);
+            cells[posX][posY].setValue(sol.get(0));
+            pq.remove(aux);
+            
+
+            aux = pq.peek();
+        }
+
+        return true;
     }
 
     /**

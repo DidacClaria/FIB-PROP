@@ -8,6 +8,271 @@ import java.util.*;
 public class Kakuro {
 
     //ATTRIBUTES
+    static HashMap<Integer, Integer> comb;
+    static HashMap<Integer, ArrayList<Integer> > comb2;
+    static {
+        //COMB
+        comb = new HashMap<>();
+        comb.put(203, 0b000000011);
+        comb.put(204, 0b000000101);
+        comb.put(205, 0b000001111);
+        comb.put(206, 0b000011011);
+        comb.put(207, 0b000111111);
+        comb.put(208, 0b001110111);
+        comb.put(209, 0b011111111);
+        comb.put(210, 0b111101111);
+        comb.put(211, 0b111111110);
+        comb.put(212, 0b111011100);
+        comb.put(213, 0b111111000);
+        comb.put(214, 0b110110000);
+        comb.put(215, 0b111100000);
+        comb.put(216, 0b101000000);
+        comb.put(217, 0b110000000);
+
+        comb.put(306, 0b000000111);
+        comb.put(307, 0b000001011);
+        comb.put(308, 0b000011111);
+        comb.put(309, 0b000111111);
+        comb.put(310, 0b001111111);
+        comb.put(311, 0b011111111);
+        comb.put(312, 0b111111111);
+        comb.put(313, 0b111111111);
+        comb.put(314, 0b111111111);
+        comb.put(315, 0b111111111);
+        comb.put(316, 0b111111111);
+        comb.put(317, 0b111111111);
+        comb.put(318, 0b111111111);
+        comb.put(319, 0b111111110);
+        comb.put(320, 0b111111100);
+        comb.put(321, 0b111111000);
+        comb.put(322, 0b111110000);
+        comb.put(323, 0b110100000);
+        comb.put(324, 0b111000000);
+
+        comb.put(410, 0b000001111);
+        comb.put(411, 0b000010111);
+        comb.put(412, 0b000111111);
+        comb.put(413, 0b001111111);
+        comb.put(414, 0b011111111);
+        comb.put(415, 0b111111111);
+        comb.put(416, 0b111111111);
+        comb.put(417, 0b111111111);
+        comb.put(418, 0b111111111);
+        comb.put(419, 0b111111111);
+        comb.put(420, 0b111111111);
+        comb.put(421, 0b111111111);
+        comb.put(422, 0b111111111);
+        comb.put(423, 0b111111111);
+        comb.put(424, 0b111111111);
+        comb.put(425, 0b111111111);
+        comb.put(426, 0b111111110);
+        comb.put(427, 0b111111100);
+        comb.put(428, 0b111111000);
+        comb.put(429, 0b111010000);
+        comb.put(430, 0b111100000);
+
+        comb.put(515, 0b000011111);
+        comb.put(516, 0b000101111);
+        comb.put(517, 0b001111111);
+        comb.put(518, 0b011111111);
+        comb.put(519, 0b111111111);
+        comb.put(520, 0b111111111);
+        comb.put(521, 0b111111111);
+        comb.put(522, 0b111111111);
+        comb.put(523, 0b111111111);
+        comb.put(524, 0b111111111);
+        comb.put(525, 0b111111111);
+        comb.put(526, 0b111111111);
+        comb.put(527, 0b111111111);
+        comb.put(528, 0b111111111);
+        comb.put(529, 0b111111111);
+        comb.put(530, 0b111111111);
+        comb.put(531, 0b111111111);
+        comb.put(532, 0b111111110);
+        comb.put(533, 0b111111100);
+        comb.put(534, 0b111101000);
+        comb.put(535, 0b111110000);
+
+        comb.put(621, 0b000111111);
+        comb.put(622, 0b001011111);
+        comb.put(623, 0b011111111);
+        comb.put(624, 0b111111111);
+        comb.put(625, 0b111111111);
+        comb.put(626, 0b111111111);
+        comb.put(627, 0b111111111);
+        comb.put(628, 0b111111111);
+        comb.put(629, 0b111111111);
+        comb.put(630, 0b111111111);
+        comb.put(631, 0b111111111);
+        comb.put(632, 0b111111111);
+        comb.put(633, 0b111111111);
+        comb.put(634, 0b111111111);
+        comb.put(635, 0b111111111);
+        comb.put(636, 0b111111111);
+        comb.put(637, 0b111111110);
+        comb.put(638, 0b111110100);
+        comb.put(639, 0b111111000);
+
+        comb.put(728, 0b001111111);
+        comb.put(729, 0b010111111);
+        comb.put(730, 0b111111111);
+        comb.put(731, 0b111111111);
+        comb.put(732, 0b111111111);
+        comb.put(733, 0b111111111);
+        comb.put(734, 0b111111111);
+        comb.put(735, 0b111111111);
+        comb.put(736, 0b111111111);
+        comb.put(737, 0b111111111);
+        comb.put(738, 0b111111111);
+        comb.put(739, 0b111111111);
+        comb.put(740, 0b111111111);
+        comb.put(741, 0b111111010);
+        comb.put(742, 0b111111100);
+
+        comb.put(836, 0b011111111);
+        comb.put(837, 0b101111111);
+        comb.put(838, 0b110111111);
+        comb.put(839, 0b111011111);
+        comb.put(840, 0b111101111);
+        comb.put(841, 0b111110111);
+        comb.put(842, 0b111111011);
+        comb.put(843, 0b111111101);
+        comb.put(844, 0b111111110);
+
+        comb.put(945, 0b111111111);
+
+        //COMB2
+        comb2 = new HashMap<>();
+        comb2.put(203, new ArrayList<>(Arrays.asList(3)));
+        comb2.put(204, new ArrayList<>(Arrays.asList(5)));
+        comb2.put(205, new ArrayList<>(Arrays.asList(9, 6)));
+        comb2.put(206, new ArrayList<>(Arrays.asList(17, 10)));
+        comb2.put(207, new ArrayList<>(Arrays.asList(33, 18, 12)));
+        comb2.put(208, new ArrayList<>(Arrays.asList(65, 34, 20)));
+        comb2.put(209, new ArrayList<>(Arrays.asList(129, 66, 36, 24)));
+        comb2.put(210, new ArrayList<>(Arrays.asList(257, 130, 68, 40)));
+        comb2.put(211, new ArrayList<>(Arrays.asList(258, 132, 72, 48)));
+        comb2.put(212, new ArrayList<>(Arrays.asList(260, 136, 80)));
+        comb2.put(213, new ArrayList<>(Arrays.asList(264, 144, 96)));
+        comb2.put(214, new ArrayList<>(Arrays.asList(272, 160)));
+        comb2.put(215, new ArrayList<>(Arrays.asList(288, 192)));
+        comb2.put(216, new ArrayList<>(Arrays.asList(320)));
+        comb2.put(217, new ArrayList<>(Arrays.asList(384)));
+
+        comb2.put(306, new ArrayList<>(Arrays.asList(7)));
+        comb2.put(307, new ArrayList<>(Arrays.asList(11)));
+        comb2.put(308, new ArrayList<>(Arrays.asList(19, 13)));
+        comb2.put(309, new ArrayList<>(Arrays.asList(35, 21, 14)));
+        comb2.put(310, new ArrayList<>(Arrays.asList(67, 37, 25, 22)));
+        comb2.put(311, new ArrayList<>(Arrays.asList(131, 69, 41, 38, 26)));
+        comb2.put(312, new ArrayList<>(Arrays.asList(259, 133, 73, 49, 70, 42, 28)));
+        comb2.put(313, new ArrayList<>(Arrays.asList(261, 137, 81, 134, 74, 50, 44)));
+        comb2.put(314, new ArrayList<>(Arrays.asList(265, 145, 97, 262, 138, 82, 76, 52)));
+        comb2.put(315, new ArrayList<>(Arrays.asList(273, 161, 266, 146, 98, 140, 84, 56)));
+        comb2.put(316, new ArrayList<>(Arrays.asList(289, 193, 274, 162, 268, 148, 100, 88)));
+        comb2.put(317, new ArrayList<>(Arrays.asList(321, 290, 194, 276, 164, 152, 104)));
+        comb2.put(318, new ArrayList<>(Arrays.asList(385, 322, 292, 196, 280, 168, 112)));
+        comb2.put(319, new ArrayList<>(Arrays.asList(386, 324, 296, 200, 176)));
+        comb2.put(320, new ArrayList<>(Arrays.asList(388, 328, 304, 208)));
+        comb2.put(321, new ArrayList<>(Arrays.asList(392, 336, 224)));
+        comb2.put(322, new ArrayList<>(Arrays.asList(400, 352)));
+        comb2.put(323, new ArrayList<>(Arrays.asList(416)));
+        comb2.put(324, new ArrayList<>(Arrays.asList(448)));
+
+        comb2.put(410, new ArrayList<>(Arrays.asList(15)));
+        comb2.put(411, new ArrayList<>(Arrays.asList(23)));
+        comb2.put(412, new ArrayList<>(Arrays.asList(39, 27)));
+        comb2.put(413, new ArrayList<>(Arrays.asList(71, 43, 29)));
+        comb2.put(414, new ArrayList<>(Arrays.asList(135, 75, 51, 45, 30)));
+        comb2.put(415, new ArrayList<>(Arrays.asList(263, 139, 83, 77, 53, 46)));
+        comb2.put(416, new ArrayList<>(Arrays.asList(267, 147, 99, 141, 85, 57, 78, 54)));
+        comb2.put(417, new ArrayList<>(Arrays.asList(275, 163, 269, 149, 101, 89, 142, 86, 58)));
+        comb2.put(418, new ArrayList<>(Arrays.asList(291, 195, 277, 165, 153, 105, 270, 150, 102, 90, 60)));
+        comb2.put(419, new ArrayList<>(Arrays.asList(323, 293, 197, 281, 169, 113, 278, 166, 154, 106, 92)));
+        comb2.put(420, new ArrayList<>(Arrays.asList(387, 325, 297, 201, 177, 294, 198, 282, 170, 114, 156, 108)));
+        comb2.put(421, new ArrayList<>(Arrays.asList(389, 329, 305, 209, 326, 298, 202, 178, 284, 172, 116)));
+        comb2.put(422, new ArrayList<>(Arrays.asList(393, 337, 225, 390, 330, 306, 210, 300, 204, 180, 120)));
+        comb2.put(423, new ArrayList<>(Arrays.asList(401, 353, 394, 338, 226, 332, 308, 212, 184)));
+        comb2.put(424, new ArrayList<>(Arrays.asList(417, 402, 354, 396, 340, 228, 312, 216)));
+        comb2.put(425, new ArrayList<>(Arrays.asList(449, 418, 404, 356, 344, 232)));
+        comb2.put(426, new ArrayList<>(Arrays.asList(450, 420, 408, 360, 240)));
+        comb2.put(427, new ArrayList<>(Arrays.asList(452, 424, 368)));
+        comb2.put(428, new ArrayList<>(Arrays.asList(456, 432)));
+        comb2.put(429, new ArrayList<>(Arrays.asList(464)));
+        comb2.put(430, new ArrayList<>(Arrays.asList(480)));
+
+        comb2.put(515, new ArrayList<>(Arrays.asList(31)));
+        comb2.put(516, new ArrayList<>(Arrays.asList(47)));
+        comb2.put(517, new ArrayList<>(Arrays.asList(79, 55)));
+        comb2.put(518, new ArrayList<>(Arrays.asList(143, 87, 59)));
+        comb2.put(519, new ArrayList<>(Arrays.asList(271, 151, 103, 91, 61)));
+        comb2.put(520, new ArrayList<>(Arrays.asList(279, 167, 155, 107, 93, 62)));
+        comb2.put(521, new ArrayList<>(Arrays.asList(295, 199, 283, 171, 115, 157, 109, 94)));
+        comb2.put(522, new ArrayList<>(Arrays.asList(327, 299, 203, 179, 285, 173, 117, 158, 110)));
+        comb2.put(523, new ArrayList<>(Arrays.asList(391, 331, 307, 211, 301, 205, 181, 121, 286, 174, 118)));
+        comb2.put(524, new ArrayList<>(Arrays.asList(395, 339, 227, 333, 309, 213, 185, 302, 206, 182, 122)));
+        comb2.put(525, new ArrayList<>(Arrays.asList(403, 355, 397, 341, 229, 313, 217, 334, 310, 214, 186, 124)));
+        comb2.put(526, new ArrayList<>(Arrays.asList(419, 405, 357, 345, 233, 398, 342, 230, 314, 218, 188)));
+        comb2.put(527, new ArrayList<>(Arrays.asList(451, 421, 409, 361, 241, 406, 358, 346, 234, 316, 220)));
+        comb2.put(528, new ArrayList<>(Arrays.asList(453, 425, 369, 422, 410, 362, 242, 348, 236)));
+        comb2.put(529, new ArrayList<>(Arrays.asList(457, 433, 454, 426, 370, 412, 364, 244)));
+        comb2.put(530, new ArrayList<>(Arrays.asList(465, 458, 434, 428, 372, 248)));
+        comb2.put(531, new ArrayList<>(Arrays.asList(481, 466, 460, 436, 376)));
+        comb2.put(532, new ArrayList<>(Arrays.asList(482, 468, 440)));
+        comb2.put(533, new ArrayList<>(Arrays.asList(484, 472)));
+        comb2.put(534, new ArrayList<>(Arrays.asList(488)));
+        comb2.put(535, new ArrayList<>(Arrays.asList(49)));
+
+        comb2.put(621, new ArrayList<>(Arrays.asList(63)));
+        comb2.put(622, new ArrayList<>(Arrays.asList(95)));
+        comb2.put(623, new ArrayList<>(Arrays.asList(159, 111)));
+        comb2.put(624, new ArrayList<>(Arrays.asList(287, 175, 119)));
+        comb2.put(625, new ArrayList<>(Arrays.asList(303, 207, 183, 123)));
+        comb2.put(626, new ArrayList<>(Arrays.asList(335, 311, 215, 187, 125)));
+        comb2.put(627, new ArrayList<>(Arrays.asList(399, 343, 231, 315, 219, 189, 126)));
+        comb2.put(628, new ArrayList<>(Arrays.asList(407, 359, 347, 235, 317, 221, 190)));
+        comb2.put(629, new ArrayList<>(Arrays.asList(423, 411, 363, 243, 349, 237, 318, 222)));
+        comb2.put(630, new ArrayList<>(Arrays.asList(455, 427, 371, 413, 365, 245, 350, 238)));
+        comb2.put(631, new ArrayList<>(Arrays.asList(459, 435, 429, 373, 249, 414, 366, 246)));
+        comb2.put(632, new ArrayList<>(Arrays.asList(467, 461, 437, 377, 430, 374, 250)));
+        comb2.put(633, new ArrayList<>(Arrays.asList(483, 469, 441, 462, 438, 378, 252)));
+        comb2.put(634, new ArrayList<>(Arrays.asList(485, 473, 470, 442, 380)));
+        comb2.put(635, new ArrayList<>(Arrays.asList(489, 486, 474, 444)));
+        comb2.put(636, new ArrayList<>(Arrays.asList(497, 490, 476)));
+        comb2.put(637, new ArrayList<>(Arrays.asList(498, 492)));
+        comb2.put(638, new ArrayList<>(Arrays.asList(500)));
+        comb2.put(639, new ArrayList<>(Arrays.asList(504)));
+
+        comb2.put(728, new ArrayList<>(Arrays.asList(127)));
+        comb2.put(729, new ArrayList<>(Arrays.asList(191)));
+        comb2.put(730, new ArrayList<>(Arrays.asList(319, 223)));
+        comb2.put(731, new ArrayList<>(Arrays.asList(351, 239)));
+        comb2.put(732, new ArrayList<>(Arrays.asList(415, 367, 247)));
+        comb2.put(733, new ArrayList<>(Arrays.asList(431, 375, 251)));
+        comb2.put(734, new ArrayList<>(Arrays.asList(463, 439, 379, 253)));
+        comb2.put(735, new ArrayList<>(Arrays.asList(471, 443, 381, 254)));
+        comb2.put(736, new ArrayList<>(Arrays.asList(487, 475, 445, 382)));
+        comb2.put(737, new ArrayList<>(Arrays.asList(491, 477, 446)));
+        comb2.put(738, new ArrayList<>(Arrays.asList(499, 493, 478)));
+        comb2.put(739, new ArrayList<>(Arrays.asList(501, 494)));
+        comb2.put(740, new ArrayList<>(Arrays.asList(505, 502)));
+        comb2.put(741, new ArrayList<>(Arrays.asList(506)));
+        comb2.put(742, new ArrayList<>(Arrays.asList(508)));
+
+        comb2.put(836, new ArrayList<>(Arrays.asList(255)));
+        comb2.put(837, new ArrayList<>(Arrays.asList(383)));
+        comb2.put(838, new ArrayList<>(Arrays.asList(447)));
+        comb2.put(839, new ArrayList<>(Arrays.asList(479)));
+        comb2.put(840, new ArrayList<>(Arrays.asList(495)));
+        comb2.put(841, new ArrayList<>(Arrays.asList(503)));
+        comb2.put(842, new ArrayList<>(Arrays.asList(507)));
+        comb2.put(843, new ArrayList<>(Arrays.asList(509)));
+        comb2.put(844, new ArrayList<>(Arrays.asList(510)));
+
+        comb2.put(945, new ArrayList<>(Arrays.asList(511)));
+
+    }
+
     /**
      * This attribute is an identifier of the Kakuro class.
      */
@@ -38,7 +303,7 @@ public class Kakuro {
      */
     private int solutions;
 
-    HashMap<Integer, ArrayList<Integer>> notes;
+    HashMap<Integer, Integer> notes;
 
     /**
      * This attribute indicates the name of the author of the Kakuro.
@@ -122,8 +387,6 @@ public class Kakuro {
         if (cells[randX][randY] instanceof WhiteCell && noAloneSym(randX, randY) && dfsSym(randX, randY)) {
             cells[randX][randY] = new BlackCell(0,0);
             cells[numRows - randX][numColumns - randY] = new BlackCell(0,0);
-            System.out.print(randX);
-            System.out.print(randY);
         }
     }
 
@@ -455,7 +718,15 @@ public class Kakuro {
                 }
             }
         }
-        return solveKakuro();
+
+        boolean aux;
+        long startTime, endTime, timeElapsed;
+        startTime=System.currentTimeMillis();
+        aux = solveKakuro();
+        endTime=System.currentTimeMillis();
+        timeElapsed = endTime - startTime;
+        System.out.println("Solver Execution --> time in milliseconds: " + timeElapsed);
+        return aux;
     }
 
     /**
@@ -490,6 +761,7 @@ public class Kakuro {
      * FALSE if there isn't a solution of the kakuro proposed
      */
     private boolean solveKakuro () {
+        solve_ob_solutions();
         ArrayList<Pair> posWhites = searchWhites();
         return solve (posWhites, 0);
     }
@@ -505,25 +777,21 @@ public class Kakuro {
     }
 
     private Pair search_SN_blackTOP (int x, int y) {
-        int columValue, num_whites = 0;
-        while (cells[x][y] instanceof WhiteCell) --x;
-        columValue = cells[x][y].getColumnValue();
-        while (x+1 < numRows && cells[x+1][y] instanceof WhiteCell) {
-            ++x;
-            ++num_whites;
-        }
-        return new Pair (columValue, num_whites);
+        int num_whites = 1;
+        int auxX = x;
+        for (--x; cells[x][y] instanceof WhiteCell; --x) ++num_whites;
+        for (++auxX; auxX < numRows && cells[auxX][y] instanceof WhiteCell; ++auxX) ++num_whites;
+
+        return new Pair (cells[x][y].getColumnValue(), num_whites);
     }
 
     private Pair search_SN_blackLEFT (int x, int y) {
-        int rowValue, num_whites = 0;
-        while (cells[x][y] instanceof WhiteCell) --y;
-        rowValue = cells[x][y].getRowValue();
-        while (y+1 < numColumns && cells[x][y+1] instanceof WhiteCell) {
-            ++y;
-            ++num_whites;
-        }
-        return new Pair (rowValue, num_whites);
+        int num_whites = 1;
+        int auxY = y;
+        for (--y; cells[x][y] instanceof WhiteCell; --y) ++num_whites;
+        for (++auxY; auxY < numColumns && cells[x][auxY] instanceof WhiteCell; ++auxY) ++num_whites;
+
+        return new Pair (cells[x][y].getRowValue(), num_whites);
     }
 
 
@@ -541,25 +809,172 @@ public class Kakuro {
         return aux;
     }
 
-    private PriorityQueue<Integer> searchWhites2 () {
+    private int count_ones (Integer x) {
+        int size = 0;
+        while (x != 0) {
+            if (x%2 != 0) ++size;
+            x /= 2;
+        }
+        return size;
+    }
+
+    private int find_unique (Integer x) {
+        int number = 1;
+        while (x != 0) {
+            if (x%2 != 0) return number;
+            x /= 2;
+            ++number;
+        }
+        return 0;
+    }
+
+    private PriorityQueue<Integer> searchIntersections () {
         notes = new HashMap<>();
-        Combination comb = new Combination();
         PriorityQueue<Integer> pq = new PriorityQueue<>();
         for (int i = 0; i < numRows; ++i) {
             for (int j = 0; j < numColumns; ++j) {
                 if (cells[i][j] instanceof WhiteCell) {
                     Pair top = search_SN_blackTOP(i, j);
                     Pair left = search_SN_blackLEFT(i, j);
-                    ArrayList<Integer> aux = comb.getCombination(top.first(), top.second(), left.first(), left.second());
+                    Integer aux = comb.get(top.second()*100 + top.first()) & comb.get(left.second()*100 + left.first());
                     notes.put(i*100+j, aux);
-                    pq.add(aux.size()*10000 + (i*100+j));
+                    pq.add(count_ones(aux)*10000 + (i*100+j));
                 }
             }
         }
         return pq;
     }
 
-    private
+    private int pow2 (int x) {
+        if (x == 1) return 1;
+        int result = 2;
+        for (int i = 1; i < x-1; ++i) result *= 2;
+        return result;
+    }
+
+    private int calculate_possibleH (int x, int y) {
+        int listR = pow2 (cells[x][y].getValue());
+
+        int auxY = y;
+        int numC = 1;
+        for (--y; cells[x][y] instanceof WhiteCell; --y) {
+            if (cells[x][y].getValue() > 0) listR += pow2(cells[x][y].getValue());
+            ++numC;
+        }
+        for (++auxY; auxY < numColumns && cells[x][auxY] instanceof WhiteCell; ++auxY) {
+            if (cells[x][auxY].getValue() > 0) listR += pow2(cells[x][auxY].getValue());
+            ++numC;
+        }
+        ArrayList<Integer> combinations = comb2.get(numC*100 + cells[x][y].getRowValue());
+        int result = 0;
+        for (Integer i : combinations) {
+            int found = listR & i;
+            if (found == listR) {
+                result = result | (i - listR);
+            }
+        }
+
+        return result;
+    }
+
+    private int calculate_possibleV (int x, int y) {
+        int listC = pow2 (cells[x][y].getValue());
+
+        int auxX = x;
+        int numF = 1;
+
+        for (--x; cells[x][y] instanceof WhiteCell; --x) {
+            if (cells[x][y].getValue() > 0) listC += pow2(cells[x][y].getValue());
+            ++numF;
+        }
+        for (++auxX; auxX < numRows && cells[auxX][y] instanceof WhiteCell; ++auxX) {
+            if (cells[auxX][y].getValue() > 0) listC += pow2(cells[auxX][y].getValue());
+            ++numF;
+        }
+
+        ArrayList<Integer> combinations = comb2.get(numF*100 + cells[x][y].getColumnValue());
+        int result = 0;
+        for (Integer i : combinations) {
+            int found = listC & i;
+            if (found == listC) {
+                result = result | (i - listC);
+            }
+        }
+
+        return result;
+    }
+
+    private void modifyH (int x, int y, PriorityQueue<Integer> pq) {
+        Integer result = calculate_possibleH(x, y);
+        System.out.println("ModifyH Position X: " + x + " Position Y: " + y + " Result33333: " + result);
+        int auxY = y;
+        for (--y; cells[x][y] instanceof WhiteCell; --y) {
+            if (cells[x][y].getValue() == 0) {
+                System.out.println("ModifyH Position X: " + x + " Position Y: " + y + " Result: " + (result & notes.get(x*100+y)));
+                notes.put (x*100+y, result & notes.get(x*100+y));
+                remove_pq (x, y, pq);
+                int size_new = count_ones(result & notes.get(x*100+y));
+                pq.add(size_new*10000 + (x*100+y));
+            }
+        }
+        for (++auxY; auxY < numColumns && cells[x][auxY] instanceof WhiteCell; ++auxY) {
+            if (cells[x][auxY].getValue() == 0) {
+                System.out.println("ModifyH Position X: " + x + " Position Y: " + auxY + " Result: " + (result & notes.get(x*100+auxY)));
+                notes.put (x*100+auxY, result & notes.get(x*100+auxY));
+                remove_pq (x, auxY, pq);
+                int size_new = count_ones(result & notes.get(x*100+auxY));
+                pq.add(size_new*10000 + (x*100+auxY));
+            }
+        }
+    }
+
+    private void modifyV (int x, int y, PriorityQueue<Integer> pq) {
+        Integer result = calculate_possibleV(x, y);
+        System.out.println("ModifyV Position X: " + x + " Position Y: " + y + " Result33333: " + result);
+        int auxX = x;
+        for (--x; cells[x][y] instanceof WhiteCell; --x) {
+            if (cells[x][y].getValue() == 0) {
+                System.out.println("ModifyV Position X: " + x + " Position Y: " + y + " Result: " + (result & notes.get(x*100+y)));
+                notes.put (x*100+y, result & notes.get(x*100+y));
+                remove_pq (x, y, pq);
+                int size_new = count_ones(result & notes.get(x*100+y));
+                pq.add(size_new*10000 + (x*100+y));
+            }
+        }
+        for (++auxX; auxX < numRows && cells[auxX][y] instanceof WhiteCell; ++auxX) {
+            if (cells[auxX][y].getValue() == 0) {
+                System.out.println("ModifyV Position X: " + auxX + " Position Y: " + y + " Result: " + (result & notes.get(auxX*100+y)));
+                notes.put (auxX*100+y, result & notes.get(auxX*100+y));
+                remove_pq (auxX, y, pq);
+                int size_new = count_ones(result & notes.get(auxX*100+y));
+                pq.add(size_new*10000 + (auxX*100+y));
+            }
+        }
+    }
+
+    private void remove_pq (int x, int y, PriorityQueue<Integer> pq) {
+        for (int i = 1; i <= 9; ++i) {
+            pq.remove (i*10000 + (x*100+y));
+        }
+    }
+
+    private void solve_ob_solutions () {
+        PriorityQueue<Integer> pq = searchIntersections();
+
+        Integer aux = pq.peek();
+        while (aux / 10000 == 1) {
+            int posX = (aux % 10000) / 100;
+            int posY = (aux % 10000) % 100;
+
+            Integer inters = notes.get(aux%10000);
+            cells[posX][posY].setValue(find_unique(inters));
+            pq.remove(aux);
+            modifyH(posX, posY, pq);
+            modifyV(posX, posY, pq);
+            aux = pq.peek();
+        }
+
+    }
 
     /**
      * Backtracking recursive function
@@ -569,10 +984,9 @@ public class Kakuro {
      * FALSE if it doesn't exist a solution
      */
     private boolean solve (final ArrayList <Pair> posWhites, int k) {
-        /*
-        if (k == posWhites.size()) return true; //El moment quan hagi vist totes les caselles blanques
 
-        // Consultar la posició de la casella blanca
+        if (k == posWhites.size()) return true;
+
         Pair aux = posWhites.get(k);
         int posX = aux.first();
         int posY = aux.second();
@@ -582,38 +996,22 @@ public class Kakuro {
             }
         }
         else {
-            // Backtracking
-            for (int i = 1; i <= 9; ++i) {
-                //Comprova la fila i la columna del de cada número (checkH i checkV)
-                if (checkH(posX, posY, i) && checkV(posX, posY, i)) {
-                    cells[posX][posY].setValue(i); // Posar el número a l'atribut tipus (Recordar els 4 tipus: -2, -1, 0 i >0)
+            int possible_numbers = notes.get(posX*100 + posY);
+            int number = 1;
+            while (possible_numbers!= 0) {
+                if (possible_numbers % 2 != 0) {
+                    if (checkH(posX, posY, number) && checkV(posX, posY, number)) {
+                        cells[posX][posY].setValue(number);
 
-                    if (solve(posWhites, k + 1)) return true; //Mira les combinacions possibles amb el número i
-                        //Retorna cert si existeix solució amb el número i
-
-                    else cells[posX][posY].setValue(0); //Fals si no existeix solució amb el número i
-                    //Per tant, esborrar el número que hem posat
+                        if (solve(posWhites, k + 1)) return true;
+                        else cells[posX][posY].setValue(0);
+                    }
                 }
+                ++number;
+                possible_numbers /= 2;
             }
         }
-        return false; //Quan hagi comprovat tots els números possibles 1...9 i no troba cap solució
-        */
-
-        PriorityQueue<Integer> pq = searchWhites2();
-        Integer aux = pq.peek();
-        while (aux / 10000 == 1) {
-            int posX = (aux % 10000) / 100;
-            int posY = (aux % 10000) % 100;
-
-            ArrayList<Integer> sol = notes.get(aux%10000);
-            cells[posX][posY].setValue(sol.get(0));
-            pq.remove(aux);
-            
-
-            aux = pq.peek();
-        }
-
-        return true;
+        return false;
     }
 
     /**
@@ -656,7 +1054,6 @@ public class Kakuro {
         int totalF = 0;
 
         int aux = y-1;
-        if (aux < 0) return true;
 
         while (cells[x][aux] instanceof WhiteCell) {
             if (cells[x][aux].getValue() == valor) return false;
@@ -690,7 +1087,6 @@ public class Kakuro {
         int totalC = 0;
 
         int aux = x-1;
-        if (aux < 0) return true;
 
         while (cells[aux][y] instanceof WhiteCell)    {
             if (cells[aux][y].getValue() == valor) return false;

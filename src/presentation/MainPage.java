@@ -5,12 +5,12 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class MainPage {
-    private JButton CREATEKAKUROButton;
-    private JButton PLAYGAMEButton;
-    private JButton PERSONALSTATSButton;
-    private JButton GLOBALRANKINGButton;
-    private JButton LOGOUTButton;
-    private JPanel mainPanel;
+    private static JButton CREATEKAKUROButton;
+    private static JButton PLAYGAMEButton;
+    private static JButton PERSONALSTATSButton;
+    private static JButton GLOBALRANKINGButton;
+    private static JButton LOGOUTButton;
+    private static JPanel mainPanel;
 
     public MainPage(){
         CREATEKAKUROButton.addActionListener(new ActionListener() {
@@ -51,5 +51,10 @@ public class MainPage {
         mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         mainFrame.pack();
         mainFrame.setVisible(true);
+        CREATEKAKUROButton.setUI(new MyButton());
+    }
+
+    private void createUIComponents() {
+        // TODO: place custom component creation code here
     }
 }

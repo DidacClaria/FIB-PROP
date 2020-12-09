@@ -33,4 +33,11 @@ public class Game {
     public Game() {
     }
 
+    /*
+    public Game (String user, int idKakuro) {
+        this.player = user,
+        this.gameScenario = idKakuro;
+    }
+     */
+
 }

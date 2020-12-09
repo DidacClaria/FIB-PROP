@@ -39,6 +39,11 @@ public class CtrlKakuro {
         this.numKakuros = 0;
     }
 
+    //GETTERS AND SETTERS
+    public int consult_id_kakuro () {
+        return this.numKakuros;
+    }
+
     //CLASS METHODS
 
     /**
@@ -50,6 +55,7 @@ public class CtrlKakuro {
         if (numColumns>= 3 && numRows>=3 && numColumns<=10 && numRows<=10){
             kakuro = new Kakuro(numRows, numColumns);
             kakuros.add(kakuro);
+            ++numKakuros;
         }
         else if (numColumns<=10 && numRows<=10) {
             throw new ArithmeticException("The size of the Kakuro is too small");

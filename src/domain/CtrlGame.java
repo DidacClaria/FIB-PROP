@@ -44,8 +44,11 @@ public class CtrlGame {
      * The execution of a Game is on.
      * @param idGame is the identification of the current game.
      */
-    public void playKakuro(int idGame){
-        throw new ArithmeticException("Not implemented yet");
+    public void playKakuro(String user, int idKakuro){
+        /*
+        Game g = new Game(user, idKakuro);
+        this.games.add(g);
+        */
     }
 
     /**

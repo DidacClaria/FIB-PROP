@@ -16,6 +16,8 @@ public class Main {
         while (true){
             System.out.println("\n1 - Propose Kakuro");
             System.out.println("2 - Generate Kakuro");
+            System.out.println("3 - Create User");
+            System.out.println("4 - Start new game");
 
             System.out.print("\nCHOOSE ONE OPTION: ");
             Scanner sca = new Scanner(System.in);
@@ -35,6 +37,20 @@ public class Main {
                     a.generateKakuro(f,c);
                     printKakuro();
                     break;
+                case 3:
+                    System.out.println("\nEnter your user name:");
+                    sca = new Scanner(System.in);
+                    a.createUser(sca.nextLine());
+                    break;
+                case 4:
+                    System.out.println("This version is for testing not for a real game :)");
+                    System.out.println("--------------------------------------------------");
+                    System.out.println("Enter the user name:");
+                    sca = new Scanner(System.in);
+                    String user = sca.nextLine();
+                    System.out.println("Enter the id of kakuro:");
+                    int id_kakuro = sca.nextInt();
+                    a.playKakuro(user, id_kakuro);
             }
         }
     }

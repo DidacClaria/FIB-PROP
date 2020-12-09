@@ -57,6 +57,7 @@ public class CtrlDomain {
      */
     public void proposeKakuro(int numRows, int numColumns, String[][] field){
         ctrlKakuro.proposeKakuro(numRows,numColumns,field);
+        ctrlPersistence.new_kakuro(ctrlKakuro.consult_id_kakuro(), ctrlKakuro.listKakuro());
     }
 
     /**
@@ -66,6 +67,7 @@ public class CtrlDomain {
      */
     public void generateKakuro(int numRows, int numColumns){
         ctrlKakuro.generateKakuro(numRows, numColumns);
+        ctrlPersistence.new_kakuro(ctrlKakuro.consult_id_kakuro(), ctrlKakuro.listKakuro());
     }
 
     /**
@@ -83,8 +85,8 @@ public class CtrlDomain {
      * @param name indicates the name of the new user
      * @param password indicates the password of the user
      */
-    public void createUser(String name, String password){
-        ctrlUser.createUser(name);
+    public void createUser(String name){
+        if (ctrlPersistence.create_user(name)) ctrlUser.createUser(name);
     }
 
     /**
@@ -99,8 +101,8 @@ public class CtrlDomain {
      * Function used to simulate a game for a kakuro
      * @param idGame indicates the identifier of the kakuro to load and play
      */
-    public void playKakuro(int idGame){
-        ctrlGame.playKakuro(idGame);
+    public void playKakuro(String user, int idKakuro){
+        if (ctrlPersistence.new_game(user, idKakuro)) ctrlGame.playKakuro(user, idKakuro);
     }
 
     /**

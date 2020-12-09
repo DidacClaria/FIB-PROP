@@ -173,6 +173,10 @@ public class Kakuro {
      */
     private int solutions;
 
+    /**
+     * This attribute indicates the possible numbers of each white cell
+     * Once a new kakuro is created, all the white cells indicated by the Map will have unique number (solution)
+     */
     HashMap<Integer, Integer> notes;
 
     /**
@@ -220,8 +224,7 @@ public class Kakuro {
             generateBlackNumbers();
             this.solutions = 0;
         }
-
-
+        save_sol_to_notes();
     }
 
     //GETTERS & SETTERS
@@ -240,6 +243,56 @@ public class Kakuro {
      */
     public void setIdKakuro(int idKakuro) {
         this.idKakuro = idKakuro;
+    }
+
+    /**
+     * Modifier function
+     * This method is used to update the map notes when a new kakuro is created
+     */
+    private void save_sol_to_notes () {
+        for (Integer i : notes.keySet()) {
+            int x = i/100;
+            int y = i%100;
+            notes.put(i, cells[x][y].getValue());
+        }
+    }
+
+    /**
+     * Consultant function
+     * @return It returns a matrix of the information of all the cells of the kakuro
+     */
+    public String [][] listKakuro () {
+        String [][] l = new String [numRows][numColumns];
+        String aux;
+
+        for (int i = 0; i < numRows; ++i) {
+            for (int j = 0; j <numColumns; ++j){
+                if (cells[i][j] instanceof BlackCell) {
+                    if (cells[i][j].getColumnValue() > 0 && cells[i][j].getRowValue() > 0) {
+                        aux = "C" + cells[i][j].getColumnValue() + "F" + cells[i][j].getRowValue();
+                    }
+                    else if (cells[i][j].getColumnValue() > 0) aux = "C" + cells[i][j].getColumnValue();
+                    else if (cells[i][j].getRowValue() > 0) aux = "F" + cells[i][j].getRowValue();
+                    else aux = "*";
+                }
+                else aux = String.valueOf(cells[i][j].getValue());
+                l[i][j] = aux;
+            }
+        }
+
+        return l;
+    }
+
+    private void askhint (String [][] k) {
+        ArrayList<Pair> aux = new ArrayList<>();
+        for(int i = 0; i < k.length; ++i) {
+            for (int j = 0; j < k[0].length; ++j) {
+                if (k[i][j] == "0") aux.add(new Pair (i, j));
+            }
+        }
+        int pos = (int)(Math.random() * aux.size());
+        Pair p = aux.get(pos);
+        k[p.first()][p.second()] = String.valueOf(cells[p.first()][p.second()].getValue());
     }
 
     //CLASS METHODS
@@ -596,33 +649,8 @@ public class Kakuro {
         endTime=System.currentTimeMillis();
         timeElapsed = endTime - startTime;
         System.out.println("Solver Execution --> time in milliseconds: " + timeElapsed);
+        if (aux) save_sol_to_notes();
         return aux;
-    }
-
-    /**
-     * Consultant function
-     * @return It returns a matrix of the information of all the cells of the kakuro
-     */
-    public String [][] listKakuro () {
-        String [][] l = new String [numRows][numColumns];
-        String aux;
-
-        for (int i = 0; i < numRows; ++i) {
-            for (int j = 0; j <numColumns; ++j){
-                if (cells[i][j] instanceof BlackCell) {
-                    if (cells[i][j].getColumnValue() > 0 && cells[i][j].getRowValue() > 0) {
-                        aux = "C" + cells[i][j].getColumnValue() + "F" + cells[i][j].getRowValue();
-                    }
-                    else if (cells[i][j].getColumnValue() > 0) aux = "C" + cells[i][j].getColumnValue();
-                    else if (cells[i][j].getRowValue() > 0) aux = "F" + cells[i][j].getRowValue();
-                    else aux = "*";
-                }
-                else aux = String.valueOf(cells[i][j].getValue());
-                l[i][j] = aux;
-            }
-        }
-
-        return l;
     }
 
     /**
@@ -647,6 +675,13 @@ public class Kakuro {
         return solveMultiple (posWhites, 0);
     }
 
+    /**
+     * Counter and searcher function
+     * @param x It indicates the position of the x-axis of the cell
+     * @param y It indicates the position of the y-axis of the cell
+     * @return It returns the column value of the black cell TOP of the white cell indicated by x and y
+     * and also his number of white vertical cells
+     */
     private Pair search_SN_blackTOP (int x, int y) {
         int num_whites = 1;
         int auxX = x;
@@ -656,6 +691,13 @@ public class Kakuro {
         return new Pair (cells[x][y].getColumnValue(), num_whites);
     }
 
+    /**
+     * Counter and searcher function
+     * @param x It indicates the position of the x-axis of the cell
+     * @param y It indicates the position of the y-axis of the cell
+     * @return It returns the row value of the black cell LEFT of the white cell indicated by x and y
+     * and also his number of white horizontal cells
+     */
     private Pair search_SN_blackLEFT (int x, int y) {
         int num_whites = 1;
         int auxY = y;
@@ -680,6 +722,9 @@ public class Kakuro {
         return aux;
     }
 
+    /**
+     * This method searches the intersection of each white cells and saves it to the map notes
+     */
     private void searchIntersections () {
         notes = new HashMap<>();
         for (int i = 0; i < numRows; ++i) {

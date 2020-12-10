@@ -1,5 +1,7 @@
 package domain;
 
+import presentation.CtrlPresentation;
+
 import java.util.Scanner;
 
 /**
@@ -12,7 +14,7 @@ public class Main {
     private static CtrlDomain a;
 
     public static void main(String[] args) {
-        a = new CtrlDomain();
+        a = new CtrlDomain(new CtrlPresentation());
         while (true){
             System.out.println("\n1 - Propose Kakuro");
             System.out.println("2 - Generate Kakuro");

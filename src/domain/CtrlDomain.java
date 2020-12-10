@@ -39,8 +39,8 @@ public class CtrlDomain {
     /**
      * Default Domain Controller constructor.
      */
-    public CtrlDomain() {
-        ctrlPresentation = new CtrlPresentation(this);
+    public CtrlDomain(CtrlPresentation ctrlPresentation) {
+        this.ctrlPresentation = ctrlPresentation;
         ctrlPersistence = new CtrlPersistence(this);
         ctrlGame = new CtrlGame(this);
         ctrlKakuro = new CtrlKakuro(this);

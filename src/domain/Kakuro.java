@@ -224,7 +224,6 @@ public class Kakuro {
             generateBlackNumbers();
             this.solutions = 0;
         }
-        save_sol_to_notes();
     }
 
     //GETTERS & SETTERS
@@ -243,18 +242,6 @@ public class Kakuro {
      */
     public void setIdKakuro(int idKakuro) {
         this.idKakuro = idKakuro;
-    }
-
-    /**
-     * Modifier function
-     * This method is used to update the map notes when a new kakuro is created
-     */
-    private void save_sol_to_notes () {
-        for (Integer i : notes.keySet()) {
-            int x = i/100;
-            int y = i%100;
-            notes.put(i, cells[x][y].getValue());
-        }
     }
 
     /**
@@ -281,18 +268,6 @@ public class Kakuro {
         }
 
         return l;
-    }
-
-    private void askhint (String [][] k) {
-        ArrayList<Pair> aux = new ArrayList<>();
-        for(int i = 0; i < k.length; ++i) {
-            for (int j = 0; j < k[0].length; ++j) {
-                if (k[i][j] == "0") aux.add(new Pair (i, j));
-            }
-        }
-        int pos = (int)(Math.random() * aux.size());
-        Pair p = aux.get(pos);
-        k[p.first()][p.second()] = String.valueOf(cells[p.first()][p.second()].getValue());
     }
 
     //CLASS METHODS
@@ -649,7 +624,6 @@ public class Kakuro {
         endTime=System.currentTimeMillis();
         timeElapsed = endTime - startTime;
         System.out.println("Solver Execution --> time in milliseconds: " + timeElapsed);
-        if (aux) save_sol_to_notes();
         return aux;
     }
 

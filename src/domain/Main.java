@@ -13,11 +13,14 @@ public class Main {
 
     public static void main(String[] args) {
         a = new CtrlDomain();
+        String user;
+        int id_kakuro;
         while (true){
             System.out.println("\n1 - Propose Kakuro");
             System.out.println("2 - Generate Kakuro");
             System.out.println("3 - Create User");
             System.out.println("4 - Start new game");
+            System.out.println("5 - Save game");
 
             System.out.print("\nCHOOSE ONE OPTION: ");
             Scanner sca = new Scanner(System.in);
@@ -44,13 +47,28 @@ public class Main {
                     break;
                 case 4:
                     System.out.println("This version is for testing not for a real game :)");
+                    System.out.println("REMEMBER CREATE A USER AND A KAKURO BEFORE!! :)");
                     System.out.println("--------------------------------------------------");
                     System.out.println("Enter the user name:");
                     sca = new Scanner(System.in);
-                    String user = sca.nextLine();
+                    user = sca.nextLine();
                     System.out.println("Enter the id of kakuro:");
-                    int id_kakuro = sca.nextInt();
+                    id_kakuro = sca.nextInt();
                     a.playKakuro(user, id_kakuro);
+                    break;
+                case 5:
+                    System.out.println("REMEMBER START A GAME BEFORE!! :)");
+                    System.out.println("--------------------------------------------------");
+                    System.out.println("Enter the user name:");
+                    sca = new Scanner(System.in);
+                    user = sca.nextLine();
+                    System.out.println("Enter the id of kakuro:");
+                    id_kakuro = sca.nextInt();
+                    System.out.println("Enter the new state of the game (THIS IS ONLY FOR TESTING):");
+                    readKakuro();
+                    a.saveGame(user, id_kakuro, kakuro);
+                    break;
+
             }
         }
     }

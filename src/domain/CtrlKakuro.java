@@ -98,7 +98,7 @@ public class CtrlKakuro {
                 Boolean b = kakuro.proposeKakuro(numRows,numColumns,field);
                 if (b) {
                     kakuro.setIdKakuro(numKakuros);
-                    numKakuros++;
+                    ++numKakuros;
                     kakuros.add(kakuro);
                     System.out.println("\nProposed Successfully");
                 }

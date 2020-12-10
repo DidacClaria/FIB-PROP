@@ -59,7 +59,7 @@ public class CtrlPersistence {
             if (user.mkdir()) return true;
             else System.out.println("User directory not created due an error");
         }
-        else System.out.println("User existed!");
+        else System.out.println("\nUser existed!");
         return false;
     }
 
@@ -75,19 +75,27 @@ public class CtrlPersistence {
     /**
      * Saves a new kakuro
      */
-    public boolean new_kakuro(int id_int, String [][] kakuro){
-        String id = String.valueOf(id_int);
+    public boolean new_kakuro(int id_kakuro, String [][] kakuro){
         try {
-            FileWriter wr = new FileWriter(routek + "\\" + id + ".txt");
-            String kak;
+            FileWriter wr = new FileWriter(routek + "\\" + id_kakuro + ".txt");
+            FileWriter wr_sol = new FileWriter(routek + "\\" + id_kakuro + "_sol.txt");
             for (int i = 0; i < kakuro.length; i++) {
                 for (int j = 0; j < kakuro[0].length; j++) {
-                    wr.write(kakuro[i][j]);
-                    if (j != kakuro[0].length - 1) wr.write(","); //separador d'elements
-                    else wr.write("#"); //separador de files
+                    if (kakuro[i][j].length() == 1 && kakuro[i][j] != "*") wr.write("0");
+                    else wr.write(kakuro[i][j]);
+                    wr_sol.write(kakuro[i][j]);
+                    if (j != kakuro[0].length - 1) {//separador d'elements
+                        wr.write(",");
+                        wr_sol.write(",");
+                    }
+                    else {
+                        wr.write(System.getProperty("line.separator")); //separador de files
+                        wr_sol.write(System.getProperty("line.separator"));
+                    }
                 }
             }
             wr.close();
+            wr_sol.close();
             return true;
         } catch (IOException e){
             System.out.println("\nError occurred during file writing");
@@ -119,12 +127,12 @@ public class CtrlPersistence {
     }
 
     /**
-     * Start a new game for User = user
+     * Starts a new game for User = user
      */
-    public boolean new_game (String user, int id_game){
+    public boolean new_game (String user, int id_kakuro){
         try {
-            File pathOri = new File(routek + "\\" + id_game + ".txt");
-            File pathDes = new File(route + "\\" + user + "\\" + id_game + ".txt");
+            File pathOri = new File(routek + "\\" + id_kakuro + ".txt");
+            File pathDes = new File(route + "\\" + user + "\\" + id_kakuro + ".txt");
             pathDes.createNewFile();
             if (pathOri.exists() && pathDes.exists())
                 Files.copy(Paths.get(pathOri.getAbsolutePath()), Paths.get(pathDes.getAbsolutePath()), StandardCopyOption.REPLACE_EXISTING);
@@ -135,29 +143,68 @@ public class CtrlPersistence {
         return false;
     }
 
-
+    /**
+     * Saves the state of a game in current of the user
+     */
+    public boolean save_game (String user, int id_kakuro, String [][] kakuro){
+        File old_game = new File(route + "\\" + user + "\\" + id_kakuro + ".txt");
+        if (old_game.exists()) {
+            old_game.delete();
+            try {
+                FileWriter new_game = new FileWriter(route + "\\" + user + "\\" + id_kakuro + ".txt");
+                for (int i = 0; i < kakuro.length; i++) {
+                    for (int j = 0; j < kakuro[0].length; j++) {
+                        if (kakuro[i][j].equals("?")) new_game.write("0");
+                        else new_game.write(kakuro[i][j]);
+                        if (j != kakuro[0].length - 1) new_game.write(","); //separador d'elements
+                        else new_game.write(System.getProperty("line.separator")); //separador de files
+                    }
+                }
+                new_game.close();
+                return true;
+            } catch (IOException e){
+                System.out.println("\nError occurred during file writing");
+                return false;
+            }
+        }
+        else {
+            System.out.println("\nThe game is not existed!");
+            return false;
+        }
+    }
 
     /**
      * returns the game of User = user with ID = id_game
      */
-    public String show_game(String user, int id_game){
-        String kakuro;
-        String aux = null;
+    /*
+    public String[][] show_game(String user, int id_kakuro){
+        int i = 0;
+        while (m)
+
+        String [][]
         try {
-            File k = new File(routek + "\\" + user + "\\" + id_game + ".txt");
+            File k = new File(route + "\\" + user + "\\" + id_kakuro + "_sol.txt");
             if (k.exists()) {
                 Scanner mr = new Scanner(k);
-                kakuro = mr.nextLine();
+                int i = 0;
                 while (mr.hasNextLine()){
-                    kakuro += mr.nextLine();
+                    String aux = mr.nextLine();
+                    kakuro[i] = aux.split(",");
+                    ++i;
                 }
                 mr.close();
-                aux = kakuro;
             }
         } catch (IOException e){
             System.out.println("\nError occurred during file reading");
         }
-        return aux;
+        return kakuro;
+    }
+    */
+
+
+    public void ask_hint (String user, int id_kakuro, String [][] kakuro) {
+
+
     }
 
 }

@@ -55,8 +55,8 @@ public class CtrlGame {
      * The execution of a Game it stops and the current state is saved.
      * @param idGame is the identification of the current game.
      */
-    public void saveGame(int idGame){
-        throw new ArithmeticException("Not implemented yet");
+    public void saveGame(String user, int idKakuro){
+
     }
 
     /**

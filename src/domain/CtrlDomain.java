@@ -109,8 +109,8 @@ public class CtrlDomain {
      * Function used to save the current state of a game.
      * @param idGame indicates the identifier of the kakuro to save
      */
-    public void saveGame(int idGame){
-        ctrlGame.saveGame(idGame);
+    public void saveGame(String user, int idKakuro, String [][] new_state){
+        if (ctrlPersistence.save_game(user, idKakuro, new_state)) ctrlGame.saveGame (user, idKakuro);
     }
 
     /**

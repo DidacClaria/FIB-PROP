@@ -2,5 +2,7 @@ package presentation;
 
 import javax.swing.*;
 
-public class PlayGameView extends JPanel {
+public class PlayGameView {
+    public PlayGameView(CtrlPresentation ctrlPresentation) {
+    }
 }

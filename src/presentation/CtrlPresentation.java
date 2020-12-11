@@ -28,4 +28,25 @@ public class CtrlPresentation {
     public void initPresentation() {
         mainFrame.makeVisible();
     }
+
+    public void logInUser(String username) {
+//        ctrlDomain.logInUser(username);
+    }
+
+    public void generateKakuro(int width, int height, int difficulty, int numFilledCells) {
+//        String[][] kakuro = ctrlDomain.generateKakuro(width,height);
+    }
+
+    public void makeUserMenuViewVisible() {
+        mainFrame.makeUserMenuViewVisible();
+    }
+
+    public void makeLogInViewVisible() {
+        mainFrame.makeLogInViewVisible();
+    }
+
+    public void makeCreateKakuroViewVisible() {
+        mainFrame.makeCreateKakuroViewVisible();
+    }
+
 }

@@ -16,15 +16,27 @@ public class MainFrame extends JFrame {
     private PlayGameView playGameView;
     private RankingView rankingView;
 
+    private String username;
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
     public MainFrame(CtrlPresentation ctrlPresentation) {
         this.ctrlPresentation = ctrlPresentation;
 
-        this.logInView = new LogInView();
-        this.userMenuView = new UserMenuView();
-        this.createKakuroView = new CreateKakuroView();
-        this.selectGameView = new SelectGameView();
-        this.playGameView = new PlayGameView();
-        this.rankingView = new RankingView();
+        this.logInView = new LogInView(ctrlPresentation);
+        this.userMenuView = new UserMenuView(ctrlPresentation);
+        this.createKakuroView = new CreateKakuroView(ctrlPresentation);
+        this.selectGameView = new SelectGameView(ctrlPresentation);
+        this.playGameView = new PlayGameView(ctrlPresentation);
+        this.rankingView = new RankingView(ctrlPresentation);
+
+        this.username = "System";
 
         mainFrameInit();
 
@@ -36,11 +48,26 @@ public class MainFrame extends JFrame {
         setPreferredSize(getMinimumSize());
         setResizable(false);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setContentPane(logInView);
+        setContentPane(logInView.getLogInPanel());
     }
 
     public void makeVisible() {
         pack();
         setVisible(true);
+    }
+
+    public void makeUserMenuViewVisible() {
+        userMenuView.setVisible(true);
+        setContentPane(userMenuView.getUserMenuPanel());
+    }
+
+    public void makeLogInViewVisible() {
+        logInView.setVisible(true);
+        setContentPane(logInView.getLogInPanel());
+    }
+
+    public void makeCreateKakuroViewVisible() {
+        createKakuroView.setVisible(true);
+        setContentPane(createKakuroView.getCreateKakuroPanel());
     }
 }

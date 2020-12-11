@@ -109,8 +109,18 @@ public class CtrlDomain {
      * Function used to save the current state of a game.
      * @param idGame indicates the identifier of the kakuro to save
      */
-    public void saveGame(String user, int idKakuro, String [][] new_state){
-        if (ctrlPersistence.save_game(user, idKakuro, new_state)) ctrlGame.saveGame (user, idKakuro);
+    public void saveGame(String user, int idKakuro, int idGame, int time, int hints, String [][] new_state){
+        if (ctrlPersistence.save_game(user, idKakuro, idGame, time, hints, new_state)) ctrlGame.saveGame (user, idKakuro);
+    }
+
+    public void validate_game (String user, int id_kakuro, int id_game, int time, int hints, String [][] kakuro) {
+        if (ctrlPersistence.validate_correctness_game(user, id_kakuro, id_game, kakuro)) {
+            int scores = (72000 - time);
+            if (scores - (7200 * hints) > 0) scores -= (7200 * hints);
+            else scores = 0;
+            ctrlPersistence.update_stats(user, id_kakuro, time, hints, scores, true);
+            ctrlPersistence.update_stats(user, id_kakuro, time, hints, scores, false);
+        }
     }
 
     /**

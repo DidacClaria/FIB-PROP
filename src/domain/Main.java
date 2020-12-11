@@ -15,12 +15,17 @@ public class Main {
         a = new CtrlDomain();
         String user;
         int id_kakuro;
+        int id_game;
+        int time;
+        int hints;
+
         while (true){
             System.out.println("\n1 - Propose Kakuro");
             System.out.println("2 - Generate Kakuro");
             System.out.println("3 - Create User");
             System.out.println("4 - Start new game");
             System.out.println("5 - Save game");
+            System.out.println("6 - Validate game");
 
             System.out.print("\nCHOOSE ONE OPTION: ");
             Scanner sca = new Scanner(System.in);
@@ -64,11 +69,32 @@ public class Main {
                     user = sca.nextLine();
                     System.out.println("Enter the id of kakuro:");
                     id_kakuro = sca.nextInt();
+                    System.out.println("Enter the id of game:");
+                    id_game = sca.nextInt();
+                    System.out.println("Enter the execution time:");
+                    time = sca.nextInt();
+                    System.out.println("Enter the number of ask_hints:");
+                    hints = sca.nextInt();
                     System.out.println("Enter the new state of the game (THIS IS ONLY FOR TESTING):");
                     readKakuro();
-                    a.saveGame(user, id_kakuro, kakuro);
+                    a.saveGame(user, id_kakuro, id_game, time, hints, kakuro);
                     break;
-
+                case 6:
+                    System.out.println("Enter the user name:");
+                    sca = new Scanner(System.in);
+                    user = sca.nextLine();
+                    System.out.println("Enter the id of kakuro:");
+                    id_kakuro = sca.nextInt();
+                    System.out.println("Enter the id of game:");
+                    id_game = sca.nextInt();
+                    System.out.println("Enter the execution time:");
+                    time = sca.nextInt();
+                    System.out.println("Enter the number of ask_hints:");
+                    hints = sca.nextInt();
+                    System.out.println("Enter the new state of the game (THIS IS ONLY FOR TESTING):");
+                    readKakuro();
+                    a.validate_game(user, id_kakuro, id_game, time, hints, kakuro);
+                    break;
             }
         }
     }

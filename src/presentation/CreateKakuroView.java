@@ -1,8 +1,11 @@
 package presentation;
 
 import javax.swing.*;
+import javax.swing.text.TabExpander;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 
 public class CreateKakuroView {
     private final CtrlPresentation ctrlPresentation;
@@ -33,14 +36,8 @@ public class CreateKakuroView {
         GOBACKbutton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                setVisible(false);
+                createKakuroPanel.setVisible(false);
                 ctrlPresentation.makeUserMenuViewVisible();
-            }
-        });
-        GENERATEFIELDButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-
             }
         });
         AUTOMATICGENERATIONButton.addActionListener(new ActionListener() {
@@ -50,7 +47,11 @@ public class CreateKakuroView {
 //                int height = Integer.parseInt(heightField.getText());
 //                int difficulty = difficultyComboBox.getSelectedIndex();
 //                int numFilledCells = Integer.parseInt(numFilledCellsField.getText());
-//                ctrlPresentation.generateKakuro(width,height,difficulty,numFilledCells);
+//                int kakuroID = ctrlPresentation.generateKakuro(width,height,difficulty,numFilledCells);
+//                JOptionPane.showMessageDialog(null,"The kakuro with id #"+kakuroID+"was created succesfully!");
+                JOptionPane.showMessageDialog(null,"The kakuro with id #1 was created succesfully!");
+                setVisible(false);
+                ctrlPresentation.makeUserMenuViewVisible();
             }
         });
         READFROMFILEButton.addActionListener(new ActionListener() {
@@ -89,21 +90,24 @@ public class CreateKakuroView {
             @Override
             public void actionPerformed(ActionEvent e) {
 //                ctrlPresentation.validateKakuro(widht,height,kakuro);
+                JOptionPane.showMessageDialog(null,"The kakuro with id #1 was created succesfully!");
+                createKakuroPanel.setVisible(false);
+                ctrlPresentation.makeUserMenuViewVisible();
             }
         });
-        heightField.addActionListener(new ActionListener() {
+        GENERATEFIELDButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (heightField.getText().equals("") || widthField.getText().equals("")){
-                    ERRORdisplay.setText("");
-                }
-                else {
+                try {
                     if (Integer.parseInt(heightField.getText())<3 || Integer.parseInt(widthField.getText())<3){
-                        ERRORdisplay.setText("This size is too small");
+                        ERRORdisplay.setText("The size of the field is too small");
                     }
                     else {
                         ERRORdisplay.setText("");
                     }
+                }
+                catch (NumberFormatException ignored){
+                    ERRORdisplay.setText("Please add the size of the field.");
                 }
             }
         });

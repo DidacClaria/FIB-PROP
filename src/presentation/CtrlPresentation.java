@@ -1,7 +1,11 @@
 package presentation;
 
 import domain.CtrlDomain;
+import domain.Game;
 import domain.Main;
+
+import java.util.ArrayList;
+import java.util.Set;
 
 /**
  * Presentation Controller Class.
@@ -33,8 +37,53 @@ public class CtrlPresentation {
 //        ctrlDomain.logInUser(username);
     }
 
-    public void generateKakuro(int width, int height, int difficulty, int numFilledCells) {
+    public String[][] generateKakuro(int width, int height, int difficulty, int numFilledCells) {
 //        String[][] kakuro = ctrlDomain.generateKakuro(width,height);
+        return null;
+    }
+
+    public String[][] validateKakuro(int width, int height, String[][] field){
+        return null;
+    }
+
+    public Set<Integer> getListKakuros() {
+        return null;
+    }
+
+    public Set<Integer> getListGames(String username){
+        return null;
+    }
+
+    public String askHint(String[][] field){
+        return null;
+    }
+
+    public String addValueToCell(int idGame, int posX, int posY, int value){
+        return null;
+    }
+
+    public void saveGame(){
+
+    }
+
+    public void exitGame(){
+
+    }
+
+    public String[][] listGlobalRanking() {
+        return null;
+    }
+
+    public String[][] listPersonalStats(){
+        return null;
+    }
+
+    public Boolean deleteUser(String username){
+        return null;
+    }
+
+    public Boolean deleteGame(String username, int idGame){
+        return null;
     }
 
     public void makeUserMenuViewVisible() {
@@ -47,6 +96,14 @@ public class CtrlPresentation {
 
     public void makeCreateKakuroViewVisible() {
         mainFrame.makeCreateKakuroViewVisible();
+    }
+
+    public void makePlayGameViewVisible() { mainFrame.makePlayGameViewVisible(); }
+
+    public void makeRankingViewVisible(String rankingType) { mainFrame.makeRankingViewVisible(rankingType); }
+
+    public void makeSelectGameViewVisible() {
+        mainFrame.makeSelectGameViewVisible();
     }
 
 }

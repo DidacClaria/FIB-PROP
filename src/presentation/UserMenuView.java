@@ -13,6 +13,7 @@ public class UserMenuView {
     private JButton CREATEKAKUROButton;
     private JButton LOGOUTButton;
     private JLabel usernameLabel;
+    private JButton DELETEUSERButton;
 
     public UserMenuView(CtrlPresentation ctrlPresentation) {
         this.ctrlPresentation = ctrlPresentation;
@@ -34,6 +35,27 @@ public class UserMenuView {
                 ctrlPresentation.makeCreateKakuroViewVisible();
             }
         });
+        PLAYGAMEButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                userMenuPanel.setVisible(false);
+                ctrlPresentation.makeSelectGameViewVisible();
+            }
+        });
+        PERSONALSTATSButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                userMenuPanel.setVisible(false);
+                ctrlPresentation.makeRankingViewVisible("PERSONAL STATS");
+            }
+        });
+        GLOBALRANKINGButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                userMenuPanel.setVisible(false);
+                ctrlPresentation.makeRankingViewVisible("GLOBAL RANKING");
+            }
+        });
     }
 
     public JPanel getUserMenuPanel() {
@@ -42,5 +64,9 @@ public class UserMenuView {
 
     public void setVisible(boolean b) {
         userMenuPanel.setVisible(b);
+    }
+
+    public void setUsername(String username){
+        usernameLabel.setText(username);
     }
 }

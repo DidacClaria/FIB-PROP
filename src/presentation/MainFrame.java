@@ -6,8 +6,6 @@ import javax.swing.*;
 import java.awt.*;
 
 public class MainFrame extends JFrame {
-    private CtrlPresentation ctrlPresentation;
-
     private JPanel MainFrame;
     private LogInView logInView;
     private UserMenuView userMenuView;
@@ -16,18 +14,7 @@ public class MainFrame extends JFrame {
     private PlayGameView playGameView;
     private RankingView rankingView;
 
-    private String username;
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
     public MainFrame(CtrlPresentation ctrlPresentation) {
-        this.ctrlPresentation = ctrlPresentation;
 
         this.logInView = new LogInView(ctrlPresentation);
         this.userMenuView = new UserMenuView(ctrlPresentation);
@@ -35,8 +22,6 @@ public class MainFrame extends JFrame {
         this.selectGameView = new SelectGameView(ctrlPresentation);
         this.playGameView = new PlayGameView(ctrlPresentation);
         this.rankingView = new RankingView(ctrlPresentation);
-
-        this.username = "System";
 
         mainFrameInit();
 
@@ -46,7 +31,7 @@ public class MainFrame extends JFrame {
         setTitle("KAKURO");
         setMinimumSize(new Dimension(900,700));
         setPreferredSize(getMinimumSize());
-        setResizable(false);
+//        setResizable(false);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setContentPane(logInView.getLogInPanel());
     }
@@ -69,5 +54,27 @@ public class MainFrame extends JFrame {
     public void makeCreateKakuroViewVisible() {
         createKakuroView.setVisible(true);
         setContentPane(createKakuroView.getCreateKakuroPanel());
+    }
+
+    public void makePlayGameViewVisible(){
+        playGameView.setVisible(true);
+        setContentPane(playGameView.getPlayGamePanel());
+    }
+
+    public void makeSelectGameViewVisible(){
+        selectGameView.setVisible(true);
+        setContentPane(selectGameView.getSelectGamePanel());
+    }
+
+    public void makeRankingViewVisible(String rankingType){
+        rankingView.setVisible(true);
+        JPanel rankingAux = rankingView.getRankingPanel();
+        if (rankingType == "PERSONAL STATS") {
+//            rankingAux.setTitle(rankingType);
+        }
+        else {
+//            rankingAux.setTitle(rankingAux);
+        }
+        setContentPane(rankingAux);
     }
 }

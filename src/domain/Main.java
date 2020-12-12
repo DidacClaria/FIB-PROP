@@ -26,6 +26,8 @@ public class Main {
             System.out.println("4 - Start new game");
             System.out.println("5 - Save game");
             System.out.println("6 - Validate game");
+            System.out.println("7 - Eliminate User");
+            System.out.println("8 - Eliminate Kakuro");
 
             System.out.print("\nCHOOSE ONE OPTION: ");
             Scanner sca = new Scanner(System.in);
@@ -48,7 +50,7 @@ public class Main {
                 case 3:
                     System.out.println("\nEnter your user name:");
                     sca = new Scanner(System.in);
-                    a.createUser(sca.nextLine());
+                    a.logInUser(sca.nextLine());
                     break;
                 case 4:
                     System.out.println("This version is for testing not for a real game :)");
@@ -94,6 +96,20 @@ public class Main {
                     System.out.println("Enter the new state of the game (THIS IS ONLY FOR TESTING):");
                     readKakuro();
                     a.validate_game(user, id_kakuro, id_game, time, hints, kakuro);
+                    break;
+                case 7:
+                    System.out.println("Enter the user name you want to remove:");
+                    sca = new Scanner(System.in);
+                    user = sca.nextLine();
+                    a.remove_user(user);
+                    break;
+                case 8:
+                    System.out.println("Enter the user name you want to remove:");
+                    sca = new Scanner(System.in);
+                    user = sca.nextLine();
+                    System.out.println("Enter the id of kakuro you want to remove:");
+                    id_kakuro = sca.nextInt();
+                    a.remove_kakuros(user, id_kakuro);
                     break;
             }
         }

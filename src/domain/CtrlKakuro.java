@@ -21,7 +21,7 @@ public class CtrlKakuro {
     /**
      * Kakuro class. Is the instance of the kakuro currently running in the system.
      */
-    private Kakuro kakuro;
+    private Kakuro kakuroCreated;
 
     /**
      * It contains the current global number of kakuros created and saved.
@@ -40,7 +40,7 @@ public class CtrlKakuro {
     }
 
     //GETTERS AND SETTERS
-    public int consult_id_kakuro () {
+    public int list_id_kakuro () {
         return this.numKakuros;
     }
 
@@ -53,8 +53,8 @@ public class CtrlKakuro {
      */
     public void generateKakuro(int numRows, int numColumns){
         if (numColumns>= 3 && numRows>=3 && numColumns<=10 && numRows<=10){
-            kakuro = new Kakuro(numRows, numColumns);
-            kakuros.add(kakuro);
+            kakuroCreated = new Kakuro(numRows, numColumns);
+            kakuros.add(kakuroCreated);
             ++numKakuros;
         }
         else if (numColumns<=10 && numRows<=10) {
@@ -70,8 +70,9 @@ public class CtrlKakuro {
      * @param numRows It indicates the number of rows that the Kakuro will have.
      * @param numColumns It indicates the number of columns that the Kakuro will have.
      * @param field It has the information of every individual Cell in the Kakuro.
+     * @return It will return true if the kakuro to be proposed has solution and otherwise false.
      */
-    public void proposeKakuro(int numRows, int numColumns, String[][] field){
+    public boolean proposeKakuro(int numRows, int numColumns, String[][] field){
         boolean validField = false;
         for (String[] row:field){
             for (String cell: row){
@@ -94,19 +95,21 @@ public class CtrlKakuro {
         }
         if (validField){
             if (numColumns>= 3 && numRows>=3){
-                kakuro = new Kakuro();
-                Boolean b = kakuro.proposeKakuro(numRows,numColumns,field);
+                kakuroCreated = new Kakuro();
+                Boolean b = kakuroCreated.proposeKakuro(numRows,numColumns,field);
                 if (b) {
-                    kakuro.setIdKakuro(numKakuros);
                     ++numKakuros;
-                    kakuros.add(kakuro);
+                    kakuroCreated.setIdKakuro(numKakuros);
+                    kakuros.add(kakuroCreated);
                     System.out.println("\nProposed Successfully");
+                    return true;
                 }
                 else System.out.println("No Solution Found Out");
             }
             else throw new ArithmeticException("The size of the Kakuro is too small");
         }
         else throw new ArithmeticException("The proposed field is not valid");
+        return false;
     }
 
     /**
@@ -114,7 +117,7 @@ public class CtrlKakuro {
      * @return It returns a matrix of the information of all the cells of the kakuro
      */
     public String [][] listKakuro () {
-        return kakuro.listKakuro();
+        return kakuroCreated.listKakuro();
     }
 
 }

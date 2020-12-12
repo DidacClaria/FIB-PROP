@@ -8,6 +8,9 @@ import java.util.*;
 public class Kakuro {
 
     //ATTRIBUTES
+    /**
+     * This attribute indicates the possible intersections
+     */
     static HashMap<Integer, Integer> comb;
 
     static {
@@ -179,10 +182,6 @@ public class Kakuro {
      */
     HashMap<Integer, Integer> notes;
 
-    /**
-     * This attribute indicates the name of the author of the Kakuro.
-     */
-    private String author;
 
     //CONSTRUCTORS
 
@@ -224,6 +223,7 @@ public class Kakuro {
             generateBlackNumbers();
             this.solutions = 0;
         }
+        solveKakuro();
     }
 
     //GETTERS & SETTERS

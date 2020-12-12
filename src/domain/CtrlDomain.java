@@ -56,8 +56,8 @@ public class CtrlDomain {
      * @param field it has the value of each cell divided by ",".
      */
     public void proposeKakuro(int numRows, int numColumns, String[][] field){
-        ctrlKakuro.proposeKakuro(numRows,numColumns,field);
-        ctrlPersistence.new_kakuro(ctrlKakuro.consult_id_kakuro(), ctrlKakuro.listKakuro());
+        if (ctrlKakuro.proposeKakuro(numRows,numColumns,field))
+            ctrlPersistence.new_kakuro(ctrlKakuro.list_id_kakuro(), ctrlKakuro.listKakuro());
     }
 
     /**
@@ -67,7 +67,7 @@ public class CtrlDomain {
      */
     public void generateKakuro(int numRows, int numColumns){
         ctrlKakuro.generateKakuro(numRows, numColumns);
-        ctrlPersistence.new_kakuro(ctrlKakuro.consult_id_kakuro(), ctrlKakuro.listKakuro());
+        ctrlPersistence.new_kakuro(ctrlKakuro.list_id_kakuro(), ctrlKakuro.listKakuro());
     }
 
     /**
@@ -81,28 +81,21 @@ public class CtrlDomain {
     //WIP USE CASES
 
     /**
-     * Function used to create new Users into the system
+     * Function used to log in, if the user is not existed, the system will create by itself a new user with name introduced
      * @param name indicates the name of the new user
-     * @param password indicates the password of the user
      */
-    public void createUser(String name){
+    public void logInUser(String name){
         if (ctrlPersistence.create_user(name)) ctrlUser.createUser(name);
+        else ctrlUser.setActiveUser (name);
     }
 
     /**
-     * Function used to swap the current User with the new one indicated
-     * @param name indicates the name of the user to load
+     *
+     * @param user It indicates the user who is playing the game
+     * @param id_kakuro It indicates the game scenario
      */
-    public void loadUser(String name){
-        ctrlUser.loadUser(name);
-    }
-
-    /**
-     * Function used to simulate a game for a kakuro
-     * @param idGame indicates the identifier of the kakuro to load and play
-     */
-    public void playKakuro(String user, int idKakuro){
-        if (ctrlPersistence.new_game(user, idKakuro)) ctrlGame.playKakuro(user, idKakuro);
+    public void playKakuro (String user, int id_kakuro) {
+        if (ctrlPersistence.new_game(user, id_kakuro)) ctrlGame.startKakuro(user, id_kakuro);
     }
 
     /**
@@ -110,7 +103,7 @@ public class CtrlDomain {
      * @param idGame indicates the identifier of the kakuro to save
      */
     public void saveGame(String user, int idKakuro, int idGame, int time, int hints, String [][] new_state){
-        if (ctrlPersistence.save_game(user, idKakuro, idGame, time, hints, new_state)) ctrlGame.saveGame (user, idKakuro);
+        ctrlPersistence.save_game(user, idKakuro, idGame, time, hints, new_state);
     }
 
     public void validate_game (String user, int id_kakuro, int id_game, int time, int hints, String [][] kakuro) {
@@ -121,6 +114,14 @@ public class CtrlDomain {
             ctrlPersistence.update_stats(user, id_kakuro, time, hints, scores, true);
             ctrlPersistence.update_stats(user, id_kakuro, time, hints, scores, false);
         }
+    }
+
+    public void remove_user (String user) {
+        ctrlPersistence.eliminate_user(user);
+    }
+
+    public void remove_kakuros (String user, int id_kakuro) {
+        ctrlPersistence.eliminate_kakuro(user, id_kakuro);
     }
 
     /**

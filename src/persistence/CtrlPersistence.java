@@ -155,20 +155,20 @@ public class CtrlPersistence {
     public boolean new_game (String user, int id_kakuro){
         try {
             File pathOri = new File(routek + "\\" + "model_" + id_kakuro + ".txt");
-            if (pathOri.exists()) {
+            File pathUser = new File(route + "\\" + user);
+            if (pathOri.exists() && pathUser.exists()) {
                 File kakuro = new File(route + "\\" + user + "\\" + "kakuro_" + id_kakuro);
                 int id_game = 0;
 
                 if (!kakuro.exists()) kakuro.mkdir();
 
                 String[] quantity = kakuro.list();
-                if (quantity.length == 0) id_game = 1;
-                else id_game = (quantity.length + 2) / 2;
+                id_game = quantity.length / 2 + 1;
 
                 File pathDes = new File(route + "\\" + user + "\\" + "kakuro_" + id_kakuro + "\\" + "game_" + id_game + ".txt");
                 Files.copy(Paths.get(pathOri.getAbsolutePath()), Paths.get(pathDes.getAbsolutePath()), StandardCopyOption.REPLACE_EXISTING);
 
-                FileWriter wr = new FileWriter(route + "\\" + user + "\\" + "kakuro_" + id_kakuro + "\\" + "game_" + id_game + "_stats.txt");
+                FileWriter wr = new FileWriter(route + "\\" + user + "\\" + "kakuro_" + id_kakuro + "\\" +"game_" + id_game + "_stats.txt");
                 wr.write("Execution Time: 0");
                 wr.write(System.getProperty("line.separator"));
                 wr.write("Hints asked: 0");
@@ -198,7 +198,7 @@ public class CtrlPersistence {
             }
             game_saved.close();
 
-            FileWriter game_saved_stats = new FileWriter(route + "\\" + user + "\\" + "kakuro_" + id_kakuro + "\\" + "game_" + id_game + "_stats.txt");
+            FileWriter game_saved_stats = new FileWriter(route + "\\" + user + "\\" + "kakuro_" + id_kakuro + "\\" +"game_" + id_game + "_stats.txt");
             game_saved_stats.write("Execution Time: " + time);
             game_saved_stats.write(System.getProperty("line.separator"));
             game_saved_stats.write("Hints asked: " + hints);
@@ -287,6 +287,37 @@ public class CtrlPersistence {
         }catch (IOException e){
             System.out.println("\nError occurred during file writing");
         }
+    }
+
+    public void eliminate_user (String user) {
+        File f = new File(route + "\\" + user);
+        if (f.exists()) {
+            String[] entries = f.list();
+            for (String s : entries) {
+                File currentFile = new File(f.getPath(), s);
+                if (currentFile.isDirectory()) eliminate_kakuro_dir(currentFile);
+                else currentFile.delete();
+            }
+            f.delete();
+        }
+        else System.out.println("\nUser not existed");
+    }
+
+    public void eliminate_kakuro (String user, int id_kakuro) {
+        File f = new File(route + "\\" + user + "\\" + "kakuro_" + id_kakuro);
+        eliminate_kakuro_dir(f);
+    }
+
+    private void eliminate_kakuro_dir (File f) {
+        if (f.exists()) {
+            String[] entries = f.list();
+            for (String s : entries) {
+                File currentFile = new File(f.getPath(), s);
+                currentFile.delete();
+            }
+            f.delete();
+        }
+        else System.out.println("\nKakuro not existed");
     }
 
 }

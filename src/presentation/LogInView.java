@@ -10,6 +10,8 @@ public class LogInView {
     private JButton enterButton;
     private JTextField usernameTextField;
     private JPanel logInPanel;
+    private Logo kakuroLogo;
+    private JPanel kakuroContainer;
 
     public LogInView(CtrlPresentation ctrlPresentation) {
         this.ctrlPresentation = ctrlPresentation;
@@ -25,8 +27,8 @@ public class LogInView {
                 ctrlPresentation.makeUserMenuViewVisible();
             }
         });
-    }
 
+    }
 
     public JPanel getLogInPanel() {
         return logInPanel;
@@ -34,5 +36,9 @@ public class LogInView {
 
     public void setVisible(boolean b) {
         logInPanel.setVisible(b);
+    }
+
+    private void createUIComponents() {
+        kakuroLogo= new Logo(250,250);
     }
 }

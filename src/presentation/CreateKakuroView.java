@@ -27,6 +27,7 @@ public class CreateKakuroView {
     private JButton VALIDATEButton;
     private JLabel ERRORdisplay;
 
+
     public CreateKakuroView(CtrlPresentation ctrlPresentation) {
         this.ctrlPresentation = ctrlPresentation;
         initComponents();

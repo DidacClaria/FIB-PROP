@@ -22,7 +22,8 @@ public class SelectGameView {
         GOBACKButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
+                selectGamePanel.setVisible(false);
+                ctrlPresentation.makeUserMenuViewVisible();
             }
         });
     }

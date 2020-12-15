@@ -28,8 +28,8 @@ public class CtrlPersistence {
      */
     public CtrlPersistence(CtrlDomain ctrlDomain) {
         this.ctrlDomain = ctrlDomain;
-        route = "D:\\PROP\\src\\persistence\\data";
-        routek = route + "\\kakuros";
+        route = "./src/persistence/data";
+        routek = route + "/kakuros";
         InitializePersistance();
 
     }
@@ -55,10 +55,10 @@ public class CtrlPersistence {
      */
     public boolean create_user(String name) {
         try {
-            File user = new File(route + "\\" + name);
+            File user = new File(route + "/" + name);
             if (!user.exists()) {
                 if (user.mkdir()) {
-                    File f = new File(route + "\\" + name + "\\" + "personal_stats.txt");
+                    File f = new File(route + "/" + name + "/" + "personal_stats.txt");
                     f.createNewFile();
                     return true;
                 } else System.out.println("User directory not created due an error");
@@ -83,8 +83,8 @@ public class CtrlPersistence {
      */
     public boolean new_kakuro(int id_kakuro, String [][] kakuro){
         try {
-            FileWriter wr = new FileWriter(routek + "\\" + "model_" + id_kakuro + ".txt");
-            FileWriter wr_sol = new FileWriter(routek + "\\" + "model_" + id_kakuro + "_sol.txt");
+            FileWriter wr = new FileWriter(routek + "/" + "model_" + id_kakuro + ".txt");
+            FileWriter wr_sol = new FileWriter(routek + "/" + "model_" + id_kakuro + "_sol.txt");
             for (int i = 0; i < kakuro.length; i++) {
                 for (int j = 0; j < kakuro[0].length; j++) {
                     if (kakuro[i][j].length() == 1 && kakuro[i][j] != "*") wr.write("0");
@@ -119,8 +119,8 @@ public class CtrlPersistence {
     public String[][] show_kakuro(int id, boolean solution){
         try {
             File k;
-            if (solution) k = new File(routek + "\\" + "model_" + id + "_sol.txt");
-            else k = new  File(routek + "\\" + "model_" + id + ".txt");
+            if (solution) k = new File(routek + "/" + "model_" + id + "_sol.txt");
+            else k = new  File(routek + "/" + "model_" + id + ".txt");
 
             if (k.exists()) {
                 String [][] kakuro;
@@ -154,10 +154,10 @@ public class CtrlPersistence {
      */
     public boolean new_game (String user, int id_kakuro){
         try {
-            File pathOri = new File(routek + "\\" + "model_" + id_kakuro + ".txt");
-            File pathUser = new File(route + "\\" + user);
+            File pathOri = new File(routek + "/" + "model_" + id_kakuro + ".txt");
+            File pathUser = new File(route + "/" + user);
             if (pathOri.exists() && pathUser.exists()) {
-                File kakuro = new File(route + "\\" + user + "\\" + "kakuro_" + id_kakuro);
+                File kakuro = new File(route + "/" + user + "/" + "kakuro_" + id_kakuro);
                 int id_game = 0;
 
                 if (!kakuro.exists()) kakuro.mkdir();
@@ -165,10 +165,10 @@ public class CtrlPersistence {
                 String[] quantity = kakuro.list();
                 id_game = quantity.length / 2 + 1;
 
-                File pathDes = new File(route + "\\" + user + "\\" + "kakuro_" + id_kakuro + "\\" + "game_" + id_game + ".txt");
+                File pathDes = new File(route + "/" + user + "/" + "kakuro_" + id_kakuro + "/" + "game_" + id_game + ".txt");
                 Files.copy(Paths.get(pathOri.getAbsolutePath()), Paths.get(pathDes.getAbsolutePath()), StandardCopyOption.REPLACE_EXISTING);
 
-                FileWriter wr = new FileWriter(route + "\\" + user + "\\" + "kakuro_" + id_kakuro + "\\" +"game_" + id_game + "_stats.txt");
+                FileWriter wr = new FileWriter(route + "/" + user + "/" + "kakuro_" + id_kakuro + "/" +"game_" + id_game + "_stats.txt");
                 wr.write("Execution Time: 0");
                 wr.write(System.getProperty("line.separator"));
                 wr.write("Hints asked: 0");
@@ -187,7 +187,7 @@ public class CtrlPersistence {
      */
     public boolean save_game (String user, int id_kakuro, int id_game, int time, int hints, String [][] kakuro){
         try {
-            FileWriter game_saved = new FileWriter(route + "\\" + user + "\\" + "kakuro_" + id_kakuro + "\\" + "game_" + id_game + ".txt");
+            FileWriter game_saved = new FileWriter(route + "/" + user + "/" + "kakuro_" + id_kakuro + "/" + "game_" + id_game + ".txt");
             for (int i = 0; i < kakuro.length; i++) {
                 for (int j = 0; j < kakuro[0].length; j++) {
                     if (kakuro[i][j].equals("?")) game_saved.write("0");
@@ -198,7 +198,7 @@ public class CtrlPersistence {
             }
             game_saved.close();
 
-            FileWriter game_saved_stats = new FileWriter(route + "\\" + user + "\\" + "kakuro_" + id_kakuro + "\\" +"game_" + id_game + "_stats.txt");
+            FileWriter game_saved_stats = new FileWriter(route + "/" + user + "/" + "kakuro_" + id_kakuro + "/" +"game_" + id_game + "_stats.txt");
             game_saved_stats.write("Execution Time: " + time);
             game_saved_stats.write(System.getProperty("line.separator"));
             game_saved_stats.write("Hints asked: " + hints);
@@ -222,7 +222,7 @@ public class CtrlPersistence {
 
         String [][]
         try {
-            File k = new File(route + "\\" + user + "\\" + id_kakuro + "_sol.txt");
+            File k = new File(route + "/" + user + "/" + id_kakuro + "_sol.txt");
             if (k.exists()) {
                 Scanner mr = new Scanner(k);
                 int i = 0;
@@ -243,8 +243,8 @@ public class CtrlPersistence {
     public boolean validate_correctness_game (String user, int id_kakuro, int id_game, String [][] kakuro) {
         String [][] solution = show_kakuro(id_kakuro, true);
         if (Arrays.deepEquals(solution, kakuro)) {
-            File f = new File(route + "\\" + user + "\\" + "kakuro_" + id_kakuro + "\\" + "game_" + id_game + ".txt");
-            File f_stats = new File(route + "\\" + user + "\\" + "kakuro_" + id_kakuro + "\\" + "game_" + id_game + "_stats.txt");
+            File f = new File(route + "/" + user + "/" + "kakuro_" + id_kakuro + "/" + "game_" + id_game + ".txt");
+            File f_stats = new File(route + "/" + user + "/" + "kakuro_" + id_kakuro + "/" + "game_" + id_game + "_stats.txt");
             f.delete();
             f_stats.delete();
             return true;
@@ -256,8 +256,8 @@ public class CtrlPersistence {
     public void update_stats (String user, int id_kakuro, int time, int hints, int scores, boolean global) {
         try {
             File f;
-            if (global) f = new File(route + "\\" + "globalranking.txt");
-            else f = new File(route + "\\" + user + "\\" + "personal_stats.txt");
+            if (global) f = new File(route + "/" + "globalranking.txt");
+            else f = new File(route + "/" + user + "/" + "personal_stats.txt");
             Scanner sca = new Scanner(f);
             String result = "";
             String aux;
@@ -274,7 +274,7 @@ public class CtrlPersistence {
             }
             if (!found)
                 result += "#" + "Kakuro " + id_kakuro + " --> " + user + " ,Time used: " + time + ", Hints asked: " + hints + ", Scores: " + scores;
-            FileWriter wr = new FileWriter(route + "\\" + "globalranking.txt");
+            FileWriter wr = new FileWriter(route + "/" + "globalranking.txt");
             String[] text = result.split("#");
             for (String s : text) {
                 if (!s.equals("")) {
@@ -290,7 +290,7 @@ public class CtrlPersistence {
     }
 
     public void eliminate_user (String user) {
-        File f = new File(route + "\\" + user);
+        File f = new File(route + "/" + user);
         if (f.exists()) {
             String[] entries = f.list();
             for (String s : entries) {
@@ -304,7 +304,7 @@ public class CtrlPersistence {
     }
 
     public void eliminate_kakuro (String user, int id_kakuro) {
-        File f = new File(route + "\\" + user + "\\" + "kakuro_" + id_kakuro);
+        File f = new File(route + "/" + user + "/" + "kakuro_" + id_kakuro);
         eliminate_kakuro_dir(f);
     }
 

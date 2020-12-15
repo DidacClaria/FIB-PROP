@@ -1,5 +1,7 @@
 package domain;
 
+import presentation.CtrlPresentation;
+
 import java.util.Scanner;
 
 /**
@@ -12,7 +14,8 @@ public class Main {
     private static CtrlDomain a;
 
     public static void main(String[] args) {
-        a = new CtrlDomain();
+        CtrlPresentation ctrlPresentation = new CtrlPresentation();
+        a = new CtrlDomain(ctrlPresentation);
         String user;
         int id_kakuro;
         int id_game;

@@ -1,8 +1,13 @@
 package presentation;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 
 public class UserMenuView {
     private final CtrlPresentation ctrlPresentation;
@@ -21,11 +26,18 @@ public class UserMenuView {
     }
 
     private void initComponents() {
+
+        String username = ctrlPresentation.getActiveUser();
+        usernameLabel.setText("WELCOME, $" + username);
+
         LOGOUTButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-                userMenuPanel.setVisible(false);
-                ctrlPresentation.makeLogInViewVisible();
+                int option = JOptionPane.showConfirmDialog(userMenuPanel,"Are you sure?");
+                if (option == JOptionPane.YES_OPTION) {
+                    userMenuPanel.setVisible(false);
+                    ctrlPresentation.makeLogInViewVisible();
+                }
             }
         });
         CREATEKAKUROButton.addActionListener(new ActionListener() {
@@ -56,6 +68,17 @@ public class UserMenuView {
                 ctrlPresentation.makeRankingViewVisible("GLOBAL RANKING");
             }
         });
+        DELETEUSERButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int option = JOptionPane.showConfirmDialog(userMenuPanel,"Are you sure?");
+                if (option == JOptionPane.YES_OPTION) {
+                    ctrlPresentation.eliminateUser(username);
+                    userMenuPanel.setVisible(false);
+                    ctrlPresentation.makeLogInViewVisible();
+                }
+            }
+        });
     }
 
     public JPanel getUserMenuPanel() {
@@ -68,5 +91,19 @@ public class UserMenuView {
 
     public void setUsername(String username){
         usernameLabel.setText(username);
+    }
+
+
+    private void createUIComponents() {
+
+        try {
+            BufferedImage image;
+            image = ImageIO.read(new File("DOCS/logoutLogo.png"));
+            Image newImage = image.getScaledInstance(30, 30, Image.SCALE_SMOOTH);
+            ImageIcon icon = new ImageIcon (newImage);
+            LOGOUTButton = new JButton(icon);
+        } catch (IOException ex) {
+            System.out.println("The file does not exists");
+        }
     }
 }

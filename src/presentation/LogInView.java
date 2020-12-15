@@ -3,6 +3,8 @@ package presentation;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
 
 public class LogInView {
 
@@ -22,14 +24,18 @@ public class LogInView {
         enterButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-                ctrlPresentation.logInUser(usernameTextField.getText());
-                logInPanel.setVisible(false);
-                ctrlPresentation.makeUserMenuViewVisible();
+                if (usernameTextField.getText().equals("")) {
+                    JOptionPane.showMessageDialog(logInPanel,"Wrong Format of User!","Alert",JOptionPane.WARNING_MESSAGE);
+                }
+                else {
+                    ctrlPresentation.logInUser(usernameTextField.getText());
+                    ctrlPresentation.iniUserMenu();
+                    usernameTextField.setText("");
+                    logInPanel.setVisible(false);
+                    ctrlPresentation.makeUserMenuViewVisible();
+                }
             }
         });
-
-
-
     }
 
     public JPanel getLogInPanel() {
@@ -41,6 +47,6 @@ public class LogInView {
     }
 
     private void createUIComponents() {
-        kakuroLogo= new Logo(222,250);
+        kakuroLogo= new Logo(250,250);
     }
 }

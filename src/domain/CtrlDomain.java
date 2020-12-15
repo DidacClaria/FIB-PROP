@@ -86,7 +86,11 @@ public class CtrlDomain {
      */
     public void logInUser(String name){
         if (ctrlPersistence.create_user(name)) ctrlUser.createUser(name);
-        else ctrlUser.setActiveUser (name);
+        else ctrlUser.setActiveUser(name);
+    }
+
+    public String getActiveUser() {
+        return ctrlUser.getActiveUser();
     }
 
     /**

@@ -49,8 +49,19 @@ public class CtrlUser {
      * It will set the activeUser
      * @param n It indicates the name of the activeUser.
      */
-    public void setActiveUser (String n) {
-        User aux = new User(n);
-        activeUser = users.get (users.indexOf(aux));
+    public String getActiveUser () {
+        return activeUser.get_Nom();
     }
+
+    public void setActiveUser (String n) {
+        boolean found = false;
+        for (User i : users) {
+            if (!found && i.get_Nom().equals(n)) {
+                activeUser = i;
+                found = true;
+            }
+        }
+    }
+
+
 }

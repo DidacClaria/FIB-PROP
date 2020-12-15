@@ -34,8 +34,20 @@ public class CtrlPresentation {
         mainFrame.makeVisible();
     }
 
+    public void iniUserMenu () {
+        mainFrame.iniUserMenu();
+    }
+
     public void logInUser(String username) {
-//        ctrlDomain.logInUser(username);
+        ctrlDomain.logInUser(username);
+    }
+
+    public String getActiveUser() {
+        return ctrlDomain.getActiveUser();
+    }
+
+    public void eliminateUser(String username) {
+        ctrlDomain.remove_user(username);
     }
 
     public String[][] generateKakuro(int width, int height, int difficulty, int numFilledCells) {

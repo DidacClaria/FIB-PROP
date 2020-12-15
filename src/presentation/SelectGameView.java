@@ -1,8 +1,13 @@
 package presentation;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 
 public class SelectGameView {
     private final CtrlPresentation ctrlPresentation;
@@ -34,5 +39,17 @@ public class SelectGameView {
 
     public JPanel getSelectGamePanel() {
         return selectGamePanel;
+    }
+
+    private void createUIComponents() {
+        try {
+            BufferedImage image;
+            image = ImageIO.read(new File("DOCS/gobackLogo.png"));
+            Image newImage = image.getScaledInstance(30, 30, Image.SCALE_SMOOTH);
+            ImageIcon icon = new ImageIcon (newImage);
+            GOBACKButton = new JButton(icon);
+        } catch (IOException ex) {
+            System.out.println("The file does not exists");
+        }
     }
 }

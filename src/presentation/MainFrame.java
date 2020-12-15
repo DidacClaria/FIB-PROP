@@ -6,6 +6,9 @@ import javax.swing.*;
 import java.awt.*;
 
 public class MainFrame extends JFrame {
+
+    private CtrlPresentation ctrlPresentation;
+
     private JPanel MainFrame;
     private LogInView logInView;
     private UserMenuView userMenuView;
@@ -14,10 +17,11 @@ public class MainFrame extends JFrame {
     private PlayGameView playGameView;
     private RankingView rankingView;
 
-    public MainFrame(CtrlPresentation ctrlPresentation) {
+    public MainFrame(CtrlPresentation CP) {
+
+        ctrlPresentation = CP;
 
         this.logInView = new LogInView(ctrlPresentation);
-        this.userMenuView = new UserMenuView(ctrlPresentation);
         this.createKakuroView = new CreateKakuroView(ctrlPresentation);
         this.selectGameView = new SelectGameView(ctrlPresentation);
         this.playGameView = new PlayGameView(ctrlPresentation);
@@ -25,6 +29,10 @@ public class MainFrame extends JFrame {
 
         mainFrameInit();
 
+    }
+
+    public void iniUserMenu () {
+        this.userMenuView = new UserMenuView(ctrlPresentation);
     }
 
     public void mainFrameInit(){

@@ -209,8 +209,8 @@ public class Kakuro {
             }
         }
 
-        for(int k = 0; k < 100; ++k) generateRandomBlack(numRows-1, numColumns-1, 1, 1);
-        correctFormat();
+        for(int k = 0; k < 10; ++k) generateRandomBlack(numRows-1, numColumns-1, 1, 1);
+        correctFormat();    
 
 
         boolean aux = generateWhiteNumbers();

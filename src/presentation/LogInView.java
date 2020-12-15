@@ -28,6 +28,8 @@ public class LogInView {
             }
         });
 
+
+
     }
 
     public JPanel getLogInPanel() {

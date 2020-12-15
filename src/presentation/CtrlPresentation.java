@@ -29,6 +29,11 @@ public class CtrlPresentation {
         this.mainFrame = new MainFrame(this);
     }
 
+    public CtrlPresentation(CtrlDomain ctrlDomain) {
+        this.ctrlDomain = ctrlDomain;
+        this.mainFrame = new MainFrame(this);
+    }
+
     public void initPresentation() {
         mainFrame.makeVisible();
     }

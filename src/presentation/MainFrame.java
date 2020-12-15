@@ -32,6 +32,7 @@ public class MainFrame extends JFrame {
         setMinimumSize(new Dimension(900,700));
         setPreferredSize(getMinimumSize());
 //        setResizable(false);
+        setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setContentPane(logInView.getLogInPanel());
     }

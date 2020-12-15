@@ -25,14 +25,10 @@ public class CtrlPresentation {
      * Default empty Presentation Controller constructor.
      */
     public CtrlPresentation() {
-        this.ctrlDomain = new CtrlDomain(this);
+        this.ctrlDomain = new CtrlDomain (this);
         this.mainFrame = new MainFrame(this);
     }
 
-    public CtrlPresentation(CtrlDomain ctrlDomain) {
-        this.ctrlDomain = ctrlDomain;
-        this.mainFrame = new MainFrame(this);
-    }
 
     public void initPresentation() {
         mainFrame.makeVisible();

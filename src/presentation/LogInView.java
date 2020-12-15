@@ -41,6 +41,6 @@ public class LogInView {
     }
 
     private void createUIComponents() {
-        kakuroLogo= new Logo(250,250);
+        kakuroLogo= new Logo(222,250);
     }
 }

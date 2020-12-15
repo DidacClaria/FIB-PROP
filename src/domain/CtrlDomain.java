@@ -47,14 +47,6 @@ public class CtrlDomain {
         ctrlUser = new CtrlUser(this);
     }
 
-    public CtrlDomain() {
-        ctrlPresentation = new CtrlPresentation(this);
-        ctrlPersistence = new CtrlPersistence(this);
-        ctrlGame = new CtrlGame(this);
-        ctrlKakuro = new CtrlKakuro(this);
-        ctrlUser = new CtrlUser(this);
-    }
-
     //CLASS METHODS
 
     /**

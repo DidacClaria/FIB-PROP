@@ -28,7 +28,7 @@ public class CtrlPersistence {
      */
     public CtrlPersistence(CtrlDomain ctrlDomain) {
         this.ctrlDomain = ctrlDomain;
-        route = "D:\\PROP\\src\\persistence\\data";
+        route = ".\\src\\persistence\\data";
         routek = route + "\\kakuros";
         InitializePersistance();
 

@@ -57,7 +57,7 @@ public class CtrlDomain {
      */
     public void proposeKakuro(int numRows, int numColumns, String[][] field){
         if (ctrlKakuro.proposeKakuro(numRows,numColumns,field))
-            ctrlPersistence.new_kakuro(ctrlKakuro.list_id_kakuro(), ctrlKakuro.listKakuro());
+            ctrlPersistence.newKakuro(ctrlKakuro.listIdKakuro(), ctrlKakuro.listKakuro());
     }
 
     /**
@@ -67,7 +67,7 @@ public class CtrlDomain {
      */
     public void generateKakuro(int numRows, int numColumns){
         ctrlKakuro.generateKakuro(numRows, numColumns);
-        ctrlPersistence.new_kakuro(ctrlKakuro.list_id_kakuro(), ctrlKakuro.listKakuro());
+        ctrlPersistence.newKakuro(ctrlKakuro.listIdKakuro(), ctrlKakuro.listKakuro());
     }
 
     /**
@@ -85,7 +85,7 @@ public class CtrlDomain {
      * @param name indicates the name of the new user
      */
     public void logInUser(String name){
-        if (ctrlPersistence.create_user(name)) ctrlUser.createUser(name);
+        if (ctrlPersistence.createUser(name)) ctrlUser.createUser(name);
         else ctrlUser.setActiveUser(name);
     }
 
@@ -96,36 +96,36 @@ public class CtrlDomain {
     /**
      *
      * @param user It indicates the user who is playing the game
-     * @param id_kakuro It indicates the game scenario
+     * @param idKakuro It indicates the game scenario
      */
-    public void playKakuro (String user, int id_kakuro) {
-        if (ctrlPersistence.new_game(user, id_kakuro)) ctrlGame.startKakuro(user, id_kakuro);
+    public void playKakuro (String user, int idKakuro) {
+        if (ctrlPersistence.newGame(user, idKakuro)) ctrlGame.startKakuro(user, idKakuro);
     }
 
     /**
      * Function used to save the current state of a game.
      * @param idGame indicates the identifier of the kakuro to save
      */
-    public void saveGame(String user, int idKakuro, int idGame, int time, int hints, String [][] new_state){
-        ctrlPersistence.save_game(user, idKakuro, idGame, time, hints, new_state);
+    public void saveGame(String user, int idKakuro, int idGame, int time, int hints, String [][] newState){
+        ctrlPersistence.saveGame(user, idKakuro, idGame, time, hints, newState);
     }
 
-    public void validate_game (String user, int id_kakuro, int id_game, int time, int hints, String [][] kakuro) {
-        if (ctrlPersistence.validate_correctness_game(user, id_kakuro, id_game, kakuro)) {
+    public void validateGame (String user, int id_kakuro, int id_game, int time, int hints, String [][] kakuro) {
+        if (ctrlPersistence.validateGame(user, id_kakuro, id_game, kakuro)) {
             int scores = (72000 - time);
             if (scores - (7200 * hints) > 0) scores -= (7200 * hints);
             else scores = 0;
-            ctrlPersistence.update_stats(user, id_kakuro, time, hints, scores, true);
-            ctrlPersistence.update_stats(user, id_kakuro, time, hints, scores, false);
+            ctrlPersistence.updateStats(user, id_kakuro, time, hints, scores, true);
+            ctrlPersistence.updateStats(user, id_kakuro, time, hints, scores, false);
         }
     }
 
-    public void remove_user (String user) {
-        ctrlPersistence.eliminate_user(user);
+    public void deleteUser (String user) {
+        ctrlPersistence.deleteUser(user);
     }
 
-    public void remove_kakuros (String user, int id_kakuro) {
-        ctrlPersistence.eliminate_kakuro(user, id_kakuro);
+    public void deleteKakuro (String user, int idKakuro) {
+        ctrlPersistence.deleteKakuro(user, idKakuro);
     }
 
     /**

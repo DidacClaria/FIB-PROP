@@ -45,14 +45,14 @@ public class CtrlUser {
         users.add (activeUser);
     }
 
-    /**
-     * It will set the activeUser
-     * @param n It indicates the name of the activeUser.
-     */
     public String getActiveUser () {
         return activeUser.get_Nom();
     }
 
+    /**
+     * It will set the activeUser
+     * @param n It indicates the name of the activeUser.
+     */
     public void setActiveUser (String n) {
         boolean found = false;
         for (User i : users) {
@@ -61,6 +61,7 @@ public class CtrlUser {
                 found = true;
             }
         }
+        if (!found) createUser(n);
     }
 
 

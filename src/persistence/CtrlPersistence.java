@@ -28,8 +28,8 @@ public class CtrlPersistence {
      */
     public CtrlPersistence(CtrlDomain ctrlDomain) {
         this.ctrlDomain = ctrlDomain;
-        route = ".\\src\\persistence\\data";
-        routek = route + "\\kakuros";
+        route = "./src/persistence/data";
+        routek = route + "/kakuros";
         InitializePersistance();
 
     }
@@ -53,12 +53,12 @@ public class CtrlPersistence {
     /**
      * Saves a new user
      */
-    public boolean create_user(String name) {
+    public boolean createUser(String name) {
         try {
-            File user = new File(route + "\\" + name);
+            File user = new File(route + "/" + name);
             if (!user.exists()) {
                 if (user.mkdir()) {
-                    File f = new File(route + "\\" + name + "\\" + "personal_stats.txt");
+                    File f = new File(route + "/" + name + "/" + "personal_stats.txt");
                     f.createNewFile();
                     return true;
                 } else System.out.println("User directory not created due an error");
@@ -72,8 +72,8 @@ public class CtrlPersistence {
     /**
      * Returns true if a user exists
      */
-    public boolean exists_user(String name){
-        File user = new File(route + "\\" + name);
+    public boolean existsUser(String name){
+        File user = new File(route + "/" + name);
         if (user.exists()) return true;
         return false;
     }
@@ -81,28 +81,28 @@ public class CtrlPersistence {
     /**
      * Saves a new kakuro
      */
-    public boolean new_kakuro(int id_kakuro, String [][] kakuro){
+    public boolean newKakuro(int idKakuro, String [][] kakuro){
         try {
-            FileWriter wr = new FileWriter(routek + "\\" + "model_" + id_kakuro + ".txt");
-            FileWriter wr_sol = new FileWriter(routek + "\\" + "model_" + id_kakuro + "_sol.txt");
+            FileWriter wr = new FileWriter(routek + "/" + "model_" + idKakuro + ".txt");
+            FileWriter fileWriterSol = new FileWriter(routek + "/" + "model_" + idKakuro + "_sol.txt");
             for (int i = 0; i < kakuro.length; i++) {
                 for (int j = 0; j < kakuro[0].length; j++) {
                     if (kakuro[i][j].length() == 1 && kakuro[i][j] != "*") wr.write("0");
                     else wr.write(kakuro[i][j]);
-                    wr_sol.write(kakuro[i][j]);
+                    fileWriterSol.write(kakuro[i][j]);
                     if (j != kakuro[0].length - 1) {//separador d'elements
                         wr.write(",");
-                        wr_sol.write(",");
+                        fileWriterSol.write(",");
                     }
                     else {
                         wr.write(System.getProperty("line.separator")); //separador de files
-                        wr_sol.write(System.getProperty("line.separator"));
+                        fileWriterSol.write(System.getProperty("line.separator"));
                     }
                 }
             }
             wr.close();
-            wr_sol.close();
-            File GlobalRanking = new File (route + "\\" + "globalranking.txt");
+            fileWriterSol.close();
+            File GlobalRanking = new File (route + "/" + "globalranking.txt");
             GlobalRanking.createNewFile();
 
             return true;
@@ -116,11 +116,11 @@ public class CtrlPersistence {
     /**
      * returns the kakuro or the solution of the kakuro with ID = id
      */
-    public String[][] show_kakuro(int id, boolean solution){
+    public String[][] showKakuro(int id, boolean solution){
         try {
             File k;
-            if (solution) k = new File(routek + "\\" + "model_" + id + "_sol.txt");
-            else k = new  File(routek + "\\" + "model_" + id + ".txt");
+            if (solution) k = new File(routek + "/" + "model_" + id + "_sol.txt");
+            else k = new  File(routek + "/" + "model_" + id + ".txt");
 
             if (k.exists()) {
                 String [][] kakuro;
@@ -152,23 +152,23 @@ public class CtrlPersistence {
     /**
      * Starts a new game for User = user
      */
-    public boolean new_game (String user, int id_kakuro){
+    public boolean newGame (String user, int idKakuro){
         try {
-            File pathOri = new File(routek + "\\" + "model_" + id_kakuro + ".txt");
-            File pathUser = new File(route + "\\" + user);
+            File pathOri = new File(routek + "/" + "model_" + idKakuro + ".txt");
+            File pathUser = new File(route + "/" + user);
             if (pathOri.exists() && pathUser.exists()) {
-                File kakuro = new File(route + "\\" + user + "\\" + "kakuro_" + id_kakuro);
-                int id_game = 0;
+                File kakuro = new File(route + "/" + user + "/" + "kakuro_" + idKakuro);
+                int idGame = 0;
 
                 if (!kakuro.exists()) kakuro.mkdir();
 
                 String[] quantity = kakuro.list();
-                id_game = quantity.length / 2 + 1;
+                idGame = quantity.length / 2 + 1;
 
-                File pathDes = new File(route + "\\" + user + "\\" + "kakuro_" + id_kakuro + "\\" + "game_" + id_game + ".txt");
+                File pathDes = new File(route + "/" + user + "/" + "kakuro_" + idKakuro + "/" + "game_" + idGame + ".txt");
                 Files.copy(Paths.get(pathOri.getAbsolutePath()), Paths.get(pathDes.getAbsolutePath()), StandardCopyOption.REPLACE_EXISTING);
 
-                FileWriter wr = new FileWriter(route + "\\" + user + "\\" + "kakuro_" + id_kakuro + "\\" +"game_" + id_game + "_stats.txt");
+                FileWriter wr = new FileWriter(route + "/" + user + "/" + "kakuro_" + idKakuro + "/" +"game_" + idGame + "_stats.txt");
                 wr.write("Execution Time: 0");
                 wr.write(System.getProperty("line.separator"));
                 wr.write("Hints asked: 0");
@@ -185,25 +185,25 @@ public class CtrlPersistence {
     /**
      * Saves the state of a game in current of the user
      */
-    public boolean save_game (String user, int id_kakuro, int id_game, int time, int hints, String [][] kakuro){
+    public boolean saveGame (String user, int idKakuro, int idGame, int time, int hints, String [][] kakuro){
         try {
-            FileWriter game_saved = new FileWriter(route + "\\" + user + "\\" + "kakuro_" + id_kakuro + "\\" + "game_" + id_game + ".txt");
+            FileWriter gameSaved = new FileWriter(route + "/" + user + "/" + "kakuro_" + idKakuro + "/" + "game_" + idGame + ".txt");
             for (int i = 0; i < kakuro.length; i++) {
                 for (int j = 0; j < kakuro[0].length; j++) {
-                    if (kakuro[i][j].equals("?")) game_saved.write("0");
-                    else game_saved.write(kakuro[i][j]);
-                    if (j != kakuro[0].length - 1) game_saved.write(","); //separador d'elements
-                    else game_saved.write(System.getProperty("line.separator")); //separador de files
+                    if (kakuro[i][j].equals("?")) gameSaved.write("0");
+                    else gameSaved.write(kakuro[i][j]);
+                    if (j != kakuro[0].length - 1) gameSaved.write(","); //separador d'elements
+                    else gameSaved.write(System.getProperty("line.separator")); //separador de files
                 }
             }
-            game_saved.close();
+            gameSaved.close();
 
-            FileWriter game_saved_stats = new FileWriter(route + "\\" + user + "\\" + "kakuro_" + id_kakuro + "\\" +"game_" + id_game + "_stats.txt");
-            game_saved_stats.write("Execution Time: " + time);
-            game_saved_stats.write(System.getProperty("line.separator"));
-            game_saved_stats.write("Hints asked: " + hints);
-            game_saved_stats.write(System.getProperty("line.separator"));
-            game_saved_stats.close();
+            FileWriter gameSavedStats = new FileWriter(route + "/" + user + "/" + "kakuro_" + idKakuro + "/" +"game_" + idGame + "_stats.txt");
+            gameSavedStats.write("Execution Time: " + time);
+            gameSavedStats.write(System.getProperty("line.separator"));
+            gameSavedStats.write("Hints asked: " + hints);
+            gameSavedStats.write(System.getProperty("line.separator"));
+            gameSavedStats.close();
 
             return true;
         } catch (IOException e){
@@ -213,16 +213,16 @@ public class CtrlPersistence {
     }
 
     /**
-     * returns the game of User = user with ID = id_game
+     * returns the game of User = user with ID = idGame
      */
     /*
-    public String[][] load_game (String user, int id_kakuro){
+    public String[][] loadGame (String user, int idKakuro){
         int i = 0;
         while (m)
 
         String [][]
         try {
-            File k = new File(route + "\\" + user + "\\" + id_kakuro + "_sol.txt");
+            File k = new File(route + "/" + user + "/" + idKakuro + "_sol.txt");
             if (k.exists()) {
                 Scanner mr = new Scanner(k);
                 int i = 0;
@@ -240,41 +240,41 @@ public class CtrlPersistence {
     }
 */
 
-    public boolean validate_correctness_game (String user, int id_kakuro, int id_game, String [][] kakuro) {
-        String [][] solution = show_kakuro(id_kakuro, true);
+    public boolean validateGame (String user, int idKakuro, int idGame, String [][] kakuro) {
+        String [][] solution = showKakuro(idKakuro, true);
         if (Arrays.deepEquals(solution, kakuro)) {
-            File f = new File(route + "\\" + user + "\\" + "kakuro_" + id_kakuro + "\\" + "game_" + id_game + ".txt");
-            File f_stats = new File(route + "\\" + user + "\\" + "kakuro_" + id_kakuro + "\\" + "game_" + id_game + "_stats.txt");
+            File f = new File(route + "/" + user + "/" + "kakuro_" + idKakuro + "/" + "game_" + idGame + ".txt");
+            File fileStats = new File(route + "/" + user + "/" + "kakuro_" + idKakuro + "/" + "game_" + idGame + "_stats.txt");
             f.delete();
-            f_stats.delete();
+            fileStats.delete();
             return true;
         }
         else return false;
     }
 
-
-    public void update_stats (String user, int id_kakuro, int time, int hints, int scores, boolean global) {
+    
+    public void updateStats (String user, int idKakuro, int time, int hints, int scores, boolean global) {
         try {
             File f;
-            if (global) f = new File(route + "\\" + "globalranking.txt");
-            else f = new File(route + "\\" + user + "\\" + "personal_stats.txt");
+            if (global) f = new File(route + "/" + "globalranking.txt");
+            else f = new File(route + "/" + user + "/" + "personal_stats.txt");
             Scanner sca = new Scanner(f);
             String result = "";
             String aux;
             boolean found = false;
             while (sca.hasNextLine()) {
                 aux = sca.nextLine();
-                if (!found && aux.contains("Kakuro " + id_kakuro)) {
+                if (!found && aux.contains("Kakuro " + idKakuro)) {
                     found = true;
-                    int old_score = Integer.parseInt(aux.substring(aux.indexOf("Scores: ") + 8));
-                    if (scores > old_score) {
-                        result += "#" + "Kakuro " + id_kakuro + " --> " + user + " ,Time used: " + time + ", Hints asked: " + hints + ", Scores: " + scores;
+                    int oldScore = Integer.parseInt(aux.substring(aux.indexOf("Scores: ") + 8));
+                    if (scores > oldScore) {
+                        result += "#" + "Kakuro " + idKakuro + " --> " + user + " ,Time used: " + time + ", Hints asked: " + hints + ", Scores: " + scores;
                     }
                 } else result += "#" + aux;
             }
             if (!found)
-                result += "#" + "Kakuro " + id_kakuro + " --> " + user + " ,Time used: " + time + ", Hints asked: " + hints + ", Scores: " + scores;
-            FileWriter wr = new FileWriter(route + "\\" + "globalranking.txt");
+                result += "#" + "Kakuro " + idKakuro + " --> " + user + " ,Time used: " + time + ", Hints asked: " + hints + ", Scores: " + scores;
+            FileWriter wr = new FileWriter(route + "/" + "globalranking.txt");
             String[] text = result.split("#");
             for (String s : text) {
                 if (!s.equals("")) {
@@ -289,13 +289,13 @@ public class CtrlPersistence {
         }
     }
 
-    public void eliminate_user (String user) {
-        File f = new File(route + "\\" + user);
+    public void deleteUser (String user) {
+        File f = new File(route + "/" + user);
         if (f.exists()) {
             String[] entries = f.list();
             for (String s : entries) {
                 File currentFile = new File(f.getPath(), s);
-                if (currentFile.isDirectory()) eliminate_kakuro_dir(currentFile);
+                if (currentFile.isDirectory()) deleteKakuroDir(currentFile);
                 else currentFile.delete();
             }
             f.delete();
@@ -303,12 +303,12 @@ public class CtrlPersistence {
         else System.out.println("\nUser not existed");
     }
 
-    public void eliminate_kakuro (String user, int id_kakuro) {
-        File f = new File(route + "\\" + user + "\\" + "kakuro_" + id_kakuro);
-        eliminate_kakuro_dir(f);
+    public void deleteKakuro (String user, int idKakuro) {
+        File f = new File(route + "/" + user + "/" + "kakuro_" + idKakuro);
+        deleteKakuroDir(f);
     }
 
-    private void eliminate_kakuro_dir (File f) {
+    private void deleteKakuroDir (File f) {
         if (f.exists()) {
             String[] entries = f.list();
             for (String s : entries) {

@@ -47,7 +47,7 @@ public class CtrlPresentation {
     }
 
     public void eliminateUser(String username) {
-        ctrlDomain.remove_user(username);
+        ctrlDomain.deleteUser(username);
     }
 
     public String[][] generateKakuro(int width, int height, int difficulty, int numFilledCells) {

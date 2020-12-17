@@ -40,7 +40,7 @@ public class CtrlKakuro {
     }
 
     //GETTERS AND SETTERS
-    public int list_id_kakuro () {
+    public int listIdKakuro () {
         return this.numKakuros;
     }
 

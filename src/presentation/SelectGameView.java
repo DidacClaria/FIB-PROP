@@ -13,10 +13,10 @@ public class SelectGameView {
     private final CtrlPresentation ctrlPresentation;
     private JPanel selectGamePanel;
     private JPanel headerContainer;
-    private JPanel listGamesContainer;
-    private JScrollBar scrollBar1;
     private JButton GOBACKButton;
     private JLabel titleLabel;
+    private JScrollPane listGamesContainer;
+
 
     public SelectGameView(CtrlPresentation ctrlPresentation) {
         this.ctrlPresentation = ctrlPresentation;
@@ -51,5 +51,15 @@ public class SelectGameView {
         } catch (IOException ex) {
             System.out.println("The file does not exists");
         }
+
+        JPanel aux = new JPanel();
+
+        for (int i = 0; i < 50; ++i) {
+            JPanel aux2 = new RowSelectKakuro(i);
+            aux2.setBorder(BorderFactory.createLineBorder(Color.black));
+            aux.add(aux2);
+        }
+        aux.setLayout(new BoxLayout(aux, BoxLayout.Y_AXIS));
+        listGamesContainer = new JScrollPane(aux);
     }
 }

@@ -1,7 +1,10 @@
 package presentation;
 
+import domain.Kakuro;
+
 import javax.swing.*;
 import javax.swing.text.TabExpander;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -14,7 +17,6 @@ public class CreateKakuroView {
     private JLabel viewTitle;
     private JButton GOBACKbutton;
     private JPanel titleContainer;
-    private JPanel kakuroDisplay;
     private JPanel buttonsDisplay;
     private JTextField widthField;
     private JTextField heightField;
@@ -26,7 +28,7 @@ public class CreateKakuroView {
     private JButton AUTOMATICGENERATIONButton;
     private JButton VALIDATEButton;
     private JLabel ERRORdisplay;
-
+    private JPanel kakuroPanel;
 
     public CreateKakuroView(CtrlPresentation ctrlPresentation) {
         this.ctrlPresentation = ctrlPresentation;
@@ -120,5 +122,15 @@ public class CreateKakuroView {
 
     public JPanel getCreateKakuroPanel() {
         return createKakuroPanel;
+    }
+
+    private void createUIComponents() {
+        kakuroPanel = new JPanel(new GridLayout(3,3));
+        kakuroPanel.setBorder(BorderFactory.createEmptyBorder(10,10, 10, 10));
+        for (int i= 0; i<3; ++i){
+            for(int j=0; j<3; ++j){
+                kakuroPanel.add(new KakuroCorner());
+            }
+        }
     }
 }

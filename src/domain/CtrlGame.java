@@ -44,29 +44,17 @@ public class CtrlGame {
      * The execution of a Game is on.
      * @param idGame is the identification of the current game.
      */
-    public void playKakuro(int idGame){
-        throw new ArithmeticException("Not implemented yet");
+    public void startKakuro(String user, int idKakuro){
+        ++this.numGames;
+        activeGame = new Game(user, idKakuro);
+        this.games.add(activeGame);
     }
 
-    /**
+    /*
      * The execution of a Game it stops and the current state is saved.
      * @param idGame is the identification of the current game.
      */
-    public void saveGame(int idGame){
-        throw new ArithmeticException("Not implemented yet");
-    }
+    public void saveGame(String user, int idKakuro){
 
-    /**
-     * It returns the global ranking of punctuations from the system.
-     */
-    public void listRanking() {
-        throw new ArithmeticException("Not implemented yet");
-    }
-
-    /**
-     * It returns all the punctuations of the current User in all their Games.
-     */
-    public void listPersonalStats() {
-        throw new ArithmeticException("Not implemented yet");
     }
 }

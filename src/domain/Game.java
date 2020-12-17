@@ -33,4 +33,12 @@ public class Game {
     public Game() {
     }
 
+
+    public Game (String user, int idKakuro) {
+        this.player = new User(user);
+        this.gameScenario = new Kakuro();
+        gameScenario.setIdKakuro(idKakuro);
+    }
+
+
 }

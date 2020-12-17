@@ -22,7 +22,7 @@ public class CtrlUser {
     /**
      * User class. Is the instance of the user currently running in the system.
      */
-    private User user;
+    private User activeUser;
 
     //CONSTRUCTORS
     /**
@@ -38,17 +38,31 @@ public class CtrlUser {
 
     /**
      * It will create a new User with the following parameters.
-     * @param name It indicates the name of the User.
+     * @param name It indicates the name of the activeUser.
      */
     public void createUser(String name){
-        throw new ArithmeticException("Not implemented yet");
+        activeUser = new User(name);
+        users.add (activeUser);
     }
 
     /**
-     * It will load the user with the name in the parameters as the active user.
-     * @param name It indicates the name of the user to load.
+     * It will set the activeUser
+     * @param n It indicates the name of the activeUser.
      */
-    public void loadUser(String name) {
-        throw new ArithmeticException("Not implemented yet");
+    public String getActiveUser () {
+        return activeUser.get_Nom();
     }
+
+    public void setActiveUser (String n) {
+        boolean found = false;
+        for (User i : users) {
+            if (!found && i.get_Nom().equals(n)) {
+                activeUser = i;
+                found = true;
+            }
+        }
+        if (!found) createUser(n);
+    }
+
+
 }

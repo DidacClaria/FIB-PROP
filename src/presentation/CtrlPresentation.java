@@ -25,16 +25,29 @@ public class CtrlPresentation {
      * Default empty Presentation Controller constructor.
      */
     public CtrlPresentation() {
-        this.ctrlDomain = new CtrlDomain(this);
+        this.ctrlDomain = new CtrlDomain (this);
         this.mainFrame = new MainFrame(this);
     }
+
 
     public void initPresentation() {
         mainFrame.makeVisible();
     }
 
+    public void iniUserMenu () {
+        mainFrame.iniUserMenu();
+    }
+
     public void logInUser(String username) {
-//        ctrlDomain.logInUser(username);
+        ctrlDomain.logInUser(username);
+    }
+
+    public String getActiveUser() {
+        return ctrlDomain.getActiveUser();
+    }
+
+    public void eliminateUser(String username) {
+        ctrlDomain.remove_user(username);
     }
 
     public String[][] generateKakuro(int width, int height, int difficulty, int numFilledCells) {

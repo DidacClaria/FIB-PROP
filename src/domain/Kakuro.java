@@ -1,14 +1,151 @@
 package domain;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
+import java.util.*;
 
 /**
  * Generic class used to created Kakuros.
  */
 public class Kakuro {
+
     //ATTRIBUTES
+    /**
+     * This attribute indicates the possible intersections
+     */
+    static HashMap<Integer, Integer> comb;
+
+    static {
+        //COMB
+        comb = new HashMap<>();
+
+        comb.put(203, 0b000000011);
+        comb.put(204, 0b000000101);
+        comb.put(205, 0b000001111);
+        comb.put(206, 0b000011011);
+        comb.put(207, 0b000111111);
+        comb.put(208, 0b001110111);
+        comb.put(209, 0b011111111);
+        comb.put(210, 0b111101111);
+        comb.put(211, 0b111111110);
+        comb.put(212, 0b111011100);
+        comb.put(213, 0b111111000);
+        comb.put(214, 0b110110000);
+        comb.put(215, 0b111100000);
+        comb.put(216, 0b101000000);
+        comb.put(217, 0b110000000);
+
+        comb.put(306, 0b000000111);
+        comb.put(307, 0b000001011);
+        comb.put(308, 0b000011111);
+        comb.put(309, 0b000111111);
+        comb.put(310, 0b001111111);
+        comb.put(311, 0b011111111);
+        comb.put(312, 0b111111111);
+        comb.put(313, 0b111111111);
+        comb.put(314, 0b111111111);
+        comb.put(315, 0b111111111);
+        comb.put(316, 0b111111111);
+        comb.put(317, 0b111111111);
+        comb.put(318, 0b111111111);
+        comb.put(319, 0b111111110);
+        comb.put(320, 0b111111100);
+        comb.put(321, 0b111111000);
+        comb.put(322, 0b111110000);
+        comb.put(323, 0b110100000);
+        comb.put(324, 0b111000000);
+
+        comb.put(410, 0b000001111);
+        comb.put(411, 0b000010111);
+        comb.put(412, 0b000111111);
+        comb.put(413, 0b001111111);
+        comb.put(414, 0b011111111);
+        comb.put(415, 0b111111111);
+        comb.put(416, 0b111111111);
+        comb.put(417, 0b111111111);
+        comb.put(418, 0b111111111);
+        comb.put(419, 0b111111111);
+        comb.put(420, 0b111111111);
+        comb.put(421, 0b111111111);
+        comb.put(422, 0b111111111);
+        comb.put(423, 0b111111111);
+        comb.put(424, 0b111111111);
+        comb.put(425, 0b111111111);
+        comb.put(426, 0b111111110);
+        comb.put(427, 0b111111100);
+        comb.put(428, 0b111111000);
+        comb.put(429, 0b111010000);
+        comb.put(430, 0b111100000);
+
+        comb.put(515, 0b000011111);
+        comb.put(516, 0b000101111);
+        comb.put(517, 0b001111111);
+        comb.put(518, 0b011111111);
+        comb.put(519, 0b111111111);
+        comb.put(520, 0b111111111);
+        comb.put(521, 0b111111111);
+        comb.put(522, 0b111111111);
+        comb.put(523, 0b111111111);
+        comb.put(524, 0b111111111);
+        comb.put(525, 0b111111111);
+        comb.put(526, 0b111111111);
+        comb.put(527, 0b111111111);
+        comb.put(528, 0b111111111);
+        comb.put(529, 0b111111111);
+        comb.put(530, 0b111111111);
+        comb.put(531, 0b111111111);
+        comb.put(532, 0b111111110);
+        comb.put(533, 0b111111100);
+        comb.put(534, 0b111101000);
+        comb.put(535, 0b111110000);
+
+        comb.put(621, 0b000111111);
+        comb.put(622, 0b001011111);
+        comb.put(623, 0b011111111);
+        comb.put(624, 0b111111111);
+        comb.put(625, 0b111111111);
+        comb.put(626, 0b111111111);
+        comb.put(627, 0b111111111);
+        comb.put(628, 0b111111111);
+        comb.put(629, 0b111111111);
+        comb.put(630, 0b111111111);
+        comb.put(631, 0b111111111);
+        comb.put(632, 0b111111111);
+        comb.put(633, 0b111111111);
+        comb.put(634, 0b111111111);
+        comb.put(635, 0b111111111);
+        comb.put(636, 0b111111111);
+        comb.put(637, 0b111111110);
+        comb.put(638, 0b111110100);
+        comb.put(639, 0b111111000);
+
+        comb.put(728, 0b001111111);
+        comb.put(729, 0b010111111);
+        comb.put(730, 0b111111111);
+        comb.put(731, 0b111111111);
+        comb.put(732, 0b111111111);
+        comb.put(733, 0b111111111);
+        comb.put(734, 0b111111111);
+        comb.put(735, 0b111111111);
+        comb.put(736, 0b111111111);
+        comb.put(737, 0b111111111);
+        comb.put(738, 0b111111111);
+        comb.put(739, 0b111111111);
+        comb.put(740, 0b111111111);
+        comb.put(741, 0b111111010);
+        comb.put(742, 0b111111100);
+
+        comb.put(836, 0b011111111);
+        comb.put(837, 0b101111111);
+        comb.put(838, 0b110111111);
+        comb.put(839, 0b111011111);
+        comb.put(840, 0b111101111);
+        comb.put(841, 0b111110111);
+        comb.put(842, 0b111111011);
+        comb.put(843, 0b111111101);
+        comb.put(844, 0b111111110);
+
+        comb.put(945, 0b111111111);
+    }
+
     /**
      * This attribute is an identifier of the Kakuro class.
      */
@@ -40,9 +177,11 @@ public class Kakuro {
     private int solutions;
 
     /**
-     * This attribute indicates the name of the author of the Kakuro.
+     * This attribute indicates the possible numbers of each white cell
+     * Once a new kakuro is created, all the white cells indicated by the Map will have unique number (solution)
      */
-    private String author;
+    HashMap<Integer, Integer> notes;
+
 
     //CONSTRUCTORS
 
@@ -70,8 +209,8 @@ public class Kakuro {
             }
         }
 
-        for(int k = 0; k < 100; ++k) generateRandomBlack(numRows-1, numColumns-1, 1, 1);
-        correctFormat();
+        for(int k = 0; k < 10; ++k) generateRandomBlack(numRows-1, numColumns-1, 1, 1);
+        correctFormat();    
 
 
         boolean aux = generateWhiteNumbers();
@@ -84,8 +223,7 @@ public class Kakuro {
             generateBlackNumbers();
             this.solutions = 0;
         }
-
-
+        solveKakuro();
     }
 
     //GETTERS & SETTERS
@@ -106,6 +244,32 @@ public class Kakuro {
         this.idKakuro = idKakuro;
     }
 
+    /**
+     * Consultant function
+     * @return It returns a matrix of the information of all the cells of the kakuro
+     */
+    public String [][] listKakuro () {
+        String [][] l = new String [numRows][numColumns];
+        String aux;
+
+        for (int i = 0; i < numRows; ++i) {
+            for (int j = 0; j <numColumns; ++j){
+                if (cells[i][j] instanceof BlackCell) {
+                    if (cells[i][j].getColumnValue() > 0 && cells[i][j].getRowValue() > 0) {
+                        aux = "C" + cells[i][j].getColumnValue() + "F" + cells[i][j].getRowValue();
+                    }
+                    else if (cells[i][j].getColumnValue() > 0) aux = "C" + cells[i][j].getColumnValue();
+                    else if (cells[i][j].getRowValue() > 0) aux = "F" + cells[i][j].getRowValue();
+                    else aux = "*";
+                }
+                else aux = String.valueOf(cells[i][j].getValue());
+                l[i][j] = aux;
+            }
+        }
+
+        return l;
+    }
+
     //CLASS METHODS
 
     /**
@@ -121,8 +285,6 @@ public class Kakuro {
         if (cells[randX][randY] instanceof WhiteCell && noAloneSym(randX, randY) && dfsSym(randX, randY)) {
             cells[randX][randY] = new BlackCell(0,0);
             cells[numRows - randX][numColumns - randY] = new BlackCell(0,0);
-            System.out.print(randX);
-            System.out.print(randY);
         }
     }
 
@@ -232,7 +394,6 @@ public class Kakuro {
     private boolean wrongCellH (int x, int y) {
         if (y+10 >= numColumns) return false;
         for (int i = y+1; i <= (y+10); ++i) {
-            //System.out.println ("H" + " " + i);
             if (cells[x][i] instanceof BlackCell) return false;
         }
         return true;
@@ -248,7 +409,6 @@ public class Kakuro {
     private boolean wrongCellV (int x, int y) {
         if (x+10 >= numRows) return false;
         for (int i = x+1; i <= (x+10); ++i) {
-            //System.out.println ("V" + " " + i);
             if (cells[i][y] instanceof BlackCell) return false;
         }
         return true;
@@ -454,33 +614,15 @@ public class Kakuro {
                 }
             }
         }
-        return solveKakuro();
-    }
 
-    /**
-     * Consultant function
-     * @return It returns a matrix of the information of all the cells of the kakuro
-     */
-    public String [][] listKakuro () {
-        String [][] l = new String [numRows][numColumns];
-        String aux;
-
-        for (int i = 0; i < numRows; ++i) {
-            for (int j = 0; j <numColumns; ++j){
-                if (cells[i][j] instanceof BlackCell) {
-                    if (cells[i][j].getColumnValue() > 0 && cells[i][j].getRowValue() > 0) {
-                        aux = "C" + cells[i][j].getColumnValue() + "F" + cells[i][j].getRowValue();
-                    }
-                    else if (cells[i][j].getColumnValue() > 0) aux = "C" + cells[i][j].getColumnValue();
-                    else if (cells[i][j].getRowValue() > 0) aux = "F" + cells[i][j].getRowValue();
-                    else aux = "*";
-                }
-                else aux = String.valueOf(cells[i][j].getValue());
-                l[i][j] = aux;
-            }
-        }
-
-        return l;
+        boolean aux;
+        long startTime, endTime, timeElapsed;
+        startTime=System.currentTimeMillis();
+        aux = solveKakuro();
+        endTime=System.currentTimeMillis();
+        timeElapsed = endTime - startTime;
+        System.out.println("Solver Execution --> time in milliseconds: " + timeElapsed);
+        return aux;
     }
 
     /**
@@ -490,6 +632,7 @@ public class Kakuro {
      */
     private boolean solveKakuro () {
         ArrayList<Pair> posWhites = searchWhites();
+        searchIntersections();
         return solve (posWhites, 0);
     }
 
@@ -500,21 +643,72 @@ public class Kakuro {
      */
     private boolean solveKakuroMultiple() {
         ArrayList <Pair> posWhites = searchWhites();
+        searchIntersections();
         return solveMultiple (posWhites, 0);
     }
+
+    /**
+     * Counter and searcher function
+     * @param x It indicates the position of the x-axis of the cell
+     * @param y It indicates the position of the y-axis of the cell
+     * @return It returns the column value of the black cell TOP of the white cell indicated by x and y
+     * and also his number of white vertical cells
+     */
+    private Pair search_SN_blackTOP (int x, int y) {
+        int num_whites = 1;
+        int auxX = x;
+        for (--x; cells[x][y] instanceof WhiteCell; --x) ++num_whites;
+        for (++auxX; auxX < numRows && cells[auxX][y] instanceof WhiteCell; ++auxX) ++num_whites;
+
+        return new Pair (cells[x][y].getColumnValue(), num_whites);
+    }
+
+    /**
+     * Counter and searcher function
+     * @param x It indicates the position of the x-axis of the cell
+     * @param y It indicates the position of the y-axis of the cell
+     * @return It returns the row value of the black cell LEFT of the white cell indicated by x and y
+     * and also his number of white horizontal cells
+     */
+    private Pair search_SN_blackLEFT (int x, int y) {
+        int num_whites = 1;
+        int auxY = y;
+        for (--y; cells[x][y] instanceof WhiteCell; --y) ++num_whites;
+        for (++auxY; auxY < numColumns && cells[x][auxY] instanceof WhiteCell; ++auxY) ++num_whites;
+
+        return new Pair (cells[x][y].getRowValue(), num_whites);
+    }
+
 
     /**
      * Auxiliar Function
      * @return it creates an ArrayList to save the positions of all existing white cells in the kakuro
      */
-    private ArrayList <Pair> searchWhites () {
-        ArrayList <Pair> p = new ArrayList <Pair> ();
+    private ArrayList<Pair> searchWhites () {
+      ArrayList<Pair> aux = new ArrayList<>();
         for (int i = 0; i < numRows; ++i) {
             for (int j = 0; j < numColumns; ++j) {
-                if (cells[i][j] instanceof WhiteCell) p.add (new Pair(i,j));
+                if (cells[i][j] instanceof WhiteCell) aux.add(new Pair (i,j));
             }
         }
-        return p;
+        return aux;
+    }
+
+    /**
+     * This method searches the intersection of each white cells and saves it to the map notes
+     */
+    private void searchIntersections () {
+        notes = new HashMap<>();
+        for (int i = 0; i < numRows; ++i) {
+            for (int j = 0; j < numColumns; ++j) {
+                if (cells[i][j] instanceof WhiteCell) {
+                    Pair top = search_SN_blackTOP(i, j);
+                    Pair left = search_SN_blackLEFT(i, j);
+                    Integer aux = comb.get(top.second()*100 + top.first()) & comb.get(left.second()*100 + left.first());
+                    notes.put(i*100+j, aux);
+                }
+            }
+        }
     }
 
     /**
@@ -525,9 +719,9 @@ public class Kakuro {
      * FALSE if it doesn't exist a solution
      */
     private boolean solve (final ArrayList <Pair> posWhites, int k) {
-        if (k == posWhites.size()) return true; //El moment quan hagi vist totes les caselles blanques
 
-        // Consultar la posició de la casella blanca
+        if (k == posWhites.size()) return true;
+
         Pair aux = posWhites.get(k);
         int posX = aux.first();
         int posY = aux.second();
@@ -537,21 +731,22 @@ public class Kakuro {
             }
         }
         else {
-            // Backtracking
-            for (int i = 1; i <= 9; ++i) {
-                //Comprova la fila i la columna del de cada número (checkH i checkV)
-                if (checkH(posX, posY, i) && checkV(posX, posY, i)) {
-                    cells[posX][posY].setValue(i); // Posar el número a l'atribut tipus (Recordar els 4 tipus: -2, -1, 0 i >0)
+            int possible_numbers = notes.get(posX*100 + posY);
+            int number = 1;
+            while (possible_numbers!= 0) {
+                if (possible_numbers % 2 != 0) {
+                    if (checkH(posX, posY, number) && checkV(posX, posY, number)) {
+                        cells[posX][posY].setValue(number);
 
-                    if (solve(posWhites, k + 1)) return true; //Mira les combinacions possibles amb el número i
-                        //Retorna cert si existeix solució amb el número i
-
-                    else cells[posX][posY].setValue(0); //Fals si no existeix solució amb el número i
-                    //Per tant, esborrar el número que hem posat
+                        if (solve(posWhites, k + 1)) return true;
+                        else cells[posX][posY].setValue(0);
+                    }
                 }
+                ++number;
+                possible_numbers /= 2;
             }
         }
-        return false; //Quan hagi comprovat tots els números possibles 1...9 i no troba cap solució
+        return false;
     }
 
     /**
@@ -570,13 +765,18 @@ public class Kakuro {
         Pair aux = posWhites.get(k);
         int posX = aux.first();
         int posY = aux.second();
-
-        for (int i = 1; i <= 9; ++i) {
-            if (checkH(posX, posY, i) && checkV(posX, posY, i)) {
-                cells[posX][posY].setValue(i);
-                if (solveMultiple(posWhites, k + 1) && solutions == 2) return true;
-                else cells[posX][posY].setValue(0);
+        int possible_numbers = notes.get(posX*100 + posY);
+        int number = 1;
+        while (possible_numbers!= 0) {
+            if (possible_numbers % 2 != 0) {
+                if (checkH(posX, posY, number) && checkV(posX, posY, number)) {
+                    cells[posX][posY].setValue(number);
+                    if (solveMultiple(posWhites, k + 1) && solutions == 2) return true;
+                    else cells[posX][posY].setValue(0);
+                }
             }
+            ++number;
+            possible_numbers /= 2;
         }
         return false;
     }
@@ -594,7 +794,6 @@ public class Kakuro {
         int totalF = 0;
 
         int aux = y-1;
-        if (aux < 0) return true;
 
         while (cells[x][aux] instanceof WhiteCell) {
             if (cells[x][aux].getValue() == valor) return false;
@@ -628,7 +827,6 @@ public class Kakuro {
         int totalC = 0;
 
         int aux = x-1;
-        if (aux < 0) return true;
 
         while (cells[aux][y] instanceof WhiteCell)    {
             if (cells[aux][y].getValue() == valor) return false;

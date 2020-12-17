@@ -1,0 +1,73 @@
+package persistence;
+
+import java.io.File;
+import java.io.IOException;
+
+public class DataUser {
+
+
+    /**
+     *
+     */
+    public DataUser() {
+    }
+
+    /**
+     * 
+     * @param user
+     * @param f
+     * @return
+     */
+    public boolean create_user(File user, File f) {
+        try {
+            
+            if (!user.exists()) {
+                if (user.mkdir()) {
+                    
+                    f.createNewFile();
+                    return true;
+                } else System.out.println("User directory not created due an error");
+            } else System.out.println("\nUser existed!");
+        } catch (IOException e){
+            System.out.println("\nError occurred during file writing");
+        }
+        return false;
+    }
+
+    /**
+     * 
+     * @param f
+     */
+    public void delete_user (File f) {
+        if (f.exists()) {
+            String[] entries = f.list();
+            for (String s : entries) {
+                File currentFile = new File(f.getPath(), s);
+                if (currentFile.isDirectory()){
+
+                    if (currentFile.exists()) {
+                        String[] entries_k = currentFile.list();
+                        for (String s_k : entries_k) {
+                            File currentFile_k = new File(currentFile.getPath(), s_k);
+                            currentFile_k.delete();
+                        }
+                        f.delete();
+                    }
+                    else System.out.println("\nKakuro not existed");
+                }
+                else currentFile.delete();
+            }
+            f.delete();
+        }
+        else System.out.println("\nUser not existed");
+    }
+
+    /**
+     * Returns true if a user exists
+
+     public boolean exists_user(String name){
+     File user = new File(route + "\\" + name);
+     if (user.exists()) return true;
+     return false;
+     }*/
+}

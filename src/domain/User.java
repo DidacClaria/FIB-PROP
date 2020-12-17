@@ -27,4 +27,14 @@ public class User {
         this.gamesPlayed = new ArrayList<Game>();
     }
 
+    public User(String n) {
+        this.name = n;
+        this.gamesPlayed = new ArrayList<Game>();
+    }
+
+    public String get_Nom () {
+        return this.name;
+    }
+
+
 }

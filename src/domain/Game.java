@@ -40,5 +40,13 @@ public class Game {
         gameScenario.setIdKakuro(idKakuro);
     }
 
+    public int get_kakuro_id(){
+        return gameScenario.getIdKakuro();
+    }
+
+    public int get_game_id(){
+        return idGame;
+    }
+
 
 }

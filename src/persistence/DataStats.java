@@ -29,6 +29,7 @@ public class DataStats {
             }
             if (!found)
                 result += "#" + "Kakuro " + id_kakuro + " --> " + user + " ,Time used: " + time + ", Hints asked: " + hints + ", Scores: " + scores;
+
             String[] text = result.split("#");
             for (String s : text) {
                 if (!s.equals("")) {

@@ -153,9 +153,10 @@ public class CtrlPersistence {
      * @param user
      * @param id_kakuro
      */
-    public void delete_kakuro (String user, int id_kakuro) {
+    public void delete_game (String user, int id_kakuro, int id_game) {
         File f = new File(route + "\\" + user + "\\" + "kakuro_" + id_kakuro);
         dataKakuro.delete_kakuro_dir(f);
+        //update stats
     }
 
     /**
@@ -190,9 +191,15 @@ public class CtrlPersistence {
     public void update_stats (String user, int id_kakuro, int time, int hints, int scores, boolean global) {
         try{
             File f;
-            if (global) f = new File(route + "\\" + "globalranking.txt");
-            else f = new File(route + "\\" + user + "\\" + "personal_stats.txt");
-            FileWriter wr = new FileWriter(route + "\\" + "globalranking.txt");
+            FileWriter wr;
+            if (global){
+                f = new File(route + "\\" + "globalranking.txt");
+                wr = new FileWriter(route + "\\" + "globalranking.txt");
+            }
+            else{
+                f = new File(route + "\\" + user + "\\" + "personal_stats.txt");
+                wr = new FileWriter(route + "\\" + user + "\\" + "personal_stats.txt");
+            }
             dataStats.update_stats(user, id_kakuro, time, hints, scores, f, wr);
         } catch (IOException e){
 

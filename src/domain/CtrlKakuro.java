@@ -51,9 +51,9 @@ public class CtrlKakuro {
      * @param numRows It indicates the number of rows that the Kakuro will have.
      * @param numColumns It indicates the number of columns that the Kakuro will have.
      */
-    public void generateKakuro(int numRows, int numColumns){
+    public void generateKakuro(int numRows, int numColumns, int diff, int fc){
         if (numColumns>= 3 && numRows>=3 && numColumns<=10 && numRows<=10){
-            kakuroCreated = new Kakuro(numRows, numColumns);
+            kakuroCreated = new Kakuro(numRows, numColumns, diff, fc);
             kakuros.add(kakuroCreated);
             ++numKakuros;
         }

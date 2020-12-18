@@ -42,9 +42,9 @@ public class CtrlGame {
 
     /**
      * The execution of a Game is on.
-     * @param idGame is the identification of the current game.
+     * @param idKakuro is the identification of the current game.
      */
-    public void startKakuro(String user, int idKakuro){
+    public void startGame(String user, int idKakuro){
         ++this.numGames;
         activeGame = new Game(user, idKakuro);
         this.games.add(activeGame);
@@ -56,5 +56,40 @@ public class CtrlGame {
      */
     public void saveGame(String user, int idKakuro){
 
+    }
+
+    public ArrayList<Integer> getGames(int id_kakuro){
+        ArrayList<Integer> list = new ArrayList<>();
+        for(Game g : games){
+            if (g.get_kakuro_id() == id_kakuro) list.add(g.get_game_id());
+        }
+        return list;
+    }
+
+    public void setActiveGame(int id_game) {
+        boolean found = false;
+        for (Game g : games) {
+            if (!found && (g.get_game_id() == id_game)) {
+                this.activeGame = g;
+                found = true;
+            }
+        }
+    }
+
+    public Game getGame(int id_game){
+        for (Game g : games) {
+            if ((g.get_game_id() == id_game)) {
+                return g;
+            }
+        }
+        return null;
+    }
+
+    public void delete_game(int id_game){
+        for (Game g : games) {
+            if ((g.get_game_id() == id_game)) {
+                games.remove(g);
+            }
+        }
     }
 }

@@ -3,6 +3,7 @@ package domain;
 import persistence.CtrlPersistence;
 import presentation.CtrlPresentation;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 /**
@@ -142,7 +143,7 @@ public class CtrlDomain {
                     fil = sca.nextInt();
                     int diff = sca.nextInt();
                     int fc = sca.nextInt();
-                    generateKakuro(fil, col); //falta la diff i les fc, retorna ID
+                    generateKakuro(fil, col, diff, fc); //falta la diff i les fc
                     System.out.println("Kakuro added to the collection");
                     exit = true;
                     break;
@@ -153,7 +154,7 @@ public class CtrlDomain {
                     fil = sca.nextInt();
                     String[][] kakuro;
                     kakuro = Main.readKakuro();
-                    if(proposeKakuro(fil, col, kakuro)) { //falta asignar una dificultat, retorna ID
+                    if(proposeKakuro(fil, col, kakuro) != -1) { //falta asignar una dificultat
                         System.out.println("Kakuro added to the collection");
                         exit = true;
                     } else{
@@ -190,12 +191,32 @@ public class CtrlDomain {
 
                     switch (option){
                         case 1:
-                            //s'executa el joc
-                            ctrlGame.startKakuro(ctrlUser.getActiveUser(), k);
+                            playKakuro(ctrlUser.getActiveUser(), k);
                             game_execution();
                             break;
                         case 2:
-                            //mostra els jocs del kakuro k, permet continuar (cinquè panell) o borrar-lo
+                            see_games(k);
+
+                            System.out.println("1 - Continue game");
+                            System.out.println("2 - Delete Game");
+
+                            System.out.print("\nCHOOSE ONE OPTION: ");
+                            sca = new Scanner(System.in);
+                            option = sca.nextInt();
+
+                            int id_game;
+                            sca = new Scanner(System.in);
+                            id_game = sca.nextInt();
+
+                            switch (option) {
+                                case 1:
+                                    continue_game(id_game);
+                                    game_execution();
+                                    break;
+                                case 2:
+                                    delete_game(id_game);
+                                    break;
+                            }
                             break;
                     }
                     break;
@@ -229,6 +250,7 @@ public class CtrlDomain {
                     break;
                 case 3:
                     //guardar joc
+                    saveGame();
                     exit = true;
                     break;
                 case 4:
@@ -254,12 +276,12 @@ public class CtrlDomain {
      * @param numColumns indicates the number of columns that the field has
      * @param field it has the value of each cell divided by ",".
      */
-    public boolean proposeKakuro(int numRows, int numColumns, String[][] field){
+    public int proposeKakuro(int numRows, int numColumns, String[][] field){
         if (ctrlKakuro.proposeKakuro(numRows,numColumns,field)) {
             ctrlPersistence.new_kakuro(ctrlKakuro.list_id_kakuro(), ctrlKakuro.listKakuro());
-            return true;
+            return ctrlKakuro.list_id_kakuro();
         }
-        return false;
+        return -1;
     }
 
     /**
@@ -267,9 +289,10 @@ public class CtrlDomain {
      * @param numRows It indicates the number of rows that the Kakuro will have.
      * @param numColumns It indicates the number of columns that the Kakuro will have.
      */
-    public void generateKakuro(int numRows, int numColumns){
-        ctrlKakuro.generateKakuro(numRows, numColumns);
+    public int generateKakuro(int numRows, int numColumns, int diff, int fc){
+        ctrlKakuro.generateKakuro(numRows, numColumns, diff, fc);
         ctrlPersistence.new_kakuro(ctrlKakuro.list_id_kakuro(), ctrlKakuro.listKakuro());
+        return ctrlKakuro.list_id_kakuro();
     }
 
     /**
@@ -295,13 +318,33 @@ public class CtrlDomain {
         return ctrlUser.getActiveUser();
     }
 
+    public void remove_user (String user) {
+        ctrlUser.delete_active_user();
+        ctrlPersistence.delete_user(user);
+    }
+
+
+
     /**
      *
      * @param user It indicates the user who is playing the game
      * @param id_kakuro It indicates the game scenario
      */
     public void playKakuro (String user, int id_kakuro) {
-        if (ctrlPersistence.new_game(user, id_kakuro)) ctrlGame.startKakuro(user, id_kakuro);
+        if (ctrlPersistence.new_game(user, id_kakuro)) ctrlGame.startGame(user, id_kakuro);
+    }
+
+    public ArrayList<Integer> see_games(int id_kakuro){
+        return ctrlGame.getGames(id_kakuro);
+    }
+
+    public void continue_game(int id_game){
+        ctrlGame.setActiveGame(id_game);
+    }
+
+    public void delete_game (int id_game) {
+        ctrlPersistence.delete_game(ctrlUser.getActiveUser(), ctrlGame.getGame(id_game).get_kakuro_id(), id_game);
+        ctrlGame.delete_game(id_game);
     }
 
     /**
@@ -322,26 +365,20 @@ public class CtrlDomain {
         }
     }
 
-    public void remove_user (String user) {
-        ctrlPersistence.delete_user(user);
-    }
 
-    public void remove_kakuros (String user, int id_kakuro) {
-        ctrlPersistence.delete_kakuro(user, id_kakuro);
-    }
 
     /**
      * Consultant function of the ranking of punctuations that all the different users made in their games.
      */
     public void listRanking(){
-        //ctrlPersistence.stats (user);
+        ctrlPersistence.show_stats(ctrlUser.getActiveUser(), false);
     }
 
     /**
      * Consultant function of the personal ranking of punctuations for one user from all his games.
      */
     public void listPersonalStats(){
-        //ctrlPersistence.ranking;
+        ctrlPersistence.show_stats(null, true);
     }
 
 }

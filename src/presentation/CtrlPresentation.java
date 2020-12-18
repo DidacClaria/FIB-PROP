@@ -3,6 +3,7 @@ package presentation;
 import domain.CtrlDomain;
 import domain.Game;
 import domain.Main;
+import java.io.*;
 
 import java.util.ArrayList;
 import java.util.Set;
@@ -38,6 +39,10 @@ public class CtrlPresentation {
         mainFrame.iniUserMenu();
     }
 
+    public void iniGame (int id_kakuro) {
+        mainFrame.iniGame(id_kakuro);
+    }
+
     public void logInUser(String username) {
         ctrlDomain.logInUser(username);
     }
@@ -50,6 +55,10 @@ public class CtrlPresentation {
         ctrlDomain.deleteUser(username);
     }
 
+    public void eliminateGame(String username, int idKakuro, int idGame){
+        ctrlDomain.deleteGame(username, idKakuro, idGame);
+    }
+
     public String[][] generateKakuro(int width, int height, int difficulty, int numFilledCells) {
 //        String[][] kakuro = ctrlDomain.generateKakuro(width,height);
         return null;
@@ -59,8 +68,20 @@ public class CtrlPresentation {
         return null;
     }
 
-    public Set<Integer> getListKakuros() {
-        return null;
+    public String[] getKakurosGlobals() {
+        return ctrlDomain.getKakurosGlobals();
+    }
+
+    public String[] getGames(String user, int id_kakuro) {
+        return ctrlDomain.getGames(user, id_kakuro);
+    }
+
+    public String listGlobalRanking () {
+        return ctrlDomain.listGlobalRanking();
+    }
+
+    public String listPersonalStats(String user){
+        return ctrlDomain.listPersonalStats(user);
     }
 
     public Set<Integer> getListGames(String username){
@@ -83,22 +104,6 @@ public class CtrlPresentation {
 
     }
 
-    public String[][] listGlobalRanking() {
-        return null;
-    }
-
-    public String[][] listPersonalStats(){
-        return null;
-    }
-
-    public Boolean deleteUser(String username){
-        return null;
-    }
-
-    public Boolean deleteGame(String username, int idGame){
-        return null;
-    }
-
     public void makeUserMenuViewVisible() {
         mainFrame.makeUserMenuViewVisible();
     }
@@ -113,10 +118,14 @@ public class CtrlPresentation {
 
     public void makePlayGameViewVisible() { mainFrame.makePlayGameViewVisible(); }
 
-    public void makeRankingViewVisible(String rankingType) { mainFrame.makeRankingViewVisible(rankingType); }
+    public void makeRankingViewVisible(boolean globalRank, String username) { mainFrame.makeRankingViewVisible(globalRank); }
 
     public void makeSelectGameViewVisible() {
         mainFrame.makeSelectGameViewVisible();
+    }
+
+    public void makeStartedGameViewVisible() {
+        mainFrame.makeStartedGameViewVisible();
     }
 
 }

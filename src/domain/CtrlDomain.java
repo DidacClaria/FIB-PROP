@@ -124,11 +124,13 @@ public class CtrlDomain {
         }
     }
 
-    public void deleteUser (String user) {
+    public void deleteUser () {
+        String user = getActiveUser();
         ctrlPersistence.deleteUser(user);
     }
 
-    public void deleteGame (String user, int idKakuro, int idGame) {
+    public void deleteGame (int idKakuro, int idGame) {
+        String user = getActiveUser();
         ctrlPersistence.deleteGame(user, idKakuro, idGame);
     }
 
@@ -142,7 +144,8 @@ public class CtrlDomain {
     /**
      * Consultant function of the personal ranking of punctuations for one user from all his games.
      */
-    public String listPersonalStats(String user){
+    public String listPersonalStats(){
+        String user = getActiveUser();
         return ctrlPersistence.listRankingOrStats(user, false);
     }
 

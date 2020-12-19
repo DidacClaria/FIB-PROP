@@ -104,7 +104,7 @@ public class Main {
                     System.out.println("Enter the user name you want to remove:");
                     sca = new Scanner(System.in);
                     user = sca.nextLine();
-                    a.deleteUser(user);
+                    a.deleteUser();
                     break;
                 case 8:
                     System.out.println("Enter the user name you want to remove:");
@@ -114,7 +114,7 @@ public class Main {
                     idKakuro = sca.nextInt();
                     System.out.println("Enter the id of game you want to remove:");
                     idGame = sca.nextInt();
-                    a.deleteGame(user, idKakuro, idGame);
+                    a.deleteGame(idKakuro, idGame);
                     break;
             }
         }

@@ -46,12 +46,12 @@ public class CtrlPresentation {
         return ctrlDomain.getActiveUser();
     }
 
-    public void deleteUser(String username) {
-        ctrlDomain.deleteUser(username);
+    public void deleteUser() {
+        ctrlDomain.deleteUser();
     }
 
-    public void deleteGame(String username, int idKakuro, int idGame){
-        ctrlDomain.deleteGame(username, idKakuro, idGame);
+    public void deleteGame(int idKakuro, int idGame){
+        ctrlDomain.deleteGame(idKakuro, idGame);
     }
 
     public String[][] generateKakuro(int width, int height, int difficulty, int numFilledCells) {
@@ -102,8 +102,8 @@ public class CtrlPresentation {
         return ctrlDomain.listGlobalRanking();
     }
 
-    public String listPersonalStats(String user){
-        return ctrlDomain.listPersonalStats(user);
+    public String listPersonalStats(){
+        return ctrlDomain.listPersonalStats();
     }
 
     public Set<Integer> getListGames(String username){

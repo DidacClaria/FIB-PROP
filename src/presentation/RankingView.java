@@ -69,7 +69,7 @@ public class RankingView {
     }
 
     public void createPSText () {
-        String text = ctrlPresentation.listPersonalStats(ctrlPresentation.getActiveUser());
+        String text = ctrlPresentation.listPersonalStats();
         list.setText(text);
         list.setEditable(false);
     }

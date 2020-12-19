@@ -242,10 +242,12 @@ public class CtrlDomain {
 
             switch (option) {
                 case 1:
+                    fill_cell();
                     //donada una posició (x,y) i un valor (v), s'omple la casella x,y amb v
                     //es guarda el joc
                     break;
                 case 2:
+                    ask_hint();
                     //demanar pista random
                     break;
                 case 3:
@@ -331,7 +333,7 @@ public class CtrlDomain {
      * @param id_kakuro It indicates the game scenario
      */
     public void playKakuro (String user, int id_kakuro) {
-        if (ctrlPersistence.new_game(user, id_kakuro)) ctrlGame.startGame(user, id_kakuro);
+        if (ctrlPersistence.new_game(user, id_kakuro)) ctrlGame.createNewGame(user, id_kakuro);
     }
 
     public ArrayList<Integer> see_games(int id_kakuro){
@@ -349,10 +351,11 @@ public class CtrlDomain {
 
     /**
      * Function used to save the current state of a game.
-     * @param idGame indicates the identifier of the kakuro to save
      */
-    public void saveGame(String user, int idKakuro, int idGame, int time, int hints, String [][] new_state){
-        ctrlPersistence.save_game(user, idKakuro, idGame, time, hints, new_state);
+    public void saveGame(int time, int hints, String [][] new_state){
+        int idGame = ctrlGame.getActiveGame();
+        ctrlGame.saveGame(time, hints, new_state);
+        ctrlPersistence.save_game(ctrlUser.getActiveUser(), ctrlGame.getGame(idGame).get_kakuro_id(), idGame, time, hints, new_state);
     }
 
     public void validate_game (String user, int id_kakuro, int id_game, int time, int hints, String [][] kakuro) {

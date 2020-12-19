@@ -35,7 +35,7 @@ public class CtrlKakuro {
      */
     public CtrlKakuro(CtrlDomain ctrlDomain) {
         this.ctrlDomain = ctrlDomain;
-        this.kakuros = new ArrayList<Kakuro>();
+        this.kakuros = new ArrayList<>();
         this.numKakuros = 0;
     }
 

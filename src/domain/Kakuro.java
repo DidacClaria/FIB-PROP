@@ -196,9 +196,12 @@ public class Kakuro {
      * @param x It indicates the number of rows that the Kakuro will have.
      * @param y It indicates the number of columns that the Kakuro will have.
      */
-    public Kakuro(int x, int y) {
+    public Kakuro(int x, int y, int d, int fc) {
         this.numRows = x;
         this.numColumns = y;
+        if(d == 1) this.difficulty = 100;
+        else if (d==2) this.difficulty = 75;
+        else this.difficulty = 50;
         this.cells = new Cell[numRows][numColumns];
         this.solutions = 0;
 

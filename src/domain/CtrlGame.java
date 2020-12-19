@@ -44,9 +44,9 @@ public class CtrlGame {
      * The execution of a Game is on.
      * @param idKakuro is the identification of the current game.
      */
-    public void startGame(String user, int idKakuro){
+    public void createNewGame(String user, int idKakuro){
         ++this.numGames;
-        activeGame = new Game(user, idKakuro);
+        activeGame = new Game(user, idKakuro, numGames);
         this.games.add(activeGame);
     }
 
@@ -54,8 +54,9 @@ public class CtrlGame {
      * The execution of a Game it stops and the current state is saved.
      * @param idGame is the identification of the current game.
      */
-    public void saveGame(String user, int idKakuro){
-
+    public void saveGame(int time, int hints, String[][] state){
+        Game g = getGame(activeGame.get_game_id());
+        g.
     }
 
     public ArrayList<Integer> getGames(int id_kakuro){
@@ -92,4 +93,9 @@ public class CtrlGame {
             }
         }
     }
+
+    public int getActiveGame(){
+        return activeGame.get_game_id();
+    }
+
 }

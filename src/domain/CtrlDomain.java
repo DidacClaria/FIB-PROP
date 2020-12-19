@@ -54,10 +54,15 @@ public class CtrlDomain {
      * @param numRows indicates the number of rows that the field has
      * @param numColumns indicates the number of columns that the field has
      * @param field it has the value of each cell divided by ",".
+     * @return It returns either the id of the new proposed Kakuro or -1 if it is has no solution.
      */
-    public void proposeKakuro(int numRows, int numColumns, String[][] field){
-        if (ctrlKakuro.proposeKakuro(numRows,numColumns,field))
+    public int proposeKakuro(int numRows, int numColumns, String[][] field){
+        int idKakuro = ctrlKakuro.proposeKakuro(numRows,numColumns,field);
+        if (idKakuro!=-1) {
             ctrlPersistence.newKakuro(ctrlKakuro.listIdKakuro(), ctrlKakuro.listKakuro());
+            return idKakuro;
+        }
+        return -1;
     }
 
     /**

@@ -72,44 +72,17 @@ public class CtrlKakuro {
      * @param field It has the information of every individual Cell in the Kakuro.
      * @return It will return true if the kakuro to be proposed has solution and otherwise false.
      */
-    public boolean proposeKakuro(int numRows, int numColumns, String[][] field){
-        boolean validField = false;
-        for (String[] row:field){
-            for (String cell: row){
-                if (!(cell.equals("*") || cell.equals("?"))){
-                    validField=false;
-                    String[] parts = cell.split("(?<=\\D)(?=\\d)|(?<=\\d)(?=\\D)");
-                    try{
-                        if (parts[0].equals("F") && parts[1].length()<3 && parts[2]==null) validField =true;
-                        else if (parts[0].equals("C") && parts[1].length()<3 && parts[2]==null) validField =true;
-                        else if (parts[0].equals("C") && parts[2].equals("F") && (parts[1].length()<3 || parts[3].length()<3)) validField=true;
-
-                    } catch (ArrayIndexOutOfBoundsException ignored){
-                        if (parts[0].equals("F") && parts[1].length()<3) validField = true;
-                        else validField = parts[0].equals("C") && parts[1].length() <= 3;
-                    }
-                }
-                else validField=true;
-                if (!validField) break;
-            }
+    public int proposeKakuro(int numRows, int numColumns, String[][] field){
+        kakuroCreated = new Kakuro();
+        Boolean b = kakuroCreated.proposeKakuro(numRows,numColumns,field);
+        if (b) {
+            ++numKakuros;
+            kakuroCreated.setIdKakuro(numKakuros);
+            kakuros.add(kakuroCreated);
+            System.out.println("\nProposed Successfully");
+            return numKakuros;
         }
-        if (validField){
-            if (numColumns>= 3 && numRows>=3){
-                kakuroCreated = new Kakuro();
-                Boolean b = kakuroCreated.proposeKakuro(numRows,numColumns,field);
-                if (b) {
-                    ++numKakuros;
-                    kakuroCreated.setIdKakuro(numKakuros);
-                    kakuros.add(kakuroCreated);
-                    System.out.println("\nProposed Successfully");
-                    return true;
-                }
-                else System.out.println("No Solution Found Out");
-            }
-            else throw new ArithmeticException("The size of the Kakuro is too small");
-        }
-        else throw new ArithmeticException("The proposed field is not valid");
-        return false;
+        return -1;
     }
 
     /**

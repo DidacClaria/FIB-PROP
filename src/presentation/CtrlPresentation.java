@@ -2,8 +2,10 @@ package presentation;
 
 import domain.CtrlDomain;
 import domain.Game;
+import domain.Kakuro;
 import domain.Main;
 
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.Set;
 
@@ -55,8 +57,35 @@ public class CtrlPresentation {
         return null;
     }
 
-    public String[][] validateKakuro(int width, int height, String[][] field){
-        return null;
+    public int proposeKakuro(int rows, int cols, String[][] field) {
+        return ctrlDomain.proposeKakuro(rows,cols,field);
+    }
+
+    public String validateKakuro(int numColumns, int numRows, String[][] field){
+        if (numColumns< 3 && numRows<3) return "The size of the Kakuro is too small";
+        else if (numColumns>10 && numRows>10) return "The size of the Kakuro is too big";
+        boolean validField = false;
+        for (String[] row:field){
+            for (String cell: row){
+                if (!(cell.equals("*") || cell.equals("?"))){
+                    validField=false;
+                    String[] parts = cell.split("(?<=\\D)(?=\\d)|(?<=\\d)(?=\\D)");
+                    try{
+                        if (parts[0].equals("F") && parts[1].length()<3 && parts[2]==null) validField =true;
+                        else if (parts[0].equals("C") && parts[1].length()<3 && parts[2]==null) validField =true;
+                        else if (parts[0].equals("C") && parts[2].equals("F") && (parts[1].length()<3 || parts[3].length()<3)) validField=true;
+
+                    } catch (ArrayIndexOutOfBoundsException ignored){
+                        if (parts[0].equals("F") && parts[1].length()<3) validField = true;
+                        else validField = parts[0].equals("C") && parts[1].length() <= 3;
+                    }
+                }
+                else validField=true;
+                if (!validField) break;
+            }
+        }
+        if (!validField) return "The proposed field is not valid";
+        else return "OK";
     }
 
     public Set<Integer> getListKakuros() {
@@ -118,5 +147,4 @@ public class CtrlPresentation {
     public void makeSelectGameViewVisible() {
         mainFrame.makeSelectGameViewVisible();
     }
-
 }

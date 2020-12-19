@@ -24,25 +24,25 @@ public class DataKakuro {
     /**
      * Saves a new kakuro
      */
-    public boolean new_kakuro(FileWriter wr, FileWriter wr_sol, String [][] kakuro, File GlobalRanking){
+    public boolean newKakuro(FileWriter wr, FileWriter wrSol, String [][] kakuro, File GlobalRanking){
         try {
             for (int i = 0; i < kakuro.length; i++) {
                 for (int j = 0; j < kakuro[0].length; j++) {
                     if (kakuro[i][j].length() == 1 && kakuro[i][j] != "*") wr.write("0");
                     else wr.write(kakuro[i][j]);
-                    wr_sol.write(kakuro[i][j]);
+                    wrSol.write(kakuro[i][j]);
                     if (j != kakuro[0].length - 1) {//separador d'elements
                         wr.write(",");
-                        wr_sol.write(",");
+                        wrSol.write(",");
                     }
                     else {
                         wr.write(System.getProperty("line.separator")); //separador de files
-                        wr_sol.write(System.getProperty("line.separator"));
+                        wrSol.write(System.getProperty("line.separator"));
                     }
                 }
             }
             wr.close();
-            wr_sol.close();
+            wrSol.close();
 
             GlobalRanking.createNewFile();
 
@@ -57,7 +57,7 @@ public class DataKakuro {
     /**
      * returns the kakuro or the solution of the kakuro with ID = id
      */
-    public String[][] show_kakuro(File k){
+    public String[][] showKakuro(File k){
         try {
             if (k.exists()) {
                 String [][] kakuro;
@@ -89,7 +89,7 @@ public class DataKakuro {
     /**
      * Starts a new game for User = user
      */
-    public boolean new_game (File pathOri, File pathUser, File pathDes, FileWriter wr){
+    public boolean newGame (File pathOri, File pathUser, File pathDes, FileWriter wr){
         try {
             if (pathOri.exists() && pathUser.exists()) {
                 Files.copy(Paths.get(pathOri.getAbsolutePath()), Paths.get(pathDes.getAbsolutePath()), StandardCopyOption.REPLACE_EXISTING);
@@ -107,21 +107,21 @@ public class DataKakuro {
     /**
      * Saves the state of a game in current of the user
      */
-    public boolean save_game (FileWriter game_saved, FileWriter game_saved_stats, int time, int hints, String [][] kakuro){
+    public boolean saveGame (FileWriter gameSaved, FileWriter gameSavedStats, int time, int hints, String [][] kakuro){
         try {
             for (int i = 0; i < kakuro.length; i++) {
                 for (int j = 0; j < kakuro[0].length; j++) {
-                    if (kakuro[i][j].equals("?")) game_saved.write("0");
-                    else game_saved.write(kakuro[i][j]);
-                    if (j != kakuro[0].length - 1) game_saved.write(","); //separador d'elements
-                    else game_saved.write(System.getProperty("line.separator")); //separador de files
+                    if (kakuro[i][j].equals("?")) gameSaved.write("0");
+                    else gameSaved.write(kakuro[i][j]);
+                    if (j != kakuro[0].length - 1) gameSaved.write(","); //separador d'elements
+                    else gameSaved.write(System.getProperty("line.separator")); //separador de files
                 }
             }
-            game_saved.close();
+            gameSaved.close();
 
-            game_saved_stats.write("Execution Time: " + time + "\n");
-            game_saved_stats.write("Hints asked: " + hints + "\n");
-            game_saved_stats.close();
+            gameSavedStats.write("Execution Time: " + time + "\n");
+            gameSavedStats.write("Hints asked: " + hints + "\n");
+            gameSavedStats.close();
 
             return true;
         } catch (IOException e){
@@ -134,14 +134,14 @@ public class DataKakuro {
      *
      * @param solution
      * @param f
-     * @param f_stats
+     * @param fStats
      * @param kakuro
      * @return
      */
-    public boolean validate_correctness_game (String [][] solution, File f, File f_stats, String [][] kakuro) {
+    public boolean validateCorrectnessGame (String [][] solution, File f, File fStats, String [][] kakuro) {
         if (Arrays.deepEquals(solution, kakuro)) {
             f.delete();
-            f_stats.delete();
+            fStats.delete();
             return true;
         }
         else return false;

@@ -98,6 +98,14 @@ public class CtrlDomain {
         return ctrlUser.getActiveUser();
     }
 
+    public String[] getKakurosGlobals() {
+        return ctrlPersistence.getKakurosGlobals();
+    }
+
+    public String[] getGames(String user, int id_game) {
+        return ctrlPersistence.getGames(user, id_game);
+    }
+
     /**
      *
      * @param user It indicates the user who is playing the game
@@ -116,7 +124,7 @@ public class CtrlDomain {
     }
 
     public void validateGame (String user, int id_kakuro, int id_game, int time, int hints, String [][] kakuro) {
-        if (ctrlPersistence.validateGame(user, id_kakuro, id_game, kakuro)) {
+        if (ctrlPersistence.validateCorrectnessGame(user, id_kakuro, id_game, kakuro)) {
             int scores = (72000 - time);
             if (scores - (7200 * hints) > 0) scores -= (7200 * hints);
             else scores = 0;
@@ -129,8 +137,8 @@ public class CtrlDomain {
         ctrlPersistence.deleteUser(user);
     }
 
-    public void deleteKakuro (String user, int idKakuro) {
-        ctrlPersistence.deleteKakuro(user, idKakuro);
+    public void deleteGame (String user, int idKakuro, int idGame) {
+        ctrlPersistence.deleteGame(user, idKakuro, idGame);
     }
 
     /**

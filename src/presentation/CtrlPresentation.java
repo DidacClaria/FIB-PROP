@@ -46,11 +46,11 @@ public class CtrlPresentation {
         return ctrlDomain.getActiveUser();
     }
 
-    public void eliminateUser(String username) {
+    public void deleteUser(String username) {
         ctrlDomain.deleteUser(username);
     }
 
-    public void eliminateGame(String username, int idKakuro, int idGame){
+    public void deleteGame(String username, int idKakuro, int idGame){
         ctrlDomain.deleteGame(username, idKakuro, idGame);
     }
 
@@ -146,8 +146,6 @@ public class CtrlPresentation {
         mainFrame.makeSelectGameViewVisible();
     }
 
-    public void makeStartedGameViewVisible() {
-        mainFrame.makeStartedGameViewVisible();
+    public void makeStartedGameViewVisible() { mainFrame.makeStartedGameViewVisible();
     }
-
 }

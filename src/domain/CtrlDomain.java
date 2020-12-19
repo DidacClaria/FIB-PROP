@@ -300,6 +300,12 @@ public class CtrlDomain {
         listGlobalRanking(); // no implementada
     }
 
+    public String[] getGames(String user, int id_game) {
+        return ctrlPersistence.getGames(user, id_game);
+    }
+
+
+
     /**
      * If the proposed Kakuro by the User at the Presentation Layer is valid, it is saved at the Persistence Layer and it's added to the collection of Kakuros that a User has.
      * @param numRows indicates the number of rows that the field has

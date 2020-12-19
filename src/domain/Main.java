@@ -112,7 +112,9 @@ public class Main {
                     user = sca.nextLine();
                     System.out.println("Enter the id of kakuro you want to remove:");
                     idKakuro = sca.nextInt();
-                    a.deleteKakuro(user, idKakuro);
+                    System.out.println("Enter the id of game you want to remove:");
+                    idGame = sca.nextInt();
+                    a.deleteGame(user, idKakuro, idGame);
                     break;
             }
         }

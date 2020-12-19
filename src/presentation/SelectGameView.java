@@ -13,10 +13,10 @@ public class SelectGameView {
     private final CtrlPresentation ctrlPresentation;
     private JPanel selectGamePanel;
     private JPanel headerContainer;
-    private JPanel listGamesContainer;
-    private JScrollBar scrollBar1;
     private JButton GOBACKButton;
     private JLabel titleLabel;
+    private JScrollPane listGamesContainer;
+
 
     public SelectGameView(CtrlPresentation ctrlPresentation) {
         this.ctrlPresentation = ctrlPresentation;
@@ -36,12 +36,22 @@ public class SelectGameView {
     public void setVisible(boolean b) {
         selectGamePanel.setVisible(b);
     }
+    public void setGameVisible() {ctrlPresentation.makePlayGameViewVisible();}
+    public void setGamesStarted(int id_kakuro) {
+        ctrlPresentation.iniGame(id_kakuro);
+        ctrlPresentation.makeStartedGameViewVisible();
+    }
 
     public JPanel getSelectGamePanel() {
         return selectGamePanel;
     }
 
     private void createUIComponents() {
+        createBackImage();
+        createListKakuros();
+    }
+
+    private void createBackImage () {
         try {
             BufferedImage image;
             image = ImageIO.read(new File("DOCS/gobackLogo.png"));
@@ -51,5 +61,23 @@ public class SelectGameView {
         } catch (IOException ex) {
             System.out.println("The file does not exists");
         }
+    }
+
+    private void createListKakuros () {
+
+        String [] files = ctrlPresentation.getKakurosGlobals();
+
+        JPanel aux = new JPanel();
+
+        for (int i = 0; i < files.length; ++i) {
+            if (i % 2 == 0) {
+                int id = files[i].charAt(6) - '0';
+                JPanel aux2 = new RowSelectKakuro(this, id);
+                aux2.setBorder(BorderFactory.createLineBorder(Color.black));
+                aux.add(aux2);
+            }
+        }
+        aux.setLayout(new BoxLayout(aux, BoxLayout.Y_AXIS));
+        listGamesContainer = new JScrollPane(aux);
     }
 }

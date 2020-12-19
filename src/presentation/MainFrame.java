@@ -16,6 +16,7 @@ public class MainFrame extends JFrame {
     private SelectGameView selectGameView;
     private PlayGameView playGameView;
     private RankingView rankingView;
+    private StartedGameView startedGameView;
 
     public MainFrame(CtrlPresentation CP) {
 
@@ -34,6 +35,8 @@ public class MainFrame extends JFrame {
     public void iniUserMenu () {
         this.userMenuView = new UserMenuView(ctrlPresentation);
     }
+
+    public void iniGame (int id_kakuro) {this.startedGameView = new StartedGameView(ctrlPresentation, id_kakuro);}
 
     public void mainFrameInit(){
         setTitle("KAKURO");
@@ -74,16 +77,22 @@ public class MainFrame extends JFrame {
         setContentPane(selectGameView.getSelectGamePanel());
     }
 
-    public void makeRankingViewVisible(String rankingType){
+    public void makeRankingViewVisible(boolean globalRank){
         rankingView.setVisible(true);
-        JPanel rankingAux = rankingView.getRankingPanel();
-        if (rankingType == "PERSONAL STATS") {
-//            rankingAux.setTitle(rankingType);
+        if (globalRank) {
+            rankingView.setTitle("GLOBAL RANKING");
+            rankingView.createRGText();;
         }
         else {
-//            rankingAux.setTitle(rankingAux);
+            rankingView.setTitle("MY PERSONAL STATS");
+            rankingView.createPSText();
         }
-        setContentPane(rankingAux);
+        setContentPane(rankingView.getRankingPanel());
+    }
+
+    public void makeStartedGameViewVisible() {
+        startedGameView.setVisible(true);
+        setContentPane(startedGameView.getStartedGamePanel());
     }
 
 }

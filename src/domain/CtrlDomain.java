@@ -136,15 +136,15 @@ public class CtrlDomain {
     /**
      * Consultant function of the ranking of punctuations that all the different users made in their games.
      */
-    public void listRanking(){
-        ctrlGame.listRanking();
+    public String listGlobalRanking(){
+        return ctrlPersistence.listRankingOrStats(null, true);
     }
 
     /**
      * Consultant function of the personal ranking of punctuations for one user from all his games.
      */
-    public void listPersonalStats(){
-        ctrlGame.listPersonalStats();
+    public String listPersonalStats(String user){
+        return ctrlPersistence.listRankingOrStats(user, false);
     }
 
 }

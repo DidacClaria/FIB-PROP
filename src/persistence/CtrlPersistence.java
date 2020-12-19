@@ -1,7 +1,10 @@
 package persistence;
 
 import domain.CtrlDomain;
+import domain.Pair;
+
 import java.io.*;
+import java.util.ArrayList;
 
 /**
  * Persistence Controller Class.
@@ -50,6 +53,33 @@ public class CtrlPersistence {
                 }
             }
         }
+    }
+
+
+    public ArrayList<String[][]> loadKakuros(){
+        ArrayList<String[][]> kakuros = new ArrayList<>();
+        File f = new File(routek);
+        for( String k : f.list()){
+           File kakuro = new File(routek + "/" + k);
+           kakuros.add(dataKakuro.showKakuro(kakuro));
+        }
+        return kakuros;
+    }
+
+    public ArrayList<String> loadUsers(){
+        ArrayList<String> users = new ArrayList<>();
+        File f = new File(route);
+        for (String u : f.list()){
+            if (u != "kakuros" && u != "global_ranking.txt"){
+                users.add(u);
+            }
+        }
+        return users;
+    }
+
+    public String[] startedKakuros(String user){
+        File f = new File(route + "/" + user);
+        return f.list();
     }
 
     /**

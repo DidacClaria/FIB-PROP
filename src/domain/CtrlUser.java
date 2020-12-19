@@ -29,9 +29,10 @@ public class CtrlUser {
      * Default empty User Controller constructor.
      * @param ctrlDomain Is the reference of the Domain Controller.
      */
-    public CtrlUser(CtrlDomain ctrlDomain) {
+    public CtrlUser(CtrlDomain ctrlDomain, ArrayList<String> users) {
         this.ctrlDomain = ctrlDomain;
-        this.users = new ArrayList<User>();
+        this.users = new ArrayList<>();
+        for (String u: users) this.users.add(new User(u));
     }
 
     //CLASS METHODS

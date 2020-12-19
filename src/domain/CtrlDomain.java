@@ -46,11 +46,40 @@ public class CtrlDomain {
         //initialization
         this.ctrlPresentation = ctrlPresentation;
         ctrlPersistence = new CtrlPersistence(this);
+        ctrlKakuro = new CtrlKakuro(this, dataKakuros());
+        ArrayList<String> users = dataUsers();
+        ctrlUser = new CtrlUser(this, users);
         ctrlGame = new CtrlGame(this);
-        ctrlKakuro = new CtrlKakuro(this);
-        ctrlUser = new CtrlUser(this);
+        dataGame(users);
+
         //welcome to the system
         ini_execution();
+    }
+
+
+    private ArrayList<String[][]> dataKakuros(){
+        return ctrlPersistence.loadKakuros();
+    }
+
+    private ArrayList<String> dataUsers(){
+        return ctrlPersistence.loadUsers();
+    }
+
+    private void dataGame(ArrayList<String> users){
+        for (String u: users){
+            String[] kakuros = ctrlPersistence.startedKakuros(u);
+            for (String k : kakuros){
+                if (k != "personal_stats.txt"){
+                    k = k.replace("kakuro_", "");
+                    int idk = Integer.parseInt(k);
+                    String[] games = ctrlPersistence.getGames(u, idk);
+                    for (String g : games) {
+                        String[][] game = ctrlPersistence.loadGame(u, idk, );
+                    }
+                }
+            }
+
+        }
     }
 
     //CLASS METHODS

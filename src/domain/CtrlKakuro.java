@@ -33,10 +33,11 @@ public class CtrlKakuro {
      * Default Kakuro Controller constructor.
      * @param ctrlDomain Is the reference of the Domain Controller.
      */
-    public CtrlKakuro(CtrlDomain ctrlDomain) {
+    public CtrlKakuro(CtrlDomain ctrlDomain, ArrayList<String[][]> kakuros) {
         this.ctrlDomain = ctrlDomain;
         this.kakuros = new ArrayList<>();
-        this.numKakuros = 0;
+        this.numKakuros = kakuros.size();
+        //passar de ArrayList<String[][]> a ArrayList<Kakuro> (mod 2 son kak i sol) i afegir a kakuros
     }
 
     //GETTERS AND SETTERS
@@ -56,6 +57,7 @@ public class CtrlKakuro {
             kakuroCreated = new Kakuro(numRows, numColumns, diff, fc);
             kakuros.add(kakuroCreated);
             ++numKakuros;
+            kakuroCreated.setIdKakuro(numKakuros);
         }
         else if (numColumns<=10 && numRows<=10) {
             throw new ArithmeticException("The size of the Kakuro is too small");

@@ -176,6 +176,9 @@ public class Kakuro {
      */
     private int solutions;
 
+
+    private String[][] solution;
+
     /**
      * This attribute indicates the possible numbers of each white cell
      * Once a new kakuro is created, all the white cells indicated by the Map will have unique number (solution)

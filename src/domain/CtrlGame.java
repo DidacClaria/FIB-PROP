@@ -36,6 +36,7 @@ public class CtrlGame {
     public CtrlGame(CtrlDomain ctrlDomain) {
         this.ctrlDomain = ctrlDomain;
         this.games = new ArrayList<>();
+        this.numGames = 0;
     }
 
     //WIP CLASS METHODS

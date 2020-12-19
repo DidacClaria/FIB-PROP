@@ -278,6 +278,15 @@ public class Kakuro {
 
     //CLASS METHODS
 
+    public void setSolution(String[][] sol){
+        this.solution = sol;
+    }
+
+    public void setCells(String[][] cells){
+        proposeKakuro(cells.length, cells[0].length, cells);
+    }
+
+
     /**
      * This method generates randomly black cells in the kakuro
      * @param rangeX It indicates the range of number that can be generated horizontally (Row)

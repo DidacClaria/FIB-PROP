@@ -74,11 +74,15 @@ public class CtrlDomain {
                     int idk = Integer.parseInt(k);
                     String[] games = ctrlPersistence.getGames(u, idk);
                     for (String g : games) {
-                        String[][] game = ctrlPersistence.loadGame(u, idk, );
+                        g = g.replace("game_", "");
+                        g = g.replace(".txt", "");
+                        int idg = Integer.parseInt(g);
+                        String[][] game = ctrlPersistence.loadGame(u, idk, idg);
+                        String stats = ctrlPersistence.loadStats(u, idk, idg);
+                        ctrlGame.loadGame(u, idk, idg, game, stats);
                     }
                 }
             }
-
         }
     }
 
@@ -310,7 +314,7 @@ public class CtrlDomain {
     public int proposeKakuro(int numRows, int numColumns, String[][] field){
         int idKakuro = ctrlKakuro.proposeKakuro(numRows,numColumns,field);
         if (idKakuro!=-1) {
-            ctrlPersistence.newKakuro(ctrlKakuro.listIdKakuro(), ctrlKakuro.listKakuro());
+            ctrlPersistence.newKakuro(ctrlKakuro.listIdKakuro(), ctrlKakuro.listKakuro(idKakuro));
             return idKakuro;
         }
         return -1;
@@ -323,17 +327,17 @@ public class CtrlDomain {
      */
     public int generateKakuro(int numRows, int numColumns, int diff, int fc){
         ctrlKakuro.generateKakuro(numRows, numColumns, diff, fc);
-        ctrlPersistence.newKakuro(ctrlKakuro.listIdKakuro(), ctrlKakuro.listKakuro());
+        ctrlPersistence.newKakuro(ctrlKakuro.listIdKakuro(), ctrlKakuro.listKakuro(ctrlKakuro.listIdKakuro()));
         return ctrlKakuro.listIdKakuro();
     }
 
     /**
      * Consultant function
      * @return It returns a matrix of the information of all the cells of the kakuro
-     */
+
     public String [][] listKakuro () {
         return ctrlKakuro.listKakuro();
-    }
+    }*/
 
     //WIP USE CASES
 
@@ -366,7 +370,10 @@ public class CtrlDomain {
      * @param idKakuro It indicates the game scenario
      */
     public void playKakuro (String user, int idKakuro) {
-        if (ctrlPersistence.newGame(user, idKakuro)) ctrlGame.startKakuro(user, idKakuro);
+        if (ctrlPersistence.newGame(user, idKakuro)){
+            String[][] kakuro = ctrlKakuro.listKakuro(idKakuro);
+            ctrlGame.startKakuro(user, idKakuro, kakuro);
+        }
     }
 
     public ArrayList<Integer> seeGames(int id_kakuro){
@@ -383,8 +390,8 @@ public class CtrlDomain {
 
     }
 
-    public void fillCell(){
-
+    public boolean fillCell(){
+        return false;
     }
 
     public void askHint(){

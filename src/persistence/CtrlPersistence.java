@@ -270,4 +270,13 @@ public class CtrlPersistence {
         if (!f.exists()) return null;
         return f.list();
     }
+
+    public String[][] loadGame(String user, int id_kakuro, int id_game){
+        return null;
+    }
+
+    public String loadStats(String u, int idk, int idg){
+        return null;
+    }
+
 }

@@ -39,15 +39,21 @@ public class CtrlGame {
         this.numGames = 0;
     }
 
+    public void loadGame(String u, int idk, int idg, String[][] game, String stats){
+        ++numGames;
+        Game g = new Game(u, idk, idg, game, stats);
+        this.games.add(g);
+    }
+
     //WIP CLASS METHODS
 
     /**
      * The execution of a Game is on.
      * @param idKakuro is the identification of the current game.
      */
-    public void startKakuro(String user, int idKakuro){
+    public void startKakuro(String user, int idKakuro, String[][] kakuro){
         ++this.numGames;
-        activeGame = new Game(user, idKakuro, numGames);
+        activeGame = new Game(user, idKakuro, numGames, kakuro);
         this.games.add(activeGame);
     }
 

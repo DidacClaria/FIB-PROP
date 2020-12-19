@@ -85,7 +85,7 @@ public class CtrlGame {
         return null;
     }
 
-    public void delete_game(int id_game){
+    public void deleteGame(int id_game){
         for (Game g : games) {
             if ((g.get_game_id() == id_game)) {
                 games.remove(g);
@@ -93,8 +93,8 @@ public class CtrlGame {
         }
     }
 
-    public int getActiveGame(){
-        return activeGame.get_game_id();
+    public Game getActiveGame(){
+        return activeGame;
     }
 
 }

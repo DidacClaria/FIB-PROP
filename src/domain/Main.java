@@ -47,7 +47,7 @@ public class Main {
                     System.out.println("\nEnter the size of kakuro you want to generate:");
                     f = sca.nextInt();
                     c = sca.nextInt();
-                    a.generateKakuro(f,c);
+                    a.generateKakuro(f,c, 0, 0);
                     printKakuro();
                     break;
                 case 3:
@@ -104,7 +104,7 @@ public class Main {
                     System.out.println("Enter the user name you want to remove:");
                     sca = new Scanner(System.in);
                     user = sca.nextLine();
-                    a.deleteUser(user);
+                    a.deleteUser();
                     break;
                 case 8:
                     System.out.println("Enter the user name you want to remove:");
@@ -114,7 +114,7 @@ public class Main {
                     idKakuro = sca.nextInt();
                     System.out.println("Enter the id of game you want to remove:");
                     idGame = sca.nextInt();
-                    a.deleteGame(user, idKakuro, idGame);
+                    a.deleteGame(idGame);
                     break;
             }
         }
@@ -123,7 +123,7 @@ public class Main {
     /**
      * Auxiliar method used to read the kakuro format
      */
-    public static void readKakuro () {
+    public static String[][] readKakuro () {
         Scanner sca = new Scanner(System.in);
         String s = sca.nextLine(); // Llegir quantes files i quantes columnes;
 
@@ -139,6 +139,7 @@ public class Main {
                 kakuro[i][j] = text[j];
             }
         }
+        return kakuro;
     }
 
     /**

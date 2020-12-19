@@ -111,7 +111,7 @@ public class CtrlDomain {
                     global_ranking();
                     break;
                 case 5:
-                    remove_user(ctrlUser.getActiveUser()); //sense implementar del tot
+                    deleteUser(); //sense implementar del tot
                     exit = true;
                     break;
                 case 6:
@@ -152,8 +152,7 @@ public class CtrlDomain {
                     sca = new Scanner(System.in);
                     col = sca.nextInt();
                     fil = sca.nextInt();
-                    String[][] kakuro;
-                    kakuro = Main.readKakuro();
+                    String[][] kakuro = Main.readKakuro();
                     if(proposeKakuro(fil, col, kakuro) != -1) { //falta asignar una dificultat
                         System.out.println("Kakuro added to the collection");
                         exit = true;
@@ -182,7 +181,7 @@ public class CtrlDomain {
 
             switch (option) {
                 case 1:
-                    System.out.print("\nSelect the kakuro by its ID (from 1 to " + ctrlKakuro.list_id_kakuro() + ")");
+                    System.out.print("\nSelect the kakuro by its ID (from 1 to " + ctrlKakuro.listIdKakuro() + ")");
                     int k = sca.nextInt();
                     System.out.println("1 - Play new game");
                     System.out.println("2 - See games");
@@ -195,7 +194,7 @@ public class CtrlDomain {
                             game_execution();
                             break;
                         case 2:
-                            see_games(k);
+                            seeGames(k);
 
                             System.out.println("1 - Continue game");
                             System.out.println("2 - Delete Game");
@@ -210,11 +209,11 @@ public class CtrlDomain {
 
                             switch (option) {
                                 case 1:
-                                    continue_game(id_game);
+                                    continueGame(id_game);
                                     game_execution();
                                     break;
                                 case 2:
-                                    delete_game(id_game);
+                                    deleteGame(id_game);
                                     break;
                             }
                             break;
@@ -242,17 +241,17 @@ public class CtrlDomain {
 
             switch (option) {
                 case 1:
-                    fill_cell();
-                    //donada una posició (x,y) i un valor (v), s'omple la casella x,y amb v
+                    fillCell();
+                    //donada una posició (x,y) i un valor (v), s'omple la casella x,y amb v, retorna true si el joc esta completat
                     //es guarda el joc
                     break;
                 case 2:
-                    ask_hint();
+                    askHint();
                     //demanar pista random
                     break;
                 case 3:
                     //guardar joc
-                    saveGame();
+                    saveGame(0, 0, null);
                     exit = true;
                     break;
                 case 4:
@@ -269,7 +268,7 @@ public class CtrlDomain {
 
     //sisè panell
     private void global_ranking(){
-        listRanking(); // no implementada
+        listGlobalRanking(); // no implementada
     }
 
     /**
@@ -295,8 +294,8 @@ public class CtrlDomain {
      */
     public int generateKakuro(int numRows, int numColumns, int diff, int fc){
         ctrlKakuro.generateKakuro(numRows, numColumns, diff, fc);
-        ctrlPersistence.new_kakuro(ctrlKakuro.list_id_kakuro(), ctrlKakuro.listKakuro());
-        return ctrlKakuro.list_id_kakuro();
+        ctrlPersistence.newKakuro(ctrlKakuro.listIdKakuro(), ctrlKakuro.listKakuro());
+        return ctrlKakuro.listIdKakuro();
     }
 
     /**
@@ -355,25 +354,33 @@ public class CtrlDomain {
 
     }
 
+    public void fillCell(){
+
+    }
+
+    public void askHint(){
+
+    }
+
     /**
      * Function used to save the current state of a game.
      */
-    public void saveGame(String user, int idKakuro, int idGame, int time, int hints, String [][] newState){
-        ctrlPersistence.saveGame(user, idKakuro, idGame, time, hints, newState);
+    public void saveGame(int time, int hints, String [][] newState){
+        ctrlPersistence.saveGame(ctrlUser.getActiveUser(), ctrlGame.getActiveGame().get_kakuro_id(), ctrlGame.getActiveGame().get_game_id(), time, hints, newState);
     }
 
-    public void validateGame (String user, int id_kakuro, int id_game, int time, int hints, String [][] kakuro) {
-        if (ctrlPersistence.validateCorrectnessGame(user, id_kakuro, id_game, kakuro)) {
+    public void validateGame (int time, int hints, String [][] kakuro) {
+        if (ctrlPersistence.validateCorrectnessGame(ctrlUser.getActiveUser(), ctrlGame.getActiveGame().get_kakuro_id(), ctrlGame.getActiveGame().get_game_id(), kakuro)) {
             int scores = (72000 - time);
             if (scores - (7200 * hints) > 0) scores -= (7200 * hints);
             else scores = 0;
-            ctrlPersistence.updateStats(user, id_kakuro, time, hints, scores, true);
-            ctrlPersistence.updateStats(user, id_kakuro, time, hints, scores, false);
+            ctrlPersistence.updateStats(ctrlUser.getActiveUser(), ctrlGame.getActiveGame().get_kakuro_id(), time, hints, scores, true);
+            ctrlPersistence.updateStats(ctrlUser.getActiveUser(), ctrlGame.getActiveGame().get_kakuro_id(), time, hints, scores, false);
         }
     }
 
-    public void deleteUser (String user) {
-        ctrlPersistence.deleteUser(user);
+    public void deleteUser () {
+        ctrlPersistence.deleteUser(ctrlUser.getActiveUser());
     }
 
 
@@ -388,7 +395,7 @@ public class CtrlDomain {
     /**
      * Consultant function of the personal ranking of punctuations for one user from all his games.
      */
-    public String listPersonalStats(String user){
-        return ctrlPersistence.listRankingOrStats(user, false);
+    public String listPersonalStats(){
+        return ctrlPersistence.listRankingOrStats(ctrlUser.getActiveUser(), false);
     }
 }

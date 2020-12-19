@@ -64,7 +64,7 @@ public class Main {
                     user = sca.nextLine();
                     System.out.println("Enter the id of kakuro:");
                     idKakuro = sca.nextInt();
-                    a.playKakuro(user, idKakuro);
+                    a.createNewGame(idKakuro);
                     break;
                 case 5:
                     System.out.println("REMEMBER START A GAME BEFORE!! :)");

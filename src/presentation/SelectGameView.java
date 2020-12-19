@@ -36,7 +36,9 @@ public class SelectGameView {
     public void setVisible(boolean b) {
         selectGamePanel.setVisible(b);
     }
-    public void setGameVisible() {ctrlPresentation.makePlayGameViewVisible();}
+
+    public void setGameVisible(int idGame) {ctrlPresentation.makePlayGameViewVisible(idGame);}
+
     public void setGamesStarted(int id_kakuro) {
         ctrlPresentation.iniGame(id_kakuro);
         ctrlPresentation.makeStartedGameViewVisible();
@@ -58,6 +60,10 @@ public class SelectGameView {
             Image newImage = image.getScaledInstance(30, 30, Image.SCALE_SMOOTH);
             ImageIcon icon = new ImageIcon (newImage);
             GOBACKButton = new JButton(icon);
+            GOBACKButton.setText("");
+            GOBACKButton.setBorderPainted(false);
+            GOBACKButton.setFocusPainted(false);
+            GOBACKButton.setContentAreaFilled(false);
         } catch (IOException ex) {
             System.out.println("The file does not exists");
         }
@@ -79,5 +85,9 @@ public class SelectGameView {
         }
         aux.setLayout(new BoxLayout(aux, BoxLayout.Y_AXIS));
         listGamesContainer = new JScrollPane(aux);
+    }
+
+    public int createNewGame(int idKakuro) {
+        return ctrlPresentation.createNewGame(idKakuro);
     }
 }

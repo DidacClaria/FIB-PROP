@@ -41,13 +41,16 @@ public class CtrlGame {
     //WIP CLASS METHODS
 
     /**
-     * The execution of a Game is on.
-     * @param idGame is the identification of the current game.
+     * This method initializes a game and its stats.
+     * @param user It references the creator of the game
+     * @param idKakuro It references the id of the Kakuro to play
+     * @return It returns the idGame of the game created.
      */
-    public void startKakuro(String user, int idKakuro){
+    public int createNewGame(String user, int idKakuro){
         ++this.numGames;
-        activeGame = new Game(user, idKakuro);
+        activeGame = new Game(user, idKakuro, numGames);
         this.games.add(activeGame);
+        return numGames;
     }
 
     /*

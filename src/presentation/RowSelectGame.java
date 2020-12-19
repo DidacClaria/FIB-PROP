@@ -7,7 +7,7 @@ import java.awt.event.ActionListener;
 
 public class RowSelectGame extends JPanel {
 
-    private int id_game;
+    private int idGame;
 
     private JLabel kakuro;
     private JButton resume;
@@ -15,7 +15,7 @@ public class RowSelectGame extends JPanel {
     private StartedGameView gameView;
 
     public RowSelectGame (StartedGameView gv, int id) {
-        this.id_game = id;
+        this.idGame = id;
 
         kakuro = new JLabel();
         resume = new JButton();
@@ -35,12 +35,12 @@ public class RowSelectGame extends JPanel {
 
         this.gameView = gv;
 
-        create_Format();
+        createFormat();
 
-        create_ActionListener();
+        createActionListener();
     }
 
-    private void create_Format () {
+    private void createFormat () {
         JPanel auxL = new JPanel();
         JPanel auxR = new JPanel();
         auxR.add(resume);
@@ -58,12 +58,12 @@ public class RowSelectGame extends JPanel {
         setLayout(new GridLayout(1,2));
     }
 
-    private void create_ActionListener () {
+    private void createActionListener () {
         resume.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 gameView.setVisible(false);
-                gameView.setGameVisible();
+                gameView.setGameVisible(idGame);
             }
         });
 
@@ -72,7 +72,7 @@ public class RowSelectGame extends JPanel {
             public void actionPerformed(ActionEvent e) {
                 int option = JOptionPane.showConfirmDialog(gameView.getStartedGamePanel(),"Are you sure?");
                 if (option == JOptionPane.YES_OPTION) {
-                    gameView.deleteGame(id_game);
+                    gameView.deleteGame(idGame);
                     gameView.setVisible(false);
                     gameView.setSelectGameVisible();
                 }

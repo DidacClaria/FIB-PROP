@@ -67,8 +67,8 @@ public class MainFrame extends JFrame {
         setContentPane(createKakuroView.getCreateKakuroPanel());
     }
 
-    public void makePlayGameViewVisible(){
-        playGameView.setVisible(true);
+    public void makePlayGameViewVisible(int idGame){
+        playGameView.setVisible(true, idGame);
         setContentPane(playGameView.getPlayGamePanel());
     }
 

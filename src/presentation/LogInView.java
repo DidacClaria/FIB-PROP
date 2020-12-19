@@ -1,10 +1,7 @@
 package presentation;
 
 import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.FocusAdapter;
-import java.awt.event.FocusEvent;
+import java.awt.event.*;
 
 public class LogInView {
 
@@ -24,18 +21,40 @@ public class LogInView {
         enterButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-                if (usernameTextField.getText().equals("")) {
-                    JOptionPane.showMessageDialog(logInPanel,"Wrong Format of User!","Alert",JOptionPane.WARNING_MESSAGE);
-                }
-                else {
-                    ctrlPresentation.logInUser(usernameTextField.getText());
-                    ctrlPresentation.iniUserMenu();
-                    usernameTextField.setText("");
-                    logInPanel.setVisible(false);
-                    ctrlPresentation.makeUserMenuViewVisible();
-                }
+                checkUsername();
             }
         });
+        usernameTextField.addKeyListener(new KeyListener() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+
+            }
+
+            @Override
+            public void keyPressed(KeyEvent e) {
+                if (e.getKeyChar()==KeyEvent.VK_ENTER){
+                    checkUsername();
+                }
+            }
+
+            @Override
+            public void keyReleased(KeyEvent e) {
+
+            }
+        });
+    }
+
+    private void checkUsername() {
+        if (usernameTextField.getText().equals("")) {
+            JOptionPane.showMessageDialog(logInPanel,"Wrong Format of User!","Alert",JOptionPane.WARNING_MESSAGE);
+        }
+        else {
+            ctrlPresentation.logInUser(usernameTextField.getText());
+            ctrlPresentation.iniUserMenu();
+            usernameTextField.setText("");
+            logInPanel.setVisible(false);
+            ctrlPresentation.makeUserMenuViewVisible();
+        }
     }
 
     public JPanel getLogInPanel() {

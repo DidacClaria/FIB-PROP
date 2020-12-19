@@ -94,8 +94,8 @@ public class CtrlPresentation {
         return ctrlDomain.getKakurosGlobals();
     }
 
-    public String[] getGames(String user, int id_kakuro) {
-        return ctrlDomain.getGames(user, id_kakuro);
+    public String[] getGames(String user, int idKakuro) {
+        return ctrlDomain.getGames(user, idKakuro);
     }
 
     public String listGlobalRanking () {
@@ -138,7 +138,7 @@ public class CtrlPresentation {
         mainFrame.makeCreateKakuroViewVisible();
     }
 
-    public void makePlayGameViewVisible() { mainFrame.makePlayGameViewVisible(); }
+    public void makePlayGameViewVisible(int idGame) { mainFrame.makePlayGameViewVisible(idGame); }
 
     public void makeRankingViewVisible(boolean globalRank, String username) { mainFrame.makeRankingViewVisible(globalRank); }
 
@@ -147,5 +147,13 @@ public class CtrlPresentation {
     }
 
     public void makeStartedGameViewVisible() { mainFrame.makeStartedGameViewVisible();
+    }
+
+    public String getGameScenario(int idGame) {
+        return ctrlDomain.getGameScenario(idGame);
+    }
+
+    public int createNewGame(int idKakuro) {
+        return ctrlDomain.createNewGame(idKakuro);
     }
 }

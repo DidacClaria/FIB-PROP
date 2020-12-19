@@ -107,15 +107,6 @@ public class CtrlDomain {
     }
 
     /**
-     *
-     * @param user It indicates the user who is playing the game
-     * @param idKakuro It indicates the game scenario
-     */
-    public void playKakuro (String user, int idKakuro) {
-        if (ctrlPersistence.newGame(user, idKakuro)) ctrlGame.startKakuro(user, idKakuro);
-    }
-
-    /**
      * Function used to save the current state of a game.
      * @param idGame indicates the identifier of the kakuro to save
      */
@@ -123,13 +114,13 @@ public class CtrlDomain {
         ctrlPersistence.saveGame(user, idKakuro, idGame, time, hints, newState);
     }
 
-    public void validateGame (String user, int id_kakuro, int id_game, int time, int hints, String [][] kakuro) {
-        if (ctrlPersistence.validateCorrectnessGame(user, id_kakuro, id_game, kakuro)) {
+    public void validateGame (String user, int idKakuro, int idGame, int time, int hints, String [][] kakuro) {
+        if (ctrlPersistence.validateCorrectnessGame(user, idKakuro, idGame, kakuro)) {
             int scores = (72000 - time);
             if (scores - (7200 * hints) > 0) scores -= (7200 * hints);
             else scores = 0;
-            ctrlPersistence.updateStats(user, id_kakuro, time, hints, scores, true);
-            ctrlPersistence.updateStats(user, id_kakuro, time, hints, scores, false);
+            ctrlPersistence.updateStats(user, idKakuro, time, hints, scores, true);
+            ctrlPersistence.updateStats(user, idKakuro, time, hints, scores, false);
         }
     }
 
@@ -155,4 +146,18 @@ public class CtrlDomain {
         return ctrlPersistence.listRankingOrStats(user, false);
     }
 
+    public String getGameScenario(int idGame) {
+        return "";
+    }
+
+    /**
+     * Method used to create a new Game in the persistence layer and in the domain layer.
+     * @param idKakuro Indicates the id of the Kakuro gameScenario.
+     * @return It returns either the id of the kakuro or -1 if it failed.
+     */
+    public int createNewGame(int idKakuro) {
+        String username = getActiveUser();
+        if(ctrlPersistence.newGame(username,idKakuro)) return ctrlGame.createNewGame(username,idKakuro);
+        else return -1;
+    }
 }

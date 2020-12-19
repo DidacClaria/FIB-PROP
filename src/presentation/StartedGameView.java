@@ -11,7 +11,7 @@ import java.io.IOException;
 
 public class StartedGameView {
 
-    private int id_kakuro;
+    private int idKakuro;
 
     private final CtrlPresentation ctrlPresentation;
 
@@ -23,20 +23,20 @@ public class StartedGameView {
 
 
     public StartedGameView(CtrlPresentation ctrlPresentation, int id) {
-        this.id_kakuro = id;
+        this.idKakuro = id;
         this.ctrlPresentation = ctrlPresentation;
         initComponents();
     }
 
     private void initComponents() {
 
-        titleLabel.setText("MY GAMES OF KAKURO " + id_kakuro);
+        titleLabel.setText("MY GAMES OF KAKURO " + idKakuro);
 
         GOBACKButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 setVisible(false);
-                ctrlPresentation.iniGame(id_kakuro);
+                ctrlPresentation.iniGame(idKakuro);
                 ctrlPresentation.makeSelectGameViewVisible();
             }
         });
@@ -45,11 +45,14 @@ public class StartedGameView {
     public void setVisible(boolean b) {
         startedGamePanel.setVisible(b);
     }
-    public void setGameVisible() {ctrlPresentation.makePlayGameViewVisible();}
+    
+    public void setGameVisible(int idGame) {ctrlPresentation.makePlayGameViewVisible(idGame);}
+    
     public void setSelectGameVisible() {ctrlPresentation.makeSelectGameViewVisible();}
+    
     public void deleteGame (int id_game) {
         String username = ctrlPresentation.getActiveUser();
-        ctrlPresentation.deleteGame(username, id_kakuro, id_game);
+        ctrlPresentation.deleteGame(username, idKakuro, id_game);
     }
 
     public JPanel getStartedGamePanel() {
@@ -76,7 +79,7 @@ public class StartedGameView {
     private void createListGames () {
 
         String username = ctrlPresentation.getActiveUser();
-        String [] files = ctrlPresentation.getGames(username, id_kakuro);
+        String [] files = ctrlPresentation.getGames(username, idKakuro);
         if (files == null) mygames = new JScrollPane();
         else {
             JPanel aux = new JPanel();

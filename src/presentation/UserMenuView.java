@@ -28,7 +28,7 @@ public class UserMenuView {
     private void initComponents() {
 
         String username = ctrlPresentation.getActiveUser();
-        usernameLabel.setText("WELCOME, $" + username);
+        usernameLabel.setText("WELCOME, " + username.toUpperCase());
 
         LOGOUTButton.addActionListener(new ActionListener() {
             @Override
@@ -102,6 +102,10 @@ public class UserMenuView {
             Image newImage = image.getScaledInstance(30, 30, Image.SCALE_SMOOTH);
             ImageIcon icon = new ImageIcon (newImage);
             LOGOUTButton = new JButton(icon);
+            LOGOUTButton.setText("");
+            LOGOUTButton.setBorderPainted(false);
+            LOGOUTButton.setFocusPainted(false);
+            LOGOUTButton.setContentAreaFilled(false);
         } catch (IOException ex) {
             System.out.println("The file does not exists");
         }

@@ -72,7 +72,7 @@ public class RowSelectGame extends JPanel {
             public void actionPerformed(ActionEvent e) {
                 int option = JOptionPane.showConfirmDialog(gameView.getStartedGamePanel(),"Are you sure?");
                 if (option == JOptionPane.YES_OPTION) {
-                    gameView.eliminateGame(id_game);
+                    gameView.deleteGame(id_game);
                     gameView.setVisible(false);
                     gameView.setSelectGameVisible();
                 }

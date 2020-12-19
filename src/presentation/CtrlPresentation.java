@@ -1,11 +1,6 @@
 package presentation;
 
 import domain.CtrlDomain;
-import domain.Game;
-import domain.Main;
-import java.io.*;
-
-import java.util.ArrayList;
 import java.util.Set;
 
 /**
@@ -39,8 +34,8 @@ public class CtrlPresentation {
         mainFrame.iniUserMenu();
     }
 
-    public void iniGame (int id_kakuro) {
-        mainFrame.iniGame(id_kakuro);
+    public void iniGame (int idKakuro) {
+        mainFrame.iniGame(idKakuro);
     }
 
     public void logInUser(String username) {
@@ -51,11 +46,11 @@ public class CtrlPresentation {
         return ctrlDomain.getActiveUser();
     }
 
-    public void eliminateUser(String username) {
+    public void deleteUser(String username) {
         ctrlDomain.deleteUser(username);
     }
 
-    public void eliminateGame(String username, int idKakuro, int idGame){
+    public void deleteGame(String username, int idKakuro, int idGame){
         ctrlDomain.deleteGame(username, idKakuro, idGame);
     }
 
@@ -64,8 +59,35 @@ public class CtrlPresentation {
         return null;
     }
 
-    public String[][] validateKakuro(int width, int height, String[][] field){
-        return null;
+    public int proposeKakuro(int rows, int cols, String[][] field) {
+        return ctrlDomain.proposeKakuro(rows,cols,field);
+    }
+
+    public String validateKakuro(int numColumns, int numRows, String[][] field){
+        if (numColumns< 3 && numRows<3) return "The size of the Kakuro is too small";
+        else if (numColumns>10 && numRows>10) return "The size of the Kakuro is too big";
+        boolean validField = false;
+        for (String[] row:field){
+            for (String cell: row){
+                if (!(cell.equals("*") || cell.equals("?"))){
+                    validField=false;
+                    String[] parts = cell.split("(?<=\\D)(?=\\d)|(?<=\\d)(?=\\D)");
+                    try{
+                        if (parts[0].equals("F") && parts[1].length()<3 && parts[2]==null) validField =true;
+                        else if (parts[0].equals("C") && parts[1].length()<3 && parts[2]==null) validField =true;
+                        else if (parts[0].equals("C") && parts[2].equals("F") && (parts[1].length()<3 || parts[3].length()<3)) validField=true;
+
+                    } catch (ArrayIndexOutOfBoundsException ignored){
+                        if (parts[0].equals("F") && parts[1].length()<3) validField = true;
+                        else validField = parts[0].equals("C") && parts[1].length() <= 3;
+                    }
+                }
+                else validField=true;
+                if (!validField) break;
+            }
+        }
+        if (!validField) return "The proposed field is not valid";
+        else return "OK";
     }
 
     public String[] getKakurosGlobals() {
@@ -124,8 +146,6 @@ public class CtrlPresentation {
         mainFrame.makeSelectGameViewVisible();
     }
 
-    public void makeStartedGameViewVisible() {
-        mainFrame.makeStartedGameViewVisible();
+    public void makeStartedGameViewVisible() { mainFrame.makeStartedGameViewVisible();
     }
-
 }

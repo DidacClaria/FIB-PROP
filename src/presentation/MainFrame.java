@@ -40,9 +40,8 @@ public class MainFrame extends JFrame {
 
     public void mainFrameInit(){
         setTitle("KAKURO");
-        setMinimumSize(new Dimension(900,700));
+        setMinimumSize(new Dimension(1200,700));
         setPreferredSize(getMinimumSize());
-//        setResizable(false);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setContentPane(logInView.getLogInPanel());
@@ -95,4 +94,5 @@ public class MainFrame extends JFrame {
         startedGameView.setVisible(true);
         setContentPane(startedGameView.getStartedGamePanel());
     }
+
 }

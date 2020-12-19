@@ -73,7 +73,7 @@ public class UserMenuView {
             public void actionPerformed(ActionEvent e) {
                 int option = JOptionPane.showConfirmDialog(userMenuPanel,"Are you sure?");
                 if (option == JOptionPane.YES_OPTION) {
-                    ctrlPresentation.eliminateUser(username);
+                    ctrlPresentation.deleteUser(username);
                     userMenuPanel.setVisible(false);
                     ctrlPresentation.makeLogInViewVisible();
                 }

@@ -47,9 +47,9 @@ public class StartedGameView {
     }
     public void setGameVisible() {ctrlPresentation.makePlayGameViewVisible();}
     public void setSelectGameVisible() {ctrlPresentation.makeSelectGameViewVisible();}
-    public void eliminateGame (int id_game) {
+    public void deleteGame (int id_game) {
         String username = ctrlPresentation.getActiveUser();
-        ctrlPresentation.eliminateGame(username, id_kakuro, id_game);
+        ctrlPresentation.deleteGame(username, id_kakuro, id_game);
     }
 
     public JPanel getStartedGamePanel() {

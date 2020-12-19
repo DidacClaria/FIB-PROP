@@ -209,8 +209,8 @@ public class Kakuro {
             }
         }
 
-        for(int k = 0; k < 100; ++k) generateRandomBlack(numRows-1, numColumns-1, 1, 1);
-        correctFormat();
+        for(int k = 0; k < 10; ++k) generateRandomBlack(numRows-1, numColumns-1, 1, 1);
+        correctFormat();    
 
 
         boolean aux = generateWhiteNumbers();
@@ -394,7 +394,6 @@ public class Kakuro {
     private boolean wrongCellH (int x, int y) {
         if (y+10 >= numColumns) return false;
         for (int i = y+1; i <= (y+10); ++i) {
-            //System.out.println ("H" + " " + i);
             if (cells[x][i] instanceof BlackCell) return false;
         }
         return true;
@@ -410,7 +409,6 @@ public class Kakuro {
     private boolean wrongCellV (int x, int y) {
         if (x+10 >= numRows) return false;
         for (int i = x+1; i <= (x+10); ++i) {
-            //System.out.println ("V" + " " + i);
             if (cells[i][y] instanceof BlackCell) return false;
         }
         return true;

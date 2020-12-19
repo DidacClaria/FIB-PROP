@@ -2,10 +2,6 @@ package persistence;
 
 import domain.CtrlDomain;
 import java.io.*;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.nio.file.StandardCopyOption;
-import java.util.*;
 
 /**
  * Persistence Controller Class.
@@ -17,8 +13,11 @@ public class CtrlPersistence {
      * Domain Controller.
      */
     private final CtrlDomain ctrlDomain;
-    private String route;
-    private String routek;
+    private final DataKakuro dataKakuro;
+    private final DataStats dataStats;
+    private final DataUser dataUser;
+    public String route;
+    public String routek;
 
     //CONSTRUCTOR
 
@@ -28,6 +27,9 @@ public class CtrlPersistence {
      */
     public CtrlPersistence(CtrlDomain ctrlDomain) {
         this.ctrlDomain = ctrlDomain;
+        dataKakuro = new DataKakuro();
+        dataStats = new DataStats();
+        dataUser = new DataUser();
         route = "./src/persistence/data";
         routek = route + "/kakuros";
         InitializePersistance();
@@ -35,7 +37,7 @@ public class CtrlPersistence {
     }
 
     /**
-     * Initializes the data folders
+     *
      */
     private void InitializePersistance(){
         File data = new File(route);
@@ -51,273 +53,191 @@ public class CtrlPersistence {
     }
 
     /**
-     * Saves a new user
+     *
+     * @param idKakuro
+     * @param kakuro
+     * @return
      */
-    public boolean create_user(String name) {
-        try {
-            File user = new File(route + "/" + name);
-            if (!user.exists()) {
-                if (user.mkdir()) {
-                    File f = new File(route + "/" + name + "/" + "personal_stats.txt");
-                    f.createNewFile();
-                    return true;
-                } else System.out.println("User directory not created due an error");
-            } else System.out.println("\nUser existed!");
+    public boolean newKakuro(int idKakuro, String [][] kakuro){
+        try{
+            FileWriter wr = new FileWriter(routek + "/" + "model_" + idKakuro + ".txt");
+            FileWriter wrSol = new FileWriter(routek + "/" + "model_" + idKakuro + "_sol.txt");
+            File GlobalRanking = new File (route + "/" + "globalranking.txt");
+            return dataKakuro.newKakuro(wr, wrSol, kakuro, GlobalRanking);
         } catch (IOException e){
-            System.out.println("\nError occurred during file writing");
+            return false;
         }
-        return false;
     }
 
     /**
-     * Returns true if a user exists
+     *
+     * @param idKakuro
+     * @param solution
+     * @return
      */
-    public boolean exists_user(String name){
-        File user = new File(route + "\\" + name);
-        if (user.exists()) return true;
-        return false;
+    public String[][] showKakuro(int idKakuro, boolean solution){
+        File k;
+        if (solution) k = new File(routek + "/" + "model_" + idKakuro + "_sol.txt");
+        else k = new  File(routek + "/" + "model_" + idKakuro + ".txt");
+        return dataKakuro.showKakuro(k);
     }
 
     /**
-     * Saves a new kakuro
+     *
+     * @param user
+     * @param idKakuro
+     * @return
      */
-    public boolean new_kakuro(int id_kakuro, String [][] kakuro){
-        try {
-            FileWriter wr = new FileWriter(routek + "/" + "model_" + id_kakuro + ".txt");
-            FileWriter wr_sol = new FileWriter(routek + "/" + "model_" + id_kakuro + "_sol.txt");
-            for (int i = 0; i < kakuro.length; i++) {
-                for (int j = 0; j < kakuro[0].length; j++) {
-                    if (kakuro[i][j].length() == 1 && kakuro[i][j] != "*") wr.write("0");
-                    else wr.write(kakuro[i][j]);
-                    wr_sol.write(kakuro[i][j]);
-                    if (j != kakuro[0].length - 1) {//separador d'elements
-                        wr.write(",");
-                        wr_sol.write(",");
-                    }
-                    else {
-                        wr.write(System.getProperty("line.separator")); //separador de files
-                        wr_sol.write(System.getProperty("line.separator"));
-                    }
-                }
-            }
-            wr.close();
-            wr_sol.close();
-            File GlobalRanking = new File (route + "\\" + "globalranking.txt");
-            GlobalRanking.createNewFile();
-
-            return true;
-
-        } catch (IOException e){
-            System.out.println("\nError occurred during file writing");
-        }
-        return false;
-    }
-
-    /**
-     * returns the kakuro or the solution of the kakuro with ID = id
-     */
-    public String[][] show_kakuro(int id, boolean solution){
-        try {
-            File k;
-            if (solution) k = new File(routek + "/" + "model_" + id + "_sol.txt");
-            else k = new  File(routek + "/" + "model_" + id + ".txt");
-
-            if (k.exists()) {
-                String [][] kakuro;
-                String aux;
-                ArrayList<String> text = new ArrayList<>();
-
-                Scanner mr = new Scanner(k);
-                while (mr.hasNextLine()) text.add(mr.nextLine());
-                mr.close();
-
-                kakuro = new String[text.size()][];
-
-                for (int i = 0; i<text.size(); ++i) {
-                    aux = text.get(i);
-                    kakuro[i] = aux.split(",");
-                }
-                return kakuro;
-            }
-            else {
-                System.out.println("Kakuro not existed");
-                return null;
-            }
-        } catch (IOException e){
-            System.out.println("\nError occurred during file reading");
-        }
-        return null;
-    }
-
-    /**
-     * Starts a new game for User = user
-     */
-    public boolean new_game (String user, int id_kakuro){
-        try {
-            File pathOri = new File(routek + "/" + "model_" + id_kakuro + ".txt");
+    public boolean newGame (String user, int idKakuro){
+        try{
+            File pathOri = new File(routek + "/" + "model_" + idKakuro + ".txt");
             File pathUser = new File(route + "/" + user);
-            if (pathOri.exists() && pathUser.exists()) {
-                File kakuro = new File(route + "/" + user + "/" + "kakuro_" + id_kakuro);
-                int id_game = 0;
+            File kakuro = new File(route + "/" + user + "/" + "kakuro_" + idKakuro);
 
-                if (!kakuro.exists()) kakuro.mkdir();
+            int idGame = 0;
+            if (!kakuro.exists()) kakuro.mkdir();
+            String[] quantity = kakuro.list();
+            idGame = quantity.length / 2 + 1;
 
-                String[] quantity = kakuro.list();
-                id_game = quantity.length / 2 + 1;
-
-                File pathDes = new File(route + "/" + user + "/" + "kakuro_" + id_kakuro + "/" + "game_" + id_game + ".txt");
-                Files.copy(Paths.get(pathOri.getAbsolutePath()), Paths.get(pathDes.getAbsolutePath()), StandardCopyOption.REPLACE_EXISTING);
-
-                FileWriter wr = new FileWriter(route + "/" + user + "/" + "kakuro_" + id_kakuro + "/" +"game_" + id_game + "_stats.txt");
-                wr.write("Execution Time: 0");
-                wr.write(System.getProperty("line.separator"));
-                wr.write("Hints asked: 0");
-                wr.write(System.getProperty("line.separator"));
-                wr.close();
-            }
-            else System.out.println("\nThe kakuro of the game or the user is not existed!!!");
+            File pathDes = new File(route + "/" + user + "/" + "kakuro_" + idKakuro + "/" + "game_" + idGame + ".txt");
+            FileWriter wr = new FileWriter(route + "/" + user + "/" + "kakuro_" + idKakuro + "/" +"game_" + idGame + "_stats.txt");
+            return dataKakuro.newGame(pathOri, pathUser, pathDes, wr);
         } catch (IOException e){
-            System.out.println("\nError occurred during file writing");
+            return false;
         }
-        return false;
+
     }
 
     /**
-     * Saves the state of a game in current of the user
+     *
+     * @param user
+     * @param idKakuro
+     * @param idGame
+     * @param time
+     * @param hints
+     * @param kakuro
+     * @return
      */
-    public boolean save_game (String user, int id_kakuro, int id_game, int time, int hints, String [][] kakuro){
-        try {
-            FileWriter game_saved = new FileWriter(route + "/" + user + "/" + "kakuro_" + id_kakuro + "/" + "game_" + id_game + ".txt");
-            for (int i = 0; i < kakuro.length; i++) {
-                for (int j = 0; j < kakuro[0].length; j++) {
-                    if (kakuro[i][j].equals("?")) game_saved.write("0");
-                    else game_saved.write(kakuro[i][j]);
-                    if (j != kakuro[0].length - 1) game_saved.write(","); //separador d'elements
-                    else game_saved.write(System.getProperty("line.separator")); //separador de files
-                }
-            }
-            game_saved.close();
-
-            FileWriter game_saved_stats = new FileWriter(route + "/" + user + "/" + "kakuro_" + id_kakuro + "/" +"game_" + id_game + "_stats.txt");
-            game_saved_stats.write("Execution Time: " + time);
-            game_saved_stats.write(System.getProperty("line.separator"));
-            game_saved_stats.write("Hints asked: " + hints);
-            game_saved_stats.write(System.getProperty("line.separator"));
-            game_saved_stats.close();
-
-            return true;
+    public boolean saveGame (String user, int idKakuro, int idGame, int time, int hints, String [][] kakuro){
+        try{
+            FileWriter gameSaved = new FileWriter(route + "/" + user + "/" + "kakuro_" + idKakuro + "/" + "game_" + idGame + ".txt");
+            FileWriter gameSavedStats = new FileWriter(route + "/" + user + "/" + "kakuro_" + idKakuro + "/" +"game_" + idGame + "_stats.txt");
+            return dataKakuro.saveGame(gameSaved, gameSavedStats, time, hints, kakuro);
         } catch (IOException e){
-            System.out.println("\nError occurred during file writing");
+            return false;
         }
-        return false;
+
     }
 
     /**
-     * returns the game of User = user with ID = id_game
+     *
+     * @param user
+     * @param idKakuro
+     * @param idGame
+     * @param kakuro
+     * @return
      */
-    /*
-    public String[][] load_game (String user, int id_kakuro){
-        int i = 0;
-        while (m)
-
-        String [][]
-        try {
-            File k = new File(route + "/" + user + "/" + id_kakuro + "_sol.txt");
-            if (k.exists()) {
-                Scanner mr = new Scanner(k);
-                int i = 0;
-                while (mr.hasNextLine()){
-                    String aux = mr.nextLine();
-                    kakuro[i] = aux.split(",");
-                    ++i;
-                }
-                mr.close();
-            }
-        } catch (IOException e){
-            System.out.println("\nError occurred during file reading");
-        }
-        return kakuro;
+    public boolean validateCorrectnessGame (String user, int idKakuro, int idGame, String [][] kakuro){
+        String [][] solution = showKakuro(idKakuro, true);
+        File f = new File(route + "/" + user + "/" + "kakuro_" + idKakuro + "/" + "game_" + idGame + ".txt");
+        File fStats = new File(route + "/" + user + "/" + "kakuro_" + idKakuro + "/" + "game_" + idGame + "_stats.txt");
+        return dataKakuro.validateCorrectnessGame(solution, f, fStats, kakuro);
     }
-*/
 
-    public boolean validate_correctness_game (String user, int id_kakuro, int id_game, String [][] kakuro) {
-        String [][] solution = show_kakuro(id_kakuro, true);
-        if (Arrays.deepEquals(solution, kakuro)) {
-            File f = new File(route + "/" + user + "/" + "kakuro_" + id_kakuro + "/" + "game_" + id_game + ".txt");
-            File f_stats = new File(route + "/" + user + "/" + "kakuro_" + id_kakuro + "/" + "game_" + id_game + "_stats.txt");
+    /**
+     * @param user
+     * @param idKakuro
+     * @param idGame
+     */
+    public void deleteGame (String user, int idKakuro, int idGame) {
+        File f = new File(route + "/" + user + "/" + "kakuro_" + idKakuro + "/" + "game_" + idGame + ".txt");
+        if (!f.exists()) {
+            File dir = new File(route + "/" + user + "/" + "kakuro_" + idKakuro);
+            String [] size = dir.list();
+            if (size.length == 0) dir.delete();
+        }
+        else {
             f.delete();
-            f_stats.delete();
-            return true;
-        }
-        else return false;
-    }
-
-
-    public void update_stats (String user, int id_kakuro, int time, int hints, int scores, boolean global) {
-        try {
-            File f;
-            if (global) f = new File(route + "/" + "globalranking.txt");
-            else f = new File(route + "/" + user + "/" + "personal_stats.txt");
-            Scanner sca = new Scanner(f);
-            String result = "";
-            String aux;
-            boolean found = false;
-            while (sca.hasNextLine()) {
-                aux = sca.nextLine();
-                if (!found && aux.contains("Kakuro " + id_kakuro)) {
-                    found = true;
-                    int old_score = Integer.parseInt(aux.substring(aux.indexOf("Scores: ") + 8));
-                    if (scores > old_score) {
-                        result += "#" + "Kakuro " + id_kakuro + " --> " + user + " ,Time used: " + time + ", Hints asked: " + hints + ", Scores: " + scores;
-                    }
-                } else result += "#" + aux;
-            }
-            if (!found)
-                result += "#" + "Kakuro " + id_kakuro + " --> " + user + " ,Time used: " + time + ", Hints asked: " + hints + ", Scores: " + scores;
-            FileWriter wr = new FileWriter(route + "/" + "globalranking.txt");
-            String[] text = result.split("#");
-            for (String s : text) {
-                if (!s.equals("")) {
-                    wr.write(s);
-                    wr.write(System.getProperty("line.separator"));
-                }
-            }
-            wr.close();
-
-        }catch (IOException e){
-            System.out.println("\nError occurred during file writing");
+            File stats = new File(route + "/" + user + "/" + "kakuro_" + idKakuro + "/" + "game_" + idGame + "_stats.txt");
+            stats.delete();
         }
     }
 
-    public void eliminate_user (String user) {
+    /**
+     *
+     * @param name
+     * @return
+     */
+    public boolean createUser (String name){
+        File user = new File(route + "/" + name);
+        File f = new File(route + "/" + name + "/" + "personal_stats.txt");
+        return dataUser.createUser(user, f);
+    }
+
+    /**
+     *
+     * @param user
+     */
+    public void deleteUser (String user) {
         File f = new File(route + "/" + user);
-        if (f.exists()) {
-            String[] entries = f.list();
-            for (String s : entries) {
-                File currentFile = new File(f.getPath(), s);
-                if (currentFile.isDirectory()) eliminate_kakuro_dir(currentFile);
-                else currentFile.delete();
+        dataUser.deleteUser(f);
+    }
+
+    /**
+     *
+     * @param user
+     * @param idKakuro
+     * @param time
+     * @param hints
+     * @param scores
+     * @param global
+     */
+    public void updateStats (String user, int idKakuro, int time, int hints, int scores, boolean global) {
+        try{
+            File f;
+            FileWriter wr;
+            if (global){
+                f = new File(route + "/" + "global_ranking.txt");
+                wr = new FileWriter(route + "/" + "global_ranking.txt");
             }
-            f.delete();
-        }
-        else System.out.println("\nUser not existed");
-    }
-
-    public void eliminate_kakuro (String user, int id_kakuro) {
-        File f = new File(route + "/" + user + "/" + "kakuro_" + id_kakuro);
-        eliminate_kakuro_dir(f);
-    }
-
-    private void eliminate_kakuro_dir (File f) {
-        if (f.exists()) {
-            String[] entries = f.list();
-            for (String s : entries) {
-                File currentFile = new File(f.getPath(), s);
-                currentFile.delete();
+            else{
+                f = new File(route + "/" + user + "/" + "personal_stats.txt");
+                wr = new FileWriter(route + "/" + user + "/" + "personal_stats.txt");
             }
-            f.delete();
+            dataStats.updateStats(user, idKakuro, time, hints, scores, f, wr);
+        } catch (IOException e){
+
         }
-        else System.out.println("\nKakuro not existed");
     }
 
+    /**
+     *
+     * @param user
+     * @param global
+     * @return
+     */
+    public String listRankingOrStats(String user, boolean global){
+        File s;
+        String r;
+        if (global) {
+            s = new File(route + "/" + "global_ranking.txt");
+            r = "NOBODY HAS PLAYED YET!";
+        }
+        else {
+            s = new File(route + "/" + user + "/" + "personal_stats.txt");
+            r = "YOU HAVE NOT DONE ANY KAKUROS!";
+        }
+        return dataStats.listRankingOrStats(s, r);
+    }
+
+    public String[] getKakurosGlobals () {
+        File f = new File(routek);
+        return f.list();
+    }
+
+    public String[] getGames (String user, int idKakuro) {
+        File f = new File(route + "/" + user + "/" + "kakuro_" + idKakuro);
+        if (!f.exists()) return null;
+        return f.list();
+    }
 }

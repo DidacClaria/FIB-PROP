@@ -6,6 +6,9 @@ import javax.swing.*;
 import java.awt.*;
 
 public class MainFrame extends JFrame {
+
+    private CtrlPresentation ctrlPresentation;
+
     private JPanel MainFrame;
     private LogInView logInView;
     private UserMenuView userMenuView;
@@ -13,11 +16,13 @@ public class MainFrame extends JFrame {
     private SelectGameView selectGameView;
     private PlayGameView playGameView;
     private RankingView rankingView;
+    private StartedGameView startedGameView;
 
-    public MainFrame(CtrlPresentation ctrlPresentation) {
+    public MainFrame(CtrlPresentation CP) {
+
+        ctrlPresentation = CP;
 
         this.logInView = new LogInView(ctrlPresentation);
-        this.userMenuView = new UserMenuView(ctrlPresentation);
         this.createKakuroView = new CreateKakuroView(ctrlPresentation);
         this.selectGameView = new SelectGameView(ctrlPresentation);
         this.playGameView = new PlayGameView(ctrlPresentation);
@@ -27,11 +32,17 @@ public class MainFrame extends JFrame {
 
     }
 
+    public void iniUserMenu () {
+        this.userMenuView = new UserMenuView(ctrlPresentation);
+    }
+
+    public void iniGame (int id_kakuro) {this.startedGameView = new StartedGameView(ctrlPresentation, id_kakuro);}
+
     public void mainFrameInit(){
         setTitle("KAKURO");
-        setMinimumSize(new Dimension(900,700));
+        setMinimumSize(new Dimension(1200,700));
         setPreferredSize(getMinimumSize());
-//        setResizable(false);
+        setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setContentPane(logInView.getLogInPanel());
     }
@@ -66,15 +77,22 @@ public class MainFrame extends JFrame {
         setContentPane(selectGameView.getSelectGamePanel());
     }
 
-    public void makeRankingViewVisible(String rankingType){
+    public void makeRankingViewVisible(boolean globalRank){
         rankingView.setVisible(true);
-        JPanel rankingAux = rankingView.getRankingPanel();
-        if (rankingType == "PERSONAL STATS") {
-//            rankingAux.setTitle(rankingType);
+        if (globalRank) {
+            rankingView.setTitle("GLOBAL RANKING");
+            rankingView.createRGText();;
         }
         else {
-//            rankingAux.setTitle(rankingAux);
+            rankingView.setTitle("MY PERSONAL STATS");
+            rankingView.createPSText();
         }
-        setContentPane(rankingAux);
+        setContentPane(rankingView.getRankingPanel());
     }
+
+    public void makeStartedGameViewVisible() {
+        startedGameView.setVisible(true);
+        setContentPane(startedGameView.getStartedGamePanel());
+    }
+
 }

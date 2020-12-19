@@ -17,8 +17,8 @@ public class Main {
         CtrlPresentation ctrlPresentation = new CtrlPresentation();
         a = new CtrlDomain(ctrlPresentation);
         String user;
-        int id_kakuro;
-        int id_game;
+        int idKakuro;
+        int idGame;
         int time;
         int hints;
 
@@ -63,8 +63,8 @@ public class Main {
                     sca = new Scanner(System.in);
                     user = sca.nextLine();
                     System.out.println("Enter the id of kakuro:");
-                    id_kakuro = sca.nextInt();
-                    a.playKakuro(user, id_kakuro);
+                    idKakuro = sca.nextInt();
+                    a.playKakuro(user, idKakuro);
                     break;
                 case 5:
                     System.out.println("REMEMBER START A GAME BEFORE!! :)");
@@ -73,46 +73,48 @@ public class Main {
                     sca = new Scanner(System.in);
                     user = sca.nextLine();
                     System.out.println("Enter the id of kakuro:");
-                    id_kakuro = sca.nextInt();
+                    idKakuro = sca.nextInt();
                     System.out.println("Enter the id of game:");
-                    id_game = sca.nextInt();
+                    idGame = sca.nextInt();
                     System.out.println("Enter the execution time:");
                     time = sca.nextInt();
-                    System.out.println("Enter the number of ask_hints:");
+                    System.out.println("Enter the number of hints:");
                     hints = sca.nextInt();
                     System.out.println("Enter the new state of the game (THIS IS ONLY FOR TESTING):");
                     readKakuro();
-                    a.saveGame(user, id_kakuro, id_game, time, hints, kakuro);
+                    a.saveGame(user, idKakuro, idGame, time, hints, kakuro);
                     break;
                 case 6:
                     System.out.println("Enter the user name:");
                     sca = new Scanner(System.in);
                     user = sca.nextLine();
                     System.out.println("Enter the id of kakuro:");
-                    id_kakuro = sca.nextInt();
+                    idKakuro = sca.nextInt();
                     System.out.println("Enter the id of game:");
-                    id_game = sca.nextInt();
+                    idGame = sca.nextInt();
                     System.out.println("Enter the execution time:");
                     time = sca.nextInt();
-                    System.out.println("Enter the number of ask_hints:");
+                    System.out.println("Enter the number of hints:");
                     hints = sca.nextInt();
                     System.out.println("Enter the new state of the game (THIS IS ONLY FOR TESTING):");
                     readKakuro();
-                    a.validate_game(user, id_kakuro, id_game, time, hints, kakuro);
+                    a.validateGame(user, idKakuro, idGame, time, hints, kakuro);
                     break;
                 case 7:
                     System.out.println("Enter the user name you want to remove:");
                     sca = new Scanner(System.in);
                     user = sca.nextLine();
-                    a.remove_user(user);
+                    a.deleteUser(user);
                     break;
                 case 8:
                     System.out.println("Enter the user name you want to remove:");
                     sca = new Scanner(System.in);
                     user = sca.nextLine();
                     System.out.println("Enter the id of kakuro you want to remove:");
-                    id_kakuro = sca.nextInt();
-                    a.remove_kakuros(user, id_kakuro);
+                    idKakuro = sca.nextInt();
+                    System.out.println("Enter the id of game you want to remove:");
+                    idGame = sca.nextInt();
+                    a.deleteGame(user, idKakuro, idGame);
                     break;
             }
         }

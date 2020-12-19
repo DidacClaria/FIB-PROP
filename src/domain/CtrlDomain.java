@@ -54,10 +54,15 @@ public class CtrlDomain {
      * @param numRows indicates the number of rows that the field has
      * @param numColumns indicates the number of columns that the field has
      * @param field it has the value of each cell divided by ",".
+     * @return It returns either the id of the new proposed Kakuro or -1 if it is has no solution.
      */
-    public void proposeKakuro(int numRows, int numColumns, String[][] field){
-        if (ctrlKakuro.proposeKakuro(numRows,numColumns,field))
-            ctrlPersistence.new_kakuro(ctrlKakuro.list_id_kakuro(), ctrlKakuro.listKakuro());
+    public int proposeKakuro(int numRows, int numColumns, String[][] field){
+        int idKakuro = ctrlKakuro.proposeKakuro(numRows,numColumns,field);
+        if (idKakuro!=-1) {
+            ctrlPersistence.newKakuro(ctrlKakuro.listIdKakuro(), ctrlKakuro.listKakuro());
+            return idKakuro;
+        }
+        return -1;
     }
 
     /**
@@ -67,7 +72,7 @@ public class CtrlDomain {
      */
     public void generateKakuro(int numRows, int numColumns){
         ctrlKakuro.generateKakuro(numRows, numColumns);
-        ctrlPersistence.new_kakuro(ctrlKakuro.list_id_kakuro(), ctrlKakuro.listKakuro());
+        ctrlPersistence.newKakuro(ctrlKakuro.listIdKakuro(), ctrlKakuro.listKakuro());
     }
 
     /**
@@ -85,57 +90,69 @@ public class CtrlDomain {
      * @param name indicates the name of the new user
      */
     public void logInUser(String name){
-        if (ctrlPersistence.create_user(name)) ctrlUser.createUser(name);
-        else ctrlUser.setActiveUser (name);
+        if (ctrlPersistence.createUser(name)) ctrlUser.createUser(name);
+        else ctrlUser.setActiveUser(name);
+    }
+
+    public String getActiveUser() {
+        return ctrlUser.getActiveUser();
+    }
+
+    public String[] getKakurosGlobals() {
+        return ctrlPersistence.getKakurosGlobals();
+    }
+
+    public String[] getGames(String user, int id_game) {
+        return ctrlPersistence.getGames(user, id_game);
     }
 
     /**
      *
      * @param user It indicates the user who is playing the game
-     * @param id_kakuro It indicates the game scenario
+     * @param idKakuro It indicates the game scenario
      */
-    public void playKakuro (String user, int id_kakuro) {
-        if (ctrlPersistence.new_game(user, id_kakuro)) ctrlGame.startKakuro(user, id_kakuro);
+    public void playKakuro (String user, int idKakuro) {
+        if (ctrlPersistence.newGame(user, idKakuro)) ctrlGame.startKakuro(user, idKakuro);
     }
 
     /**
      * Function used to save the current state of a game.
      * @param idGame indicates the identifier of the kakuro to save
      */
-    public void saveGame(String user, int idKakuro, int idGame, int time, int hints, String [][] new_state){
-        ctrlPersistence.save_game(user, idKakuro, idGame, time, hints, new_state);
+    public void saveGame(String user, int idKakuro, int idGame, int time, int hints, String [][] newState){
+        ctrlPersistence.saveGame(user, idKakuro, idGame, time, hints, newState);
     }
 
-    public void validate_game (String user, int id_kakuro, int id_game, int time, int hints, String [][] kakuro) {
-        if (ctrlPersistence.validate_correctness_game(user, id_kakuro, id_game, kakuro)) {
+    public void validateGame (String user, int id_kakuro, int id_game, int time, int hints, String [][] kakuro) {
+        if (ctrlPersistence.validateCorrectnessGame(user, id_kakuro, id_game, kakuro)) {
             int scores = (72000 - time);
             if (scores - (7200 * hints) > 0) scores -= (7200 * hints);
             else scores = 0;
-            ctrlPersistence.update_stats(user, id_kakuro, time, hints, scores, true);
-            ctrlPersistence.update_stats(user, id_kakuro, time, hints, scores, false);
+            ctrlPersistence.updateStats(user, id_kakuro, time, hints, scores, true);
+            ctrlPersistence.updateStats(user, id_kakuro, time, hints, scores, false);
         }
     }
 
-    public void remove_user (String user) {
-        ctrlPersistence.eliminate_user(user);
+    public void deleteUser (String user) {
+        ctrlPersistence.deleteUser(user);
     }
 
-    public void remove_kakuros (String user, int id_kakuro) {
-        ctrlPersistence.eliminate_kakuro(user, id_kakuro);
+    public void deleteGame (String user, int idKakuro, int idGame) {
+        ctrlPersistence.deleteGame(user, idKakuro, idGame);
     }
 
     /**
      * Consultant function of the ranking of punctuations that all the different users made in their games.
      */
-    public void listRanking(){
-        ctrlGame.listRanking();
+    public String listGlobalRanking(){
+        return ctrlPersistence.listRankingOrStats(null, true);
     }
 
     /**
      * Consultant function of the personal ranking of punctuations for one user from all his games.
      */
-    public void listPersonalStats(){
-        ctrlGame.listPersonalStats();
+    public String listPersonalStats(String user){
+        return ctrlPersistence.listRankingOrStats(user, false);
     }
 
 }

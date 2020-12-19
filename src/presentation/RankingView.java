@@ -17,6 +17,9 @@ public class RankingView {
     private JButton gobackButton;
     private JScrollPane rankingList;
     private JPanel headerContainer;
+    private JLabel title;
+
+    private JTextArea list;
 
     public RankingView(CtrlPresentation ctrlPresentation) {
         this.ctrlPresentation = ctrlPresentation;
@@ -42,6 +45,12 @@ public class RankingView {
     }
 
     private void createUIComponents() {
+        createBackImage();
+        list = new JTextArea();
+        rankingList = new JScrollPane(list);
+    }
+
+    private void createBackImage () {
         try {
             BufferedImage image;
             image = ImageIO.read(new File("DOCS/gobackLogo.png"));
@@ -51,21 +60,21 @@ public class RankingView {
         } catch (IOException ex) {
             System.out.println("The file does not exists");
         }
+    }
 
-        JTextArea list = new JTextArea();
-        try {
-            File f = new File(".\\DOCS\\virus.txt");
-            Scanner reader = new Scanner(f);
-            String aux;
-            while (reader.hasNextLine()) {
-                aux = reader.nextLine();
-                list.append(aux + "\n");
-            }
-        }catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
+    public void createRGText () {
+        String text = ctrlPresentation.listGlobalRanking();
+        list.setText(text);
         list.setEditable(false);
-        rankingList = new JScrollPane(list);
+    }
 
+    public void createPSText () {
+        String text = ctrlPresentation.listPersonalStats(ctrlPresentation.getActiveUser());
+        list.setText(text);
+        list.setEditable(false);
+    }
+
+    public void setTitle (String name) {
+        title.setText(name);
     }
 }

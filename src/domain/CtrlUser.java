@@ -64,10 +64,5 @@ public class CtrlUser {
         if (!found) createUser(n);
     }
 
-    public void delete_active_user(){
-        users.remove(getActiveUser());
-        activeUser = null;
-    }
-
 
 }

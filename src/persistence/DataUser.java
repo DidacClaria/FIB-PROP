@@ -13,17 +13,17 @@ public class DataUser {
     }
 
     /**
-     * 
+     *
      * @param user
      * @param f
      * @return
      */
-    public boolean create_user(File user, File f) {
+    public boolean createUser(File user, File f) {
         try {
-            
+
             if (!user.exists()) {
                 if (user.mkdir()) {
-                    
+
                     f.createNewFile();
                     return true;
                 } else System.out.println("User directory not created due an error");
@@ -35,10 +35,10 @@ public class DataUser {
     }
 
     /**
-     * 
+     *
      * @param f
      */
-    public void delete_user (File f) {
+    public void deleteUser (File f) {
         if (f.exists()) {
             String[] entries = f.list();
             for (String s : entries) {
@@ -46,8 +46,8 @@ public class DataUser {
                 if (currentFile.isDirectory()){
 
                     if (currentFile.exists()) {
-                        String[] entries_k = currentFile.list();
-                        for (String s_k : entries_k) {
+                        String[] entriesK = currentFile.list();
+                        for (String s_k : entriesK) {
                             File currentFile_k = new File(currentFile.getPath(), s_k);
                             currentFile_k.delete();
                         }
@@ -66,7 +66,7 @@ public class DataUser {
      * Returns true if a user exists
 
      public boolean exists_user(String name){
-     File user = new File(route + "\\" + name);
+     File user = new File(route + "/" + name);
      if (user.exists()) return true;
      return false;
      }*/

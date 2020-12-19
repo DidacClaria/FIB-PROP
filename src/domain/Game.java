@@ -34,6 +34,7 @@ public class Game {
     }
 
 
+
     public Game (String user, int idKakuro, int idGame) {
         this.player = new User(user);
         this.gameScenario = new Kakuro();

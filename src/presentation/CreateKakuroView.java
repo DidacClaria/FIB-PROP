@@ -1,11 +1,13 @@
 package presentation;
 
 import javax.swing.*;
-import javax.swing.text.TabExpander;
+import javax.swing.plaf.ComponentUI;
+import javax.swing.plaf.PanelUI;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
+import java.io.File;
+import java.util.Scanner;
 
 public class CreateKakuroView {
     private final CtrlPresentation ctrlPresentation;
@@ -14,26 +16,31 @@ public class CreateKakuroView {
     private JLabel viewTitle;
     private JButton GOBACKbutton;
     private JPanel titleContainer;
-    private JPanel kakuroDisplay;
     private JPanel buttonsDisplay;
     private JTextField widthField;
     private JTextField heightField;
     private JComboBox difficultyComboBox;
     private JTextField numFilledCellsField;
     private JButton READFROMFILEButton;
-    private JButton GENERATEFIELDButton;
     private JButton INFOButton;
     private JButton AUTOMATICGENERATIONButton;
     private JButton VALIDATEButton;
     private JLabel ERRORdisplay;
+    private JPanel kakuroPanel;
 
+    private int rows, cols;
+    private String field[][];
 
     public CreateKakuroView(CtrlPresentation ctrlPresentation) {
         this.ctrlPresentation = ctrlPresentation;
+        rows=cols=-1;
+        field=null;
         initComponents();
     }
 
     private void initComponents() {
+        initINFOButton();
+        ERRORdisplay.setText("");
         GOBACKbutton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -41,24 +48,10 @@ public class CreateKakuroView {
                 ctrlPresentation.makeUserMenuViewVisible();
             }
         });
-        AUTOMATICGENERATIONButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-//                int width = Integer.parseInt(widthField.getText());
-//                int height = Integer.parseInt(heightField.getText());
-//                int difficulty = difficultyComboBox.getSelectedIndex();
-//                int numFilledCells = Integer.parseInt(numFilledCellsField.getText());
-//                int kakuroID = ctrlPresentation.generateKakuro(width,height,difficulty,numFilledCells);
-//                JOptionPane.showMessageDialog(null,"The kakuro with id #"+kakuroID+"was created succesfully!");
-                JOptionPane.showMessageDialog(null,"The kakuro with id #1 was created succesfully!");
-                setVisible(false);
-                ctrlPresentation.makeUserMenuViewVisible();
-            }
-        });
         READFROMFILEButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
+                readFile();
             }
         });
         INFOButton.addActionListener(new ActionListener() {
@@ -90,13 +83,17 @@ public class CreateKakuroView {
         VALIDATEButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-//                ctrlPresentation.validateKakuro(widht,height,kakuro);
-                JOptionPane.showMessageDialog(null,"The kakuro with id #1 was created succesfully!");
-                createKakuroPanel.setVisible(false);
-                ctrlPresentation.makeUserMenuViewVisible();
+                int idKakuro = ctrlPresentation.proposeKakuro(rows,cols,field);
+                if (idKakuro == -1) ERRORdisplay.setText("The kakuro has no solution");
+                else {
+                    JOptionPane.showMessageDialog(null,"The kakuro with id "+idKakuro+" was created succesfully!");
+                    createKakuroPanel.setVisible(false);
+                    ctrlPresentation.makeUserMenuViewVisible();
+                    ERRORdisplay.setText("");
+                }
             }
         });
-        GENERATEFIELDButton.addActionListener(new ActionListener() {
+        AUTOMATICGENERATIONButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
@@ -110,8 +107,25 @@ public class CreateKakuroView {
                 catch (NumberFormatException ignored){
                     ERRORdisplay.setText("Please add the size of the field.");
                 }
+                int width = Integer.parseInt(widthField.getText());
+                int height = Integer.parseInt(heightField.getText());
+                int difficulty = difficultyComboBox.getSelectedIndex();
+                int numFilledCells = Integer.parseInt(numFilledCellsField.getText());
+//                int kakuroID = ctrlPresentation.generateKakuro(width,height,difficulty,numFilledCells);
+//                JOptionPane.showMessageDialog(null,"The kakuro with id #"+kakuroID+"was created succesfully!");
+                setVisible(false);
+                ctrlPresentation.makeUserMenuViewVisible();
             }
         });
+    }
+
+    private void initINFOButton() {
+        ImageIcon infoIcon = new ImageIcon(new ImageIcon("./DOCS/info.png").getImage().getScaledInstance(20, 20, Image.SCALE_DEFAULT));
+        INFOButton.setIcon(infoIcon);
+        INFOButton.setText("");
+        INFOButton.setBorderPainted(false);
+        INFOButton.setFocusPainted(false);
+        INFOButton.setContentAreaFilled(false);
     }
 
     public void setVisible(boolean b) {
@@ -120,5 +134,43 @@ public class CreateKakuroView {
 
     public JPanel getCreateKakuroPanel() {
         return createKakuroPanel;
+    }
+
+    private void createUIComponents() {
+        kakuroPanel = new JPanel(new GridLayout());
+        kakuroPanel.add(new KakuroGrid(10,10,null,false));
+    }
+
+    private void readFile(){
+        try {
+            JFileChooser fileChooser = new JFileChooser(".");
+            fileChooser.showOpenDialog(null);
+            File f = fileChooser.getSelectedFile();
+            Scanner sca = new Scanner(f);
+            String s = sca.nextLine(); // Llegir quantes files i quantes columnes;
+
+            String[] input = s.split (",");
+            rows = Integer.parseInt(input[0]);
+            cols = Integer.parseInt(input[1]);
+            field = new String[rows][cols];
+
+            for (int i = 0; i<rows; ++i) {
+                s = sca.nextLine();
+                String[] text = s.split (",");
+                if (cols >= 0) System.arraycopy(text, 0, field[i], 0, cols);
+            }
+            String errorMessage = ctrlPresentation.validateKakuro(rows,cols,field);
+            if (!errorMessage.equals("OK")) ERRORdisplay.setText(errorMessage);
+            else {
+                kakuroPanel.removeAll();
+                kakuroPanel.repaint();
+                kakuroPanel.revalidate();
+
+                kakuroPanel.add(new KakuroGrid(rows,cols,field,false));
+                kakuroPanel.repaint();
+                kakuroPanel.revalidate();
+            }
+        }
+        catch(Exception ignored){}
     }
 }

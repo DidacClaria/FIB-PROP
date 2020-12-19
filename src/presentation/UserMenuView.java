@@ -58,14 +58,25 @@ public class UserMenuView {
             @Override
             public void actionPerformed(ActionEvent e) {
                 userMenuPanel.setVisible(false);
-                ctrlPresentation.makeRankingViewVisible("PERSONAL STATS");
+                ctrlPresentation.makeRankingViewVisible(false, username);
             }
         });
         GLOBALRANKINGButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 userMenuPanel.setVisible(false);
-                ctrlPresentation.makeRankingViewVisible("GLOBAL RANKING");
+                ctrlPresentation.makeRankingViewVisible(true, username);
+            }
+        });
+        DELETEUSERButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int option = JOptionPane.showConfirmDialog(userMenuPanel,"Are you sure?");
+                if (option == JOptionPane.YES_OPTION) {
+                    ctrlPresentation.deleteUser(username);
+                    userMenuPanel.setVisible(false);
+                    ctrlPresentation.makeLogInViewVisible();
+                }
             }
         });
         DELETEUSERButton.addActionListener(new ActionListener() {

@@ -86,7 +86,7 @@ public class CreateKakuroView {
                 int idKakuro = ctrlPresentation.proposeKakuro(rows,cols,field);
                 if (idKakuro == -1) ERRORdisplay.setText("The kakuro has no solution");
                 else {
-                    JOptionPane.showMessageDialog(null,"The kakuro was created succesfully!");
+                    JOptionPane.showMessageDialog(null,"The kakuro with id "+idKakuro+" was created succesfully!");
                     createKakuroPanel.setVisible(false);
                     ctrlPresentation.makeUserMenuViewVisible();
                     ERRORdisplay.setText("");

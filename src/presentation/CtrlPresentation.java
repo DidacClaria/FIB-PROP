@@ -13,8 +13,10 @@ public class CtrlPresentation {
      */
     private final CtrlDomain ctrlDomain;
 
+    /**
+     * This will be the frame where all the different panels will be painted.
+     */
     private final MainFrame mainFrame;
-
 
     //CONSTRUCTOR
     /**
@@ -25,7 +27,9 @@ public class CtrlPresentation {
         this.mainFrame = new MainFrame(this);
     }
 
-
+    /**
+     * This method sets the mainFrame as visible
+     */
     public void initPresentation() {
         mainFrame.makeVisible();
     }
@@ -114,9 +118,7 @@ public class CtrlPresentation {
         return null;
     }
 
-    public String addValueToCell(int idGame, int posX, int posY, int value){
-        return null;
-    }
+    public boolean validateSolution(String[][] field){return false;}
 
     public void saveGame(){
 
@@ -142,17 +144,32 @@ public class CtrlPresentation {
 
     public void makeRankingViewVisible(boolean globalRank, String username) { mainFrame.makeRankingViewVisible(globalRank); }
 
+    /**
+     * This method sets the select game view
+     */
     public void makeSelectGameViewVisible() {
         mainFrame.makeSelectGameViewVisible();
     }
 
-    public void makeStartedGameViewVisible() { mainFrame.makeStartedGameViewVisible();
-    }
+    /**
+     * This method sets to the mainFrame the StartedGameView as visible
+     */
+    public void makeStartedGameViewVisible() { mainFrame.makeStartedGameViewVisible(); }
 
+    /**
+     * This method asks to domain the gameScenario of a specific idGame
+     * @param idGame This parameter specifies which gameScenario is needed
+     * @return It returns the information of the size and cell values in a formatted string
+     */
     public String getGameScenario(int idGame) {
         return ctrlDomain.getGameScenario(idGame);
     }
 
+    /**
+     * This operation creates a new Game for a specific idKakuro
+     * @param idKakuro Indicates the id of the kakuro to play
+     * @return It returns the id of the new created game if exists -1 if not.
+     */
     public int createNewGame(int idKakuro) {
         return ctrlDomain.createNewGame(idKakuro);
     }

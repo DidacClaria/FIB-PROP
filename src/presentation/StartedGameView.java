@@ -52,7 +52,7 @@ public class StartedGameView {
     
     public void deleteGame (int id_game) {
         String username = ctrlPresentation.getActiveUser();
-        ctrlPresentation.deleteGame(username, idKakuro, id_game);
+        ctrlPresentation.deleteGame(idKakuro, id_game);
     }
 
     public JPanel getStartedGamePanel() {
@@ -71,6 +71,10 @@ public class StartedGameView {
             Image newImage = image.getScaledInstance(30, 30, Image.SCALE_SMOOTH);
             ImageIcon icon = new ImageIcon (newImage);
             GOBACKButton = new JButton(icon);
+            GOBACKButton.setText("");
+            GOBACKButton.setBorderPainted(false);
+            GOBACKButton.setFocusPainted(false);
+            GOBACKButton.setContentAreaFilled(false);
         } catch (IOException ex) {
             System.out.println("The file does not exists");
         }

@@ -1,12 +1,15 @@
 package presentation;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.plaf.ComponentUI;
 import javax.swing.plaf.PanelUI;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.IOException;
 import java.util.Scanner;
 
 public class CreateKakuroView {
@@ -103,18 +106,27 @@ public class CreateKakuroView {
                     else {
                         ERRORdisplay.setText("");
                     }
+                    int width = Integer.parseInt(widthField.getText());
+                    int height = Integer.parseInt(heightField.getText());
+                    int difficulty = difficultyComboBox.getSelectedIndex();
+                    int numFilledCells = Integer.parseInt(numFilledCellsField.getText());
+//                int kakuroID = ctrlPresentation.generateKakuro(width,height,difficulty,numFilledCells);
+//                JOptionPane.showMessageDialog(null,"The kakuro with id #"+kakuroID+"was created succesfully!");
+                    setVisible(false);
+                    ctrlPresentation.makeUserMenuViewVisible();
                 }
                 catch (NumberFormatException ignored){
                     ERRORdisplay.setText("Please add the size of the field.");
                 }
-                int width = Integer.parseInt(widthField.getText());
-                int height = Integer.parseInt(heightField.getText());
-                int difficulty = difficultyComboBox.getSelectedIndex();
-                int numFilledCells = Integer.parseInt(numFilledCellsField.getText());
-//                int kakuroID = ctrlPresentation.generateKakuro(width,height,difficulty,numFilledCells);
-//                JOptionPane.showMessageDialog(null,"The kakuro with id #"+kakuroID+"was created succesfully!");
-                setVisible(false);
-                ctrlPresentation.makeUserMenuViewVisible();
+
+                //TESTING GETTING FIELD
+//                KakuroGrid aux = (KakuroGrid) kakuroPanel.getComponent(0);
+//                String[][] fieldAux = aux.getFieldStatus();
+//                for (int i=0; i<9; ++i ){
+//                    for (int j=0; j<9; ++j){
+//                        System.out.println(fieldAux[i][j]);
+//                    }
+//                }
             }
         });
     }
@@ -139,6 +151,23 @@ public class CreateKakuroView {
     private void createUIComponents() {
         kakuroPanel = new JPanel(new GridLayout());
         kakuroPanel.add(new KakuroGrid(10,10,null,false));
+        createBackImage();
+    }
+
+    private void createBackImage () {
+        try {
+            BufferedImage image;
+            image = ImageIO.read(new File("DOCS/gobackLogo.png"));
+            Image newImage = image.getScaledInstance(30, 30, Image.SCALE_SMOOTH);
+            ImageIcon icon = new ImageIcon (newImage);
+            GOBACKbutton = new JButton(icon);
+            GOBACKbutton.setText("");
+            GOBACKbutton.setBorderPainted(false);
+            GOBACKbutton.setFocusPainted(false);
+            GOBACKbutton.setContentAreaFilled(false);
+        } catch (IOException ex) {
+            System.out.println("The file does not exists");
+        }
     }
 
     private void readFile(){

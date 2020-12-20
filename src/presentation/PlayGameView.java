@@ -27,10 +27,76 @@ public class PlayGameView {
     private JButton VALIDATESOLUTIONButton;
 
     private KakuroGrid gamesScenario;
+    private static int cnt=0, timerCount, numHints;
+    Timer  timer;
 
     public PlayGameView(CtrlPresentation ctrlPresentation) {
         this.ctrlPresentation = ctrlPresentation;
         initComponents();
+    }
+
+    private void initComponents() {
+        errorMessage.setText("");
+        BACKButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                playGamePanel.setVisible(false);
+                ctrlPresentation.makeSelectGameViewVisible();
+                timer.stop();
+            }
+        });
+        VALIDATESOLUTIONButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+//                ctrlPresentation.validateSolution(gamesScenario.getField());
+            }
+        });
+        ASKHINTButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                ++numHints;
+//                String newValue = ctrlPresentation.askHint(numHints);
+//
+            }
+        });
+        SAVEANDEXITButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+//                ctrlPresentation.updateStats;
+//                ctrlPresentation.updateFieldStatus;
+                playGamePanel.setVisible(false);
+                ctrlPresentation.makeSelectGameViewVisible();
+                timer.stop();
+            }
+        });
+        timer =new Timer(1000,new ActionListener(){
+            public void actionPerformed(ActionEvent e)
+            {
+                ++timerCount;
+                timerValue.setText(String.valueOf(timerCount));
+            }
+        });
+    }
+
+    public JPanel getPlayGamePanel() {
+        return playGamePanel;
+    }
+
+    public void setVisible(Boolean b, int idGame){
+//        String sizeAndField = ctrlPresentation.getGameScenario();
+//        stringToKakuroGrid(sizeAndField);
+//        String stats = ctrlPresentation.getStats();
+//        stringToStats(stats);
+        timerCount = 0;
+        timerValue.setText(String.valueOf(timerCount));
+        timer.restart();
+        playGamePanel.setVisible(b);
+    }
+
+    private void stringToStats(String stats) {
+        String[] parts = stats.split(":");
+        timerCount = Integer.parseInt(parts[0]);
+        numHints = Integer.parseInt(parts[1]);
     }
 
     private void stringToKakuroGrid(String sizeAndField) {
@@ -45,33 +111,14 @@ public class PlayGameView {
                 kakuroField[i][j] = field[i*numCols+j];
             }
         }
-        kakuroContainer.add(new KakuroGrid(numRows,numCols,kakuroField,true));
+        kakuroContainer.removeAll();
         kakuroContainer.repaint();
         kakuroContainer.revalidate();
-    }
 
-    private void initComponents() {
-        errorMessage.setText("");
-        BACKButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                kakuroContainer.removeAll();
-                kakuroContainer.repaint();
-                kakuroContainer.revalidate();
-                playGamePanel.setVisible(false);
-                ctrlPresentation.makeSelectGameViewVisible();
-            }
-        });
-    }
-
-    public JPanel getPlayGamePanel() {
-        return playGamePanel;
-    }
-
-    public void setVisible(Boolean b, int gameID){
-//        String sizeAndField = ctrlPresentation.getGameScenario(gameID);
-//        stringToKakuroGrid(sizeAndField);
-        playGamePanel.setVisible(b);
+        gamesScenario = new KakuroGrid(numRows,numCols,kakuroField,true);
+        kakuroContainer.add(gamesScenario);
+        kakuroContainer.repaint();
+        kakuroContainer.revalidate();
     }
 
     private void createUIComponents() {
@@ -91,5 +138,9 @@ public class PlayGameView {
             BACKButton.setFocusPainted(false);
             BACKButton.setContentAreaFilled(false);
         } catch (IOException ex) {}
+    }
+
+    private String[][] getFieldStatus(){
+        return gamesScenario.getFieldStatus();
     }
 }

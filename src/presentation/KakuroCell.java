@@ -1,5 +1,7 @@
 package presentation;
 
+import domain.Kakuro;
+
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
@@ -12,6 +14,8 @@ public class KakuroCell extends JFormattedTextField implements KeyListener {
 
     private JLabel numColLabel;
     private JLabel numRowLabel;
+    private KakuroGrid parent;
+    private int posX, posY, value;
 
     public KakuroCell(int numCol, int numRow) {
         if (numCol==-1) numColLabel = new JLabel("");
@@ -34,7 +38,11 @@ public class KakuroCell extends JFormattedTextField implements KeyListener {
 
     }
 
-    public KakuroCell(int value, boolean enabled){
+    public KakuroCell(int value, int posX, int posY, boolean enabled, KakuroGrid parent){
+        this.parent = parent;
+        this.posX=posX;
+        this.posY=posY;
+        this.value = value;
         setFont (getFont().deriveFont(12f));
         setHorizontalAlignment(JLabel.CENTER);
         setForeground(Color.black);
@@ -65,6 +73,7 @@ public class KakuroCell extends JFormattedTextField implements KeyListener {
             }
             catch (Exception ignored) {
             }
+            parent.setValueField(posX,posY,c-'0');
         }
     }
 

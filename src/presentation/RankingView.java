@@ -18,11 +18,13 @@ public class RankingView {
     private JScrollPane rankingList;
     private JPanel headerContainer;
     private JLabel title;
+    private JTable list;
 
-    private JTextArea list;
+    private final String [][] data_AUX;
 
-    public RankingView(CtrlPresentation ctrlPresentation) {
+    public RankingView(CtrlPresentation ctrlPresentation, String [][] data) {
         this.ctrlPresentation = ctrlPresentation;
+        this.data_AUX = data;
         initComponents();
     }
 
@@ -46,8 +48,7 @@ public class RankingView {
 
     private void createUIComponents() {
         createBackImage();
-        list = new JTextArea();
-        rankingList = new JScrollPane(list);
+        createRankingList();
     }
 
     private void createBackImage () {
@@ -62,16 +63,15 @@ public class RankingView {
         }
     }
 
-    public void createRGText () {
-        String text = ctrlPresentation.listGlobalRanking();
-        list.setText(text);
-        list.setEditable(false);
-    }
-
-    public void createPSText () {
-        String text = ctrlPresentation.listPersonalStats(ctrlPresentation.getActiveUser());
-        list.setText(text);
-        list.setEditable(false);
+    private void createRankingList () {
+        String [] components = {"KAKURO ID", "USERNAME", "TIME", "ASK_HINTS", "SCORES"};
+        if (data_AUX != null) list = new JTable(data_AUX, components);
+        else {
+            String[][] nullMatrix = new String[1][5];
+            nullMatrix[0] = new String[]{"-", "-", "-", "-", "-"};
+            list = new JTable(nullMatrix, components);
+        }
+        rankingList = new JScrollPane(list);
     }
 
     public void setTitle (String name) {

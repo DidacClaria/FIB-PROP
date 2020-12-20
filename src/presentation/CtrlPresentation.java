@@ -38,6 +38,8 @@ public class CtrlPresentation {
         mainFrame.iniGame(idKakuro);
     }
 
+    public void iniRanking (String [][] data) {mainFrame.iniranKing(data);}
+
     public void logInUser(String username) {
         ctrlDomain.logInUser(username);
     }
@@ -94,15 +96,15 @@ public class CtrlPresentation {
         return ctrlDomain.getKakurosGlobals();
     }
 
-    public String[] getGames(String user, int id_kakuro) {
-        return ctrlDomain.getGames(user, id_kakuro);
+    public String[] getGames(String user, int idKakuro) {
+        return ctrlDomain.getGames(user, idKakuro);
     }
 
-    public String listGlobalRanking () {
+    public String[][] listGlobalRanking () {
         return ctrlDomain.listGlobalRanking();
     }
 
-    public String listPersonalStats(String user){
+    public String[][] listPersonalStats(String user){
         return ctrlDomain.listPersonalStats(user);
     }
 

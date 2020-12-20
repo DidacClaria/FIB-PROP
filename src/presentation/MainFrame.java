@@ -26,7 +26,6 @@ public class MainFrame extends JFrame {
         this.createKakuroView = new CreateKakuroView(ctrlPresentation);
         this.selectGameView = new SelectGameView(ctrlPresentation);
         this.playGameView = new PlayGameView(ctrlPresentation);
-        this.rankingView = new RankingView(ctrlPresentation);
 
         mainFrameInit();
 
@@ -36,7 +35,9 @@ public class MainFrame extends JFrame {
         this.userMenuView = new UserMenuView(ctrlPresentation);
     }
 
-    public void iniGame (int id_kakuro) {this.startedGameView = new StartedGameView(ctrlPresentation, id_kakuro);}
+    public void iniGame (int idKakuro) {this.startedGameView = new StartedGameView(ctrlPresentation, idKakuro);}
+
+    public void iniranKing (String [][] data) {this.rankingView = new RankingView(ctrlPresentation, data);}
 
     public void mainFrameInit(){
         setTitle("KAKURO");
@@ -79,14 +80,8 @@ public class MainFrame extends JFrame {
 
     public void makeRankingViewVisible(boolean globalRank){
         rankingView.setVisible(true);
-        if (globalRank) {
-            rankingView.setTitle("GLOBAL RANKING");
-            rankingView.createRGText();;
-        }
-        else {
-            rankingView.setTitle("MY PERSONAL STATS");
-            rankingView.createPSText();
-        }
+        if (globalRank) rankingView.setTitle("GLOBAL RANKING");
+        else rankingView.setTitle("MY PERSONAL STATS");
         setContentPane(rankingView.getRankingPanel());
     }
 

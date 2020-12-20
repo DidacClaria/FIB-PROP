@@ -68,18 +68,24 @@ public class CtrlDomain {
     private void dataGame(ArrayList<String> users){
         for (String u: users){
             String[] kakuros = ctrlPersistence.startedKakuros(u);
-            for (String k : kakuros){
-                if (k != "personal_stats.txt"){
-                    k = k.replace("kakuro_", "");
-                    int idk = Integer.parseInt(k);
-                    String[] games = ctrlPersistence.getGames(u, idk);
-                    for (String g : games) {
-                        g = g.replace("game_", "");
-                        g = g.replace(".txt", "");
-                        int idg = Integer.parseInt(g);
-                        String[][] game = ctrlPersistence.loadGame(u, idk, idg);
-                        String stats = ctrlPersistence.loadStats(u, idk, idg);
-                        ctrlGame.loadGame(u, idk, idg, game, stats);
+            if (kakuros != null) {
+                for (String k : kakuros) {
+                    if (k.contains("kakuro_")) {
+                        k = k.replace("kakuro_", "");
+                        int idk = Integer.parseInt(k);
+                        String[] games = ctrlPersistence.getGames(u, idk);
+                        for (String g : games) {
+                            if (!g.contains("_stats")) {
+                                g = g.replace("game_", "");
+                                g = g.replace(".txt", "");
+                                int idg = Integer.parseInt(g);
+                                String[][] game = ctrlPersistence.loadGame(u, idk, idg);
+                                String stats = ctrlPersistence.loadStats(u, idk, idg);
+                                stats = stats.replace("Execution Time: ", "");
+                                stats = stats.replace("Hints asked: ", "");
+                                ctrlGame.loadGame(u, idk, idg, game, stats);
+                            }
+                        }
                     }
                 }
             }
@@ -266,7 +272,7 @@ public class CtrlDomain {
             System.out.println("1 - Fill cell");
             System.out.println("2 - Ask hint");
             System.out.println("3 - Save and exit");
-            System.out.println("2 - Exit");
+            System.out.println("4 - Exit");
 
             System.out.print("\nCHOOSE ONE OPTION: ");
             Scanner sca = new Scanner(System.in);

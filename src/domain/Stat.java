@@ -43,4 +43,11 @@ public class Stat {
         this.numHints = hints;
     }
 
+    public int getTime() {
+        return time;
+    }
+
+    public int getNumHints() {
+        return numHints;
+    }
 }

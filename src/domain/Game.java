@@ -50,7 +50,10 @@ public class Game {
         this.idGame = idGame;
         this.kakuroId = idKakuro;
         this.gameScenario = estat;
-        this.stat = new Stat();
+        int aux = stat.indexOf(":");
+        int time = Integer.parseInt(stat.substring(0, aux));
+        int hints = Integer.parseInt(stat.substring(aux+1));
+        this.stat = new Stat(time, hints);
     }
 
     public int get_kakuro_id(){
@@ -61,5 +64,7 @@ public class Game {
         return idGame;
     }
 
-
+    public String getStat() {
+        return String.valueOf(stat.getTime()) + ":" + String.valueOf(stat.getNumHints());
+    }
 }

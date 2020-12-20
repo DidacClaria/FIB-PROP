@@ -36,17 +36,16 @@ public class CtrlKakuro {
     public CtrlKakuro(CtrlDomain ctrlDomain, ArrayList<String[][]> kakuros) {
         this.ctrlDomain = ctrlDomain;
         this.kakuros = new ArrayList<>();
-        for (int i=0; i<kakuros.size(); i+=2){
+        for (int i = 0; i < kakuros.size(); i += 2) {
             ++numKakuros;
             String[][] k_string = kakuros.get(i);
-            String[][] sol = kakuros.get(i+1);
+            String[][] sol = kakuros.get(i + 1);
             Kakuro k = new Kakuro();
             k.setSolution(sol);
             k.setCells(k_string);
             k.setIdKakuro(numKakuros);
             this.kakuros.add(k);
         }
-
     }
 
     //GETTERS AND SETTERS

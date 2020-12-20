@@ -9,6 +9,9 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
+/**
+ * This class represents the UserMenuView and with all the components added into the userMenuPanel it is represented. It also communicates with the Presentation Controller.
+ */
 public class UserMenuView {
     private final CtrlPresentation ctrlPresentation;
     private JPanel userMenuPanel;
@@ -20,11 +23,18 @@ public class UserMenuView {
     private JLabel usernameLabel;
     private JButton DELETEUSERButton;
 
+    /**
+     * Default UserMenuView constructor.
+     * @param ctrlPresentation Reference of the presentation controller.
+     */
     public UserMenuView(CtrlPresentation ctrlPresentation) {
         this.ctrlPresentation = ctrlPresentation;
         initComponents();
     }
 
+    /**
+     * This method initialize all the different buttons and their specific behaviour.
+     */
     private void initComponents() {
 
         String username = ctrlPresentation.getActiveUser();
@@ -58,14 +68,14 @@ public class UserMenuView {
             @Override
             public void actionPerformed(ActionEvent e) {
                 userMenuPanel.setVisible(false);
-                ctrlPresentation.makeRankingViewVisible(false, username);
+                ctrlPresentation.makeRankingViewVisible(false);
             }
         });
         GLOBALRANKINGButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 userMenuPanel.setVisible(false);
-                ctrlPresentation.makeRankingViewVisible(true, username);
+                ctrlPresentation.makeRankingViewVisible(true);
             }
         });
         DELETEUSERButton.addActionListener(new ActionListener() {
@@ -81,19 +91,34 @@ public class UserMenuView {
         });
     }
 
+    /**
+     * Getter method of the userMenuPanel.
+     * @return It returns the instance of the userMenuPanel.
+     */
     public JPanel getUserMenuPanel() {
         return userMenuPanel;
     }
 
+    /**
+     * This method sets the panel of the view as visible or not depending on the bool of the parameter.
+     * @param b Indicates whether the view must show or not.
+     */
     public void setVisible(boolean b) {
         userMenuPanel.setVisible(b);
     }
 
+    /**
+     * This operations sets the JLabel text depending on the username in the parameter.
+     * @param username Indicates the username of the active user.
+     */
     public void setUsername(String username){
         usernameLabel.setText(username);
     }
 
 
+    /**
+     * This method initialize the custom components of the view.
+     */
     private void createUIComponents() {
 
         try {
@@ -107,7 +132,7 @@ public class UserMenuView {
             LOGOUTButton.setFocusPainted(false);
             LOGOUTButton.setContentAreaFilled(false);
         } catch (IOException ex) {
-            System.out.println("The file does not exists");
+//            System.out.println("The file does not exists");
         }
     }
 }

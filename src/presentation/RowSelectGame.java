@@ -5,6 +5,9 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+/**
+ * This class is a custom component that extends the class JPanel and it is used in the SelectGameView to represent one entry of Game.
+ */
 public class RowSelectGame extends JPanel {
 
     private int idGame;
@@ -14,6 +17,11 @@ public class RowSelectGame extends JPanel {
     private JButton delete;
     private StartedGameView gameView;
 
+    /**
+     * Default creator of a RowSelectGame.
+     * @param gv Reference of the parent view.
+     * @param id Identifier of the game that is displayed.
+     */
     public RowSelectGame (StartedGameView gv, int id) {
         this.idGame = id;
 
@@ -40,6 +48,9 @@ public class RowSelectGame extends JPanel {
         createActionListener();
     }
 
+    /**
+     * Initialization method that configures the format of the panel.
+     */
     private void createFormat () {
         JPanel auxL = new JPanel();
         JPanel auxR = new JPanel();
@@ -58,6 +69,9 @@ public class RowSelectGame extends JPanel {
         setLayout(new GridLayout(1,2));
     }
 
+    /**
+     * This method implements the behaviour of resume and delete buttons.
+     */
     private void createActionListener () {
         resume.addActionListener(new ActionListener() {
             @Override

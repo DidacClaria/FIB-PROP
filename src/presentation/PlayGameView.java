@@ -1,7 +1,5 @@
 package presentation;
 
-import org.w3c.dom.html.HTMLBodyElement;
-
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
@@ -11,6 +9,9 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
+/**
+ * This class represents the PlayGameView and with all the components added into the playGamePanel it is represented. It also communicates with the Presentation Controller.
+ */
 public class PlayGameView {
     private final CtrlPresentation ctrlPresentation;
     private JPanel playGamePanel;
@@ -30,11 +31,18 @@ public class PlayGameView {
     private static int cnt=0, timerCount, numHints;
     Timer  timer;
 
+    /**
+     * Default PlayGameView constructor.
+     * @param ctrlPresentation Reference of the presentation controller.
+     */
     public PlayGameView(CtrlPresentation ctrlPresentation) {
         this.ctrlPresentation = ctrlPresentation;
         initComponents();
     }
 
+    /**
+     * This method initialize all the different buttons and their specific behaviour.
+     */
     private void initComponents() {
         errorMessage.setText("");
         BACKButton.addActionListener(new ActionListener() {
@@ -78,10 +86,19 @@ public class PlayGameView {
         });
     }
 
+    /**
+     * Getter method of the logInPanel.
+     * @return It returns the instance of the logInPanel.
+     */
     public JPanel getPlayGamePanel() {
         return playGamePanel;
     }
 
+    /**
+     * This method sets the panel of the view as visible or not depending on the bool of the parameter. It also sets the timer to the correct value, and the current status of the field.
+     * @param b Indicates whether the view must show or not.
+     * @param idGame Indicates which Game to load.
+     */
     public void setVisible(Boolean b, int idGame){
 //        String sizeAndField = ctrlPresentation.getGameScenario();
 //        stringToKakuroGrid(sizeAndField);
@@ -93,12 +110,20 @@ public class PlayGameView {
         playGamePanel.setVisible(b);
     }
 
+    /**
+     * This operation interprets the formatted String as the different stats values.
+     * @param stats It has the current time, score, and numHints divided by ":".
+     */
     private void stringToStats(String stats) {
         String[] parts = stats.split(":");
         timerCount = Integer.parseInt(parts[0]);
         numHints = Integer.parseInt(parts[1]);
     }
 
+    /**
+     * This operation interprets the formatted String as a KakuroGrid. It also repaints the custom component.
+     * @param sizeAndField It contains the information of a KakuroGrid divided by ":".
+     */
     private void stringToKakuroGrid(String sizeAndField) {
         String[] parts = sizeAndField.split(":");
         String[] size = parts[0].split(",");
@@ -121,11 +146,17 @@ public class PlayGameView {
         kakuroContainer.revalidate();
     }
 
+    /**
+     * This method initialize the custom components of the view.
+     */
     private void createUIComponents() {
         createBackImage();
         kakuroContainer = new JPanel(new GridLayout());
     }
 
+    /**
+     * This method configure the BACKButton so that it has the desired appearance.
+     */
     private void createBackImage () {
         try {
             BufferedImage image;
@@ -140,6 +171,10 @@ public class PlayGameView {
         } catch (IOException ex) {}
     }
 
+    /**
+     * This method returns the current status of the field from one game played.
+     * @return The field in a String matrix.
+     */
     private String[][] getFieldStatus(){
         return gamesScenario.getFieldStatus();
     }

@@ -102,7 +102,8 @@ public class CtrlDomain {
         return ctrlPersistence.getKakurosGlobals();
     }
 
-    public String[] getGames(String user, int id_game) {
+    public String[] getGames(int id_game) {
+        String user=getActiveUser();
         return ctrlPersistence.getGames(user, id_game);
     }
 

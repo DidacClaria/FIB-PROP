@@ -1,15 +1,14 @@
 package presentation;
 
-import domain.Kakuro;
-
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import javax.swing.*;
 
+/**
+ * This class is a CustomComponent that extends a JFormattedField and it is used to represent a Cell from a KakuroGrid in the GUI.
+ */
 public class KakuroCell extends JFormattedTextField implements KeyListener {
 
     private JLabel numColLabel;
@@ -17,6 +16,11 @@ public class KakuroCell extends JFormattedTextField implements KeyListener {
     private KakuroGrid parent;
     private int posX, posY, value;
 
+    /**
+     * Constructor of a BlackCell
+     * @param numCol Indicates the value of the sum in the columns if it has, either way it will contain a -1.
+     * @param numRow Indicates the value of the sum in the rows if it has, either way it will contain a -1.
+     */
     public KakuroCell(int numCol, int numRow) {
         if (numCol==-1) numColLabel = new JLabel("");
         else numColLabel = new JLabel(""+numCol);
@@ -38,6 +42,14 @@ public class KakuroCell extends JFormattedTextField implements KeyListener {
 
     }
 
+    /**
+     * Constructor of a WhiteCell
+     * @param value Indicates the value of the cell if it has -1 either way.
+     * @param posX Indicates the X position of the cell in the grid.
+     * @param posY Indicates the Y position of the cell in the grid.
+     * @param enabled Indicates if the cell can be editable or not.
+     * @param parent It is the reference of the kakuro Grid that contains it.
+     */
     public KakuroCell(int value, int posX, int posY, boolean enabled, KakuroGrid parent){
         this.parent = parent;
         this.posX=posX;

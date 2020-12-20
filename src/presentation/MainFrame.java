@@ -5,6 +5,9 @@ import domain.Main;
 import javax.swing.*;
 import java.awt.*;
 
+/**
+ * This class it contains the mainFrame where all the panels will be painted and it also communicates with the presentation controller.
+ */
 public class MainFrame extends JFrame {
 
     private CtrlPresentation ctrlPresentation;
@@ -19,8 +22,8 @@ public class MainFrame extends JFrame {
     private StartedGameView startedGameView;
 
     /**
-     * Default MainFrame constructor
-     * @param CP Is the reference of the Presentation Controller
+     * Default MainFrame constructor.
+     * @param CP Is the reference of the Presentation Controller.
      */
     public MainFrame(CtrlPresentation CP) {
 
@@ -36,15 +39,21 @@ public class MainFrame extends JFrame {
 
     }
 
+    /**
+     * This method initializes a new instance of the UserMenuView class.
+     */
     public void iniUserMenu () {
         this.userMenuView = new UserMenuView(ctrlPresentation);
     }
 
-
-    public void iniGame (int id_kakuro) {this.startedGameView = new StartedGameView(ctrlPresentation, id_kakuro);}
+    /**
+     * This method initializes a new instance of the StartedGameView class.
+     * @param idKakuro It identifies the kakuro of the games.
+     */
+    public void iniGame (int idKakuro) {this.startedGameView = new StartedGameView(ctrlPresentation, idKakuro);}
 
     /**
-     * This method initialize the properties of the frame created
+     * This method initialize the properties of the frame created.
      */
     public void mainFrameInit(){
         setTitle("KAKURO");
@@ -56,7 +65,7 @@ public class MainFrame extends JFrame {
     }
 
     /**
-     * This method makes the main frame visible
+     * This method makes the main frame visible.
      */
     public void makeVisible() {
         pack();
@@ -64,7 +73,7 @@ public class MainFrame extends JFrame {
     }
 
     /**
-     * This method sets the userMenuView as visible
+     * This method sets the userMenuView as visible.
      */
     public void makeUserMenuViewVisible() {
         userMenuView.setVisible(true);
@@ -72,7 +81,7 @@ public class MainFrame extends JFrame {
     }
 
     /**
-     * This method sets the logInView as visible
+     * This method sets the logInView as visible.
      */
     public void makeLogInViewVisible() {
         logInView.setVisible(true);
@@ -80,7 +89,7 @@ public class MainFrame extends JFrame {
     }
 
     /**
-     * This method sets the createKakuroView as visible
+     * This method sets the createKakuroView as visible.
      */
     public void makeCreateKakuroViewVisible() {
         createKakuroView.setVisible(true);
@@ -88,8 +97,8 @@ public class MainFrame extends JFrame {
     }
 
     /**
-     * This method sets the playGameView for an specific idGame to visible
-     * @param idGame Indicates the identifier of the game to play
+     * This method sets the playGameView for an specific idGame to visible.
+     * @param idGame Indicates the identifier of the game to play.
      */
     public void makePlayGameViewVisible(int idGame){
         playGameView.setVisible(true, idGame);
@@ -97,7 +106,7 @@ public class MainFrame extends JFrame {
     }
 
     /**
-     * This method sets the SelectGameView as visible
+     * This method sets the SelectGameView as visible.
      */
     public void makeSelectGameViewVisible(){
         selectGameView.setVisible(true);
@@ -105,8 +114,8 @@ public class MainFrame extends JFrame {
     }
 
     /**
-     * This method sets either the globalRankingView or the personalStatsView as visible
-     * @param globalRank Indicates if the panel to show is the globalRankingView
+     * This method sets either the globalRankingView or the personalStatsView as visible.
+     * @param globalRank Indicates if the panel to show is the globalRankingView.
      */
     public void makeRankingViewVisible(boolean globalRank){
         rankingView.setVisible(true);

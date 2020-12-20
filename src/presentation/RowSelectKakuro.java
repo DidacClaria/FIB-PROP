@@ -5,6 +5,9 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+/**
+ * This class is a custom component that extends the class JPanel and it is used in the SelectKakuroView to represent one entry of a Kakuro.
+ */
 public class RowSelectKakuro extends JPanel {
 
     private int idKakuro;
@@ -14,6 +17,11 @@ public class RowSelectKakuro extends JPanel {
     private JButton seeGame;
     private SelectGameView gameView;
 
+    /**
+     * Default RowSelectKakuro creator.
+     * @param gv Reference of the view SelectGameView.
+     * @param id It indicates the identifier of the kakuro.
+     */
     public RowSelectKakuro (SelectGameView gv, int id) {
         this.idKakuro = id;
 
@@ -36,6 +44,9 @@ public class RowSelectKakuro extends JPanel {
         createActionListener();
     }
 
+    /**
+     * Initialization method that configures the format of the panel.
+     */
     private void createFormat () {
         JPanel auxL = new JPanel();
         JPanel auxR = new JPanel();
@@ -54,6 +65,9 @@ public class RowSelectKakuro extends JPanel {
         setLayout(new GridLayout(1,2));
     }
 
+    /**
+     * This method implements the behaviour of newGame and seeGames buttons.
+     */
     private void createActionListener () {
         newGame.addActionListener(new ActionListener() {
             @Override

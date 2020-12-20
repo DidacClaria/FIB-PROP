@@ -2,8 +2,6 @@ package presentation;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
-import javax.swing.plaf.ComponentUI;
-import javax.swing.plaf.PanelUI;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -12,6 +10,9 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Scanner;
 
+/**
+ * This class represents the CreateKakuroView and with all the components added into the createKakuroPanel it is represented. It communicates with the Presentation Controller.
+ */
 public class CreateKakuroView {
     private final CtrlPresentation ctrlPresentation;
 
@@ -34,6 +35,10 @@ public class CreateKakuroView {
     private int rows, cols;
     private String field[][];
 
+    /**
+     * Default CreateKakuroView creator.
+     * @param ctrlPresentation It contains the reference of the Presentation Controller.
+     */
     public CreateKakuroView(CtrlPresentation ctrlPresentation) {
         this.ctrlPresentation = ctrlPresentation;
         rows=cols=-1;
@@ -41,6 +46,9 @@ public class CreateKakuroView {
         initComponents();
     }
 
+    /**
+     * This method initialize all the different buttons and their specific behaviour.
+     */
     private void initComponents() {
         initINFOButton();
         ERRORdisplay.setText("");
@@ -131,6 +139,9 @@ public class CreateKakuroView {
         });
     }
 
+    /**
+     * This method configures the format information button.
+     */
     private void initINFOButton() {
         ImageIcon infoIcon = new ImageIcon(new ImageIcon("./DOCS/info.png").getImage().getScaledInstance(20, 20, Image.SCALE_DEFAULT));
         INFOButton.setIcon(infoIcon);
@@ -140,20 +151,34 @@ public class CreateKakuroView {
         INFOButton.setContentAreaFilled(false);
     }
 
+    /**
+     * This method sets the panel of the view as visible or not depending on the bool of the parameter.
+     * @param b Indicates whether the view must show or not.
+     */
     public void setVisible(boolean b) {
         createKakuroPanel.setVisible(b);
     }
 
+    /**
+     * Getter method of the createKakuroPanel.
+     * @return It returns the instance of the createKakuroPanel.
+     */
     public JPanel getCreateKakuroPanel() {
         return createKakuroPanel;
     }
 
+    /**
+     * This method initialize the custom components of the view.
+     */
     private void createUIComponents() {
         kakuroPanel = new JPanel(new GridLayout());
         kakuroPanel.add(new KakuroGrid(10,10,null,false));
         createBackImage();
     }
 
+    /**
+     * This method configure the GOBACKbutton so that it has the desired appearance.
+     */
     private void createBackImage () {
         try {
             BufferedImage image;
@@ -166,17 +191,20 @@ public class CreateKakuroView {
             GOBACKbutton.setFocusPainted(false);
             GOBACKbutton.setContentAreaFilled(false);
         } catch (IOException ex) {
-            System.out.println("The file does not exists");
+//            System.out.println("The file does not exists");
         }
     }
 
+    /**
+     * This method opens up a FileChooser and once it is selected, it reads it and tries to print it into the kakuroPanel if it's valid.
+     */
     private void readFile(){
         try {
             JFileChooser fileChooser = new JFileChooser(".");
             fileChooser.showOpenDialog(null);
             File f = fileChooser.getSelectedFile();
             Scanner sca = new Scanner(f);
-            String s = sca.nextLine(); // Llegir quantes files i quantes columnes;
+            String s = sca.nextLine();
 
             String[] input = s.split (",");
             rows = Integer.parseInt(input[0]);

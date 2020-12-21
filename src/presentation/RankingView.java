@@ -94,8 +94,8 @@ public class RankingView {
         String [] components = {"KAKURO ID", "USERNAME", "TIME", "ASK_HINTS", "SCORES"};
         if (dataAUX != null) list = new JTable(dataAUX, components);
         else {
-            String[][] nullMatrix = new String[9][5];
-            for (int i=0; i<9; ++i) nullMatrix[i] = new String[]{"KAKURO "+i, "SYSTEM", "10", "0", "100"};
+            String[][] nullMatrix = new String[1][5];
+            nullMatrix[0] = new String[]{"-", "-", "-", "-", "-"};
             list = new JTable(nullMatrix, components);
         }
         rankingList = new JScrollPane(list);

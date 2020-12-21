@@ -55,7 +55,7 @@ public class MainFrame extends JFrame {
      * This method initializes a new instance of the RankingView class.
      * @param data This variable contains the info that the rankingView will load.
      */
-    public void iniranKing (String [][] data) {this.rankingView = new RankingView(ctrlPresentation, data);}
+    public void iniRanking (String [][] data) {this.rankingView = new RankingView(ctrlPresentation, data);}
 
     /**
      * This method initialize the properties of the frame created.

@@ -98,7 +98,7 @@ public class Main {
                     hints = sca.nextInt();
                     System.out.println("Enter the new state of the game (THIS IS ONLY FOR TESTING):");
                     readKakuro();
-                    a.validateGame(user, idKakuro, idGame, time, hints, kakuro);
+                    a.validateGame(idKakuro, idGame, time, hints, kakuro);
                     break;
                 case 7:
                     System.out.println("Enter the user name you want to remove:");

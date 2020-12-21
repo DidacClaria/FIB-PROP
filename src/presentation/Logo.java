@@ -37,7 +37,7 @@ public class Logo extends JPanel {
      * @see Component#paintAll
      */
     @Override
-    public void paintComponents(Graphics g) {
+    public void paintComponent(Graphics g) {
         super.paintComponent(g);
         g.drawImage(newImage, 0, 0, this);
     }

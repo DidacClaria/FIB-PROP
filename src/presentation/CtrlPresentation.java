@@ -51,6 +51,14 @@ public class CtrlPresentation {
     }
 
     /**
+     * This method instantiates a new StartedGameView for an specific idKakuro.
+     * @param data This variable contains the info that the rankingView will load.
+     */
+    public void iniRanking (String[][] data) {
+        mainFrame.iniRanking(data);
+    }
+
+    /**
      * This method sends the information collected in the LogInView to be processed by the domain
      * @param username This attribute indicates the username the new user logged in.
      */
@@ -161,7 +169,7 @@ public class CtrlPresentation {
      * This method asks for the information of all the completed Games in the system with their score.
      * @return An ordered list depending on the score of a completed Game from all the Games in the system.
      */
-    public String listGlobalRanking () {
+    public String[][] listGlobalRanking () {
         return ctrlDomain.listGlobalRanking();
     }
 
@@ -169,7 +177,7 @@ public class CtrlPresentation {
      * This method asks for the information of all the completed Games from the Active User.
      * @return An ordered list depending on the score of a completed Game from all the games of the Active User.
      */
-    public String listPersonalStats(){
+    public String[][] listPersonalStats(){
         return ctrlDomain.listPersonalStats();
     }
 

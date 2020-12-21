@@ -78,7 +78,8 @@ public class SelectGameView {
      */
     private void createUIComponents() {
         createBackImage();
-        createListKakuros();
+        listGamesContainer = new JScrollPane(new JPanel());
+//        createListKakuros();
     }
 
     /**

@@ -65,5 +65,11 @@ public class CtrlUser {
         if (!found) createUser(n);
     }
 
+    public void deleteUser(String user){
+        for (User u : users){
+            if (u.get_Nom() == user) users.remove(u);
+        }
+    }
+
 
 }

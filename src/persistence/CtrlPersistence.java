@@ -5,6 +5,7 @@ import domain.Pair;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Objects;
 
 /**
  * Persistence Controller Class.
@@ -59,18 +60,19 @@ public class CtrlPersistence {
     public ArrayList<String[][]> loadKakuros(){
         ArrayList<String[][]> kakuros = new ArrayList<>();
         File f = new File(routek);
-        for( String k : f.list()){
+        for( String k : Objects.requireNonNull(f.list())){
            File kakuro = new File(routek + "/" + k);
            kakuros.add(dataKakuro.showKakuro(kakuro));
         }
+
         return kakuros;
     }
 
     public ArrayList<String> loadUsers(){
         ArrayList<String> users = new ArrayList<>();
         File f = new File(route);
-        for (String u : f.list()){
-            if (u != "kakuros" && u != "global_ranking.txt"){
+        for (String u : Objects.requireNonNull(f.list())){
+            if (!u.equals("kakuros") && !u.equals("global_ranking.txt")){
                 users.add(u);
             }
         }
@@ -246,23 +248,12 @@ public class CtrlPersistence {
      * @param global
      * @return
      */
-    public String listRankingOrStats(String user, boolean global){
+    public String[][] listRankingOrStats(String user, boolean global){
         File s;
         String r;
-        if (global) {
-            s = new File(route + "/" + "global_ranking.txt");
-            r = "NOBODY HAS PLAYED YET!";
-        }
-        else {
-            s = new File(route + "/" + user + "/" + "personal_stats.txt");
-            r = "YOU HAVE NOT DONE ANY KAKUROS!";
-        }
-        return dataStats.listRankingOrStats(s, r);
-    }
-
-    public String[] getKakurosGlobals () {
-        File f = new File(routek);
-        return f.list();
+        if (global) s = new File(route + "/" + "global_ranking.txt");
+        else s = new File(route + "/" + user + "/" + "personal_stats.txt");
+        return dataStats.listRankingOrStats(s);
     }
 
     public String[] getGames (String user, int idKakuro) {
@@ -270,4 +261,15 @@ public class CtrlPersistence {
         if (!f.exists()) return null;
         return f.list();
     }
+
+    public String[][] loadGame(String user, int idKakuro, int idGame){
+        File f = new File(route + "/" + user + "/" + "kakuro_" + idKakuro + "/" + "game_" + idGame + ".txt");
+        return dataKakuro.showKakuro(f);
+    }
+
+    public String loadStats(String user, int idKakuro, int idGame) {
+        File fStats = new File(route + "/" + user + "/" + "kakuro_" + idKakuro + "/" + "game_" + idGame + "_stats.txt");
+        return dataKakuro.showGameStats(fStats);
+    }
+
 }

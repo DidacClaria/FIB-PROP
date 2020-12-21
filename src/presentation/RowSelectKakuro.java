@@ -5,42 +5,53 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+/**
+ * This class is a custom component that extends the class JPanel and it is used in the SelectKakuroView to represent one entry of a Kakuro.
+ */
 public class RowSelectKakuro extends JPanel {
 
-    private int id_kakuro;
+    private int idKakuro;
 
     private JLabel kakuro;
-    private JButton new_game;
-    private JButton see_game;
+    private JButton newGame;
+    private JButton seeGame;
     private SelectGameView gameView;
 
+    /**
+     * Default RowSelectKakuro creator.
+     * @param gv Reference of the view SelectGameView.
+     * @param id It indicates the identifier of the kakuro.
+     */
     public RowSelectKakuro (SelectGameView gv, int id) {
-        this.id_kakuro = id;
+        this.idKakuro = id;
 
         kakuro = new JLabel();
-        new_game = new JButton();
-        see_game = new JButton();
+        newGame = new JButton();
+        seeGame = new JButton();
 
         kakuro.setForeground(Color.black);
-        new_game.setForeground(Color.black);
-        see_game.setForeground(Color.black);
+        newGame.setForeground(Color.black);
+        seeGame.setForeground(Color.black);
 
         kakuro.setText("KAKURO " + id);
-        new_game.setText("NEW GAME");
-        see_game.setText("SEE GAME");
+        newGame.setText("NEW GAME");
+        seeGame.setText("SEE GAME");
 
         this.gameView = gv;
 
-        create_Format();
+        createFormat();
 
-        create_ActionListener();
+        createActionListener();
     }
 
-    private void create_Format () {
+    /**
+     * Initialization method that configures the format of the panel.
+     */
+    private void createFormat () {
         JPanel auxL = new JPanel();
         JPanel auxR = new JPanel();
-        auxR.add(new_game);
-        auxR.add(see_game);
+        auxR.add(newGame);
+        auxR.add(seeGame);
         auxR.setLayout(new GridLayout(2,0));
         auxR.setBorder(BorderFactory.createLineBorder(Color.black));
 
@@ -54,20 +65,24 @@ public class RowSelectKakuro extends JPanel {
         setLayout(new GridLayout(1,2));
     }
 
-    private void create_ActionListener () {
-        new_game.addActionListener(new ActionListener() {
+    /**
+     * This method implements the behaviour of newGame and seeGames buttons.
+     */
+    private void createActionListener () {
+        newGame.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                int idGame = gameView.createNewGame(idKakuro);
                 gameView.setVisible(false);
-                gameView.setGameVisible();
+                gameView.setGameVisible(idGame);
             }
         });
 
-        see_game.addActionListener(new ActionListener() {
+        seeGame.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 gameView.setVisible(false);
-                gameView.setGamesStarted(id_kakuro);
+                gameView.setGamesStarted(idKakuro);
             }
         });
     }

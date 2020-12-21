@@ -38,4 +38,16 @@ public class Stat {
         this.completed = false;
     }
 
+    public Stat(int time, int hints){
+        this.time = time;
+        this.numHints = hints;
+    }
+
+    public int getTime() {
+        return time;
+    }
+
+    public int getNumHints() {
+        return numHints;
+    }
 }

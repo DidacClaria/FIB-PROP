@@ -252,6 +252,30 @@ public class Kakuro {
 
     /**
      * Consultant function
+     * @return It return the number of columns of the Kakuro
+     */
+    public int getNumColumns() {
+        return numColumns;
+    }
+
+    /**
+     * Consultant function
+     * @return It returns the number of rows of the Kakuro
+     */
+    public int getNumRows() {
+        return numRows;
+    }
+
+    /**
+     * Consultant function
+     * @return it returns the solution of the kakuro
+     */
+    public String[][] getSolution() {
+        return solution;
+    }
+
+    /**
+     * Consultant function
      * @return It returns a matrix of the information of all the cells of the kakuro
      */
     public String [][] listKakuro () {
@@ -277,6 +301,64 @@ public class Kakuro {
     }
 
     //CLASS METHODS
+
+    public void setSolution(String[][] sol){
+        this.solution = sol;
+    }
+
+    public void setCells(String[][] c){
+        this.numRows = c.length;
+        this.numColumns = c[0].length;
+        this.cells = new Cell[numRows][numColumns];
+
+        for (int i = 0; i<this.numRows; ++i) {
+            for (int j=0; j<this.numColumns; ++j) {
+                String aux = c[i][j];
+                int l = aux.length();
+
+                switch (l) {
+                    case 1:
+                        if (aux.charAt(0) == '?') cells[i][j] = new WhiteCell(0);
+                        else if (aux.charAt(0) == '*') cells[i][j] = new BlackCell(0,0);
+                        else cells[i][j]= new WhiteCell(aux.charAt(0)-'0');
+                        break;
+                    case 2:
+                        cells[i][j]=new BlackCell(0,0);
+                        if (aux.charAt(0) == 'F') cells[i][j].setRowValue(aux.charAt(1) - '0');
+                        else cells[i][j].setColumnValue(aux.charAt(1) - '0');
+                        break;
+                    case 3:
+                        cells[i][j]=new BlackCell(0,0);
+                        int q = Integer.parseInt(aux.substring(1, 3));
+                        if (aux.charAt(0) == 'F') cells[i][j].setRowValue(q);
+                        else cells[i][j].setColumnValue(q);
+                        break;
+                    case 4:
+                        cells[i][j]=new BlackCell(0,0);
+                        cells[i][j].setColumnValue(aux.charAt(1) - '0');
+                        cells[i][j].setRowValue(aux.charAt(3) - '0');
+                        break;
+                    case 5:
+                        cells[i][j]=new BlackCell(0,0);
+                        if (aux.charAt(2) == 'F') {
+                            cells[i][j].setColumnValue(aux.charAt(1) - '0');
+                            cells[i][j].setRowValue(Integer.parseInt(aux.substring(3, 5)));
+                        } else {
+                            cells[i][j].setColumnValue(Integer.parseInt(aux.substring(1, 3)));
+                            cells[i][j].setRowValue(aux.charAt(4) - '0');
+                        }
+                        break;
+                    case 6:
+                        cells[i][j]=new BlackCell(0,0);
+                        cells[i][j].setColumnValue(Integer.parseInt(aux.substring(1, 3)));
+                        cells[i][j].setRowValue(Integer.parseInt(aux.substring(4, 6)));
+                        break;
+                }
+            }
+        }
+
+    }
+
 
     /**
      * This method generates randomly black cells in the kakuro

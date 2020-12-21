@@ -36,8 +36,16 @@ public class CtrlKakuro {
     public CtrlKakuro(CtrlDomain ctrlDomain, ArrayList<String[][]> kakuros) {
         this.ctrlDomain = ctrlDomain;
         this.kakuros = new ArrayList<>();
-        this.numKakuros = kakuros.size();
-        //passar de ArrayList<String[][]> a ArrayList<Kakuro> (mod 2 son kak i sol) i afegir a kakuros
+        for (int i = 0; i < kakuros.size(); i += 2) {
+            ++numKakuros;
+            String[][] k_string = kakuros.get(i);
+            String[][] sol = kakuros.get(i + 1);
+            Kakuro k = new Kakuro();
+            k.setSolution(sol);
+            k.setCells(k_string);
+            k.setIdKakuro(numKakuros);
+            this.kakuros.add(k);
+        }
     }
 
     //GETTERS AND SETTERS
@@ -92,8 +100,10 @@ public class CtrlKakuro {
      * Consultant function
      * @return It returns a matrix of the information of all the cells of the kakuro
      */
-    public String [][] listKakuro () {
-        return kakuroCreated.listKakuro();
+    public Kakuro listKakuro (int id) {
+        for (Kakuro k: kakuros){
+            if (k.getIdKakuro() == id) return k;
+        }
+        return null;
     }
-
 }

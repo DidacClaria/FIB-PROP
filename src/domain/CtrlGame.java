@@ -39,38 +39,54 @@ public class CtrlGame {
         this.numGames = 0;
     }
 
-    //WIP CLASS METHODS
-
-    /**
-     * The execution of a Game is on.
-     * @param idKakuro is the identification of the current game.
-     */
-    public void startKakuro(String user, int idKakuro){
-        ++this.numGames;
-        activeGame = new Game(user, idKakuro, numGames);
-        this.games.add(activeGame);
+    public void loadGame(String u, int idk, int idg, String[][] game, String stats){
+        ++numGames;
+        Game g = new Game(u, idk, idg, game, stats);
+        this.games.add(g);
     }
 
-    /*
-     * The execution of a Game it stops and the current state is saved.
-     * @param idGame is the identification of the current game.
+
+    /**
+     * This method initializes a game and its stats.
+     * @param user It references the creator of the game
+     * @param idKakuro It references the id of the Kakuro to play
+     * @return It returns the idGame of the game created.
      */
-    public void saveGame(int time, int hints, String[][] state){
-        Game g = getGame(activeGame.get_game_id());
+    public int createNewGame(String user, int idKakuro,  String[][] kakuro){
+        ++this.numGames;
+        activeGame = new Game(user, idKakuro, numGames, kakuro);
+        this.games.add(activeGame);
+        return numGames;
+    }
+
+    /**
+     * The execution of a Game it stops and the current state is saved.
+     * @param user
+     * @param time
+     * @param hints
+     * @param state
+     */
+    public void saveGame(String user, int time, int hints, String[][] state){
+        Game g = getActiveGame();
+        games.remove(g);
+        String stats = time + ":" + hints;
+        g = new Game(user, g.getKakuroId(), g.getGameId(), state, stats);
+        games.add(g);
     }
 
     public ArrayList<Integer> getGames(int id_kakuro){
         ArrayList<Integer> list = new ArrayList<>();
         for(Game g : games){
-            if (g.get_kakuro_id() == id_kakuro) list.add(g.get_game_id());
+            if (g.getKakuroId() == id_kakuro) list.add(g.getGameId());
         }
         return list;
     }
 
     public void setActiveGame(int id_game) {
         boolean found = false;
+        if (id_game == -1) this.activeGame = null;
         for (Game g : games) {
-            if (!found && (g.get_game_id() == id_game)) {
+            if (!found && (g.getGameId() == id_game)) {
                 this.activeGame = g;
                 found = true;
             }
@@ -79,7 +95,7 @@ public class CtrlGame {
 
     public Game getGame(int id_game){
         for (Game g : games) {
-            if ((g.get_game_id() == id_game)) {
+            if ((g.getGameId() == id_game)) {
                 return g;
             }
         }
@@ -88,14 +104,32 @@ public class CtrlGame {
 
     public void deleteGame(int id_game){
         for (Game g : games) {
-            if ((g.get_game_id() == id_game)) {
-                games.remove(g);
-            }
+            if ((g.getGameId() == id_game)) games.remove(g);
+        }
+    }
+
+    public void deleteGames(String user){
+        for (Game g : games){
+            if (g.getPlayer() == user) games.remove(g);
         }
     }
 
     public Game getActiveGame(){
         return activeGame;
+    }
+
+    /**
+     * It returns the global ranking of punctuations from the system.
+     */
+    public void listRanking() {
+        throw new ArithmeticException("Not implemented yet");
+    }
+
+    /**
+     * It returns all the punctuations of the current User in all their Games.
+     */
+    public void listPersonalStats() {
+        throw new ArithmeticException("Not implemented yet");
     }
 
 }

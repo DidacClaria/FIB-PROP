@@ -8,12 +8,17 @@ public class Game {
     /**
      * The scenario of a Game it is a Kakuro field.
      */
-    private Kakuro gameScenario;
+    private String[][] gameScenario;
+
+    /**
+     * Identifier of the kakuro played.
+     */
+    private int kakuroId;
 
     /**
      * This attribute indicates the User player of the Game.
      */
-    private User player;
+    private String player;
 
     /**
      * This instance has all the individual stats of a Game.
@@ -34,22 +39,42 @@ public class Game {
     }
 
 
-
-    public Game (String user, int idKakuro, int idGame) {
-        this.player = new User(user);
-        this.gameScenario = new Kakuro();
-        gameScenario.setIdKakuro(idKakuro);
+    public Game (String user, int idKakuro, int idGame, String[][] estat) {
+        this.player = user;
+        this.gameScenario = estat;
+        this.kakuroId = idKakuro;
         this.idGame = idGame;
-
+        this.stat = new Stat();
     }
 
-    public int get_kakuro_id(){
-        return gameScenario.getIdKakuro();
+    public Game (String user, int idKakuro, int idGame, String[][] estat, String stat){
+        this.player =  user;
+        this.idGame = idGame;
+        this.kakuroId = idKakuro;
+        this.gameScenario = estat;
+        int aux = stat.indexOf(":");
+        int time = Integer.parseInt(stat.substring(0, aux));
+        int hints = Integer.parseInt(stat.substring(aux+1));
+        this.stat = new Stat(time, hints);
     }
 
-    public int get_game_id(){
+    public int getKakuroId(){
+        return kakuroId;
+    }
+
+    public int getGameId(){
         return idGame;
     }
 
+    public String getStat() {
+        return stat.getTime() + ":" + stat.getNumHints();
+    }
 
+    public String getPlayer() {
+        return player;
+    }
+
+    public String[][] getGameScenario() {
+        return gameScenario;
+    }
 }

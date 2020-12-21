@@ -64,7 +64,7 @@ public class Main {
                     user = sca.nextLine();
                     System.out.println("Enter the id of kakuro:");
                     idKakuro = sca.nextInt();
-                    a.playKakuro(user, idKakuro);
+                    a.createNewGame(idKakuro);
                     break;
                 case 5:
                     System.out.println("REMEMBER START A GAME BEFORE!! :)");
@@ -82,7 +82,7 @@ public class Main {
                     hints = sca.nextInt();
                     System.out.println("Enter the new state of the game (THIS IS ONLY FOR TESTING):");
                     readKakuro();
-                    a.saveGame(user, idKakuro, idGame, time, hints, kakuro);
+//                    a.saveGame(user, idKakuro, idGame, time, hints, kakuro);
                     break;
                 case 6:
                     System.out.println("Enter the user name:");
@@ -98,7 +98,7 @@ public class Main {
                     hints = sca.nextInt();
                     System.out.println("Enter the new state of the game (THIS IS ONLY FOR TESTING):");
                     readKakuro();
-                    a.validateGame(user, idKakuro, idGame, time, hints, kakuro);
+                    a.validateGame(idKakuro, idGame, time, hints, kakuro);
                     break;
                 case 7:
                     System.out.println("Enter the user name you want to remove:");
@@ -146,16 +146,16 @@ public class Main {
      * Auxiliar method used to print or represent the kakuro in console
      */
     public static void printKakuro () {
-        String[][] aux = a.listKakuro();
-        System.out.println(f + "," + c);
-
-        for (int i = 0; i < aux.length; ++i) {
-            for (int j = 0; j <aux[0].length; ++j){
-                System.out.print(aux[i][j]);
-                if (j != aux[0].length - 1) System.out.print(",");
-            }
-            System.out.println();
-        }
+//        String[][] aux = a.listKakuro();
+//        System.out.println(f + "," + c);
+//
+//        for (int i = 0; i < aux.length; ++i) {
+//            for (int j = 0; j <aux[0].length; ++j){
+//                System.out.print(aux[i][j]);
+//                if (j != aux[0].length - 1) System.out.print(",");
+//            }
+//            System.out.println();
+//        }
     }
 
 }

@@ -1,6 +1,9 @@
 package persistence;
 
+import domain.Pair;
+
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -65,6 +68,7 @@ public class DataKakuro {
                 ArrayList<String> text = new ArrayList<>();
 
                 Scanner mr = new Scanner(k);
+                if(mr.hasNextLine()) mr.nextLine();
                 while (mr.hasNextLine()) text.add(mr.nextLine());
                 mr.close();
 
@@ -145,6 +149,23 @@ public class DataKakuro {
             return true;
         }
         else return false;
+    }
+
+
+    public String showGameStats(File fStats) {
+        try {
+            if (fStats.exists()) {
+                Scanner mr = new Scanner(fStats);
+                String time = "0";
+                String hints = "0";
+                if(mr.hasNextLine()) time = mr.nextLine();
+                if(mr.hasNextLine()) hints = mr.nextLine();
+                return time + ":" + hints;
+            }
+        } catch (IOException e) {
+
+        }
+        return null;
     }
 
 }

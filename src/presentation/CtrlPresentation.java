@@ -1,7 +1,8 @@
 package presentation;
 
 import domain.CtrlDomain;
-import java.util.Set;
+
+import java.util.ArrayList;
 
 /**
  * Presentation Controller Class. It communicates with the mainFrame where the different views will be loaded, and with the Domain Controller.
@@ -83,11 +84,10 @@ public class CtrlPresentation {
 
     /**
      * This method sends a request to domain that deletes a game of a Kakuro from the Active User.
-     * @param idKakuro Indicates the Kakuro that has a game.
      * @param idGame Indicate the exact game to delete.
      */
-    public void deleteGame(int idKakuro, int idGame){
-        ctrlDomain.deleteGame(idKakuro, idGame);
+    public void deleteGame(int idGame){
+        ctrlDomain.deleteGame(idGame);
     }
 
     /**
@@ -161,7 +161,7 @@ public class CtrlPresentation {
      * @param idKakuro It has the identifier of the kakuro to search games of.
      * @return It returns a list with the information of all the games for a specific Kakuro.
      */
-    public String[] getGames(int idKakuro) {
+    public ArrayList<Integer> getGames(int idKakuro) {
         return ctrlDomain.getGames(idKakuro);
     }
 
@@ -257,15 +257,6 @@ public class CtrlPresentation {
     public void makeStartedGameViewVisible() { mainFrame.makeStartedGameViewVisible(); }
 
     /**
-     * This method asks to domain the gameScenario of a specific idGame
-     * @param idGame This parameter specifies which gameScenario is needed
-     * @return It returns the information of the size and cell values in a formatted string
-     */
-    public String getGameScenario(int idGame) {
-        return ctrlDomain.getGameScenario(idGame);
-    }
-
-    /**
      * This method creates a new Game for a specific idKakuro
      * @param idKakuro Indicates the id of the kakuro to play
      * @return It returns the id of the new created game if exists -1 if not.
@@ -281,7 +272,7 @@ public class CtrlPresentation {
      * @return It returns the stats of the game and the current state of the field in a formatted string. All different attributes are divided by ":".
      */
     public String playStartedGame(int idKakuro, int idGame){
-//        return ctrlDomain.playStartedGame();
+//        return ctrlDomain.getGameScenario();
         return "";
     }
 }

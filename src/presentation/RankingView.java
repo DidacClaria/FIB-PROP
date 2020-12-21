@@ -81,6 +81,10 @@ public class RankingView {
             Image newImage = image.getScaledInstance(30, 30, Image.SCALE_SMOOTH);
             ImageIcon icon = new ImageIcon (newImage);
             gobackButton = new JButton(icon);
+            gobackButton.setText("");
+            gobackButton.setBorderPainted(false);
+            gobackButton.setFocusPainted(false);
+            gobackButton.setContentAreaFilled(false);
         } catch (IOException ex) {
             System.out.println("The file does not exists");
         }

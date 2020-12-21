@@ -82,7 +82,7 @@ public class Main {
                     hints = sca.nextInt();
                     System.out.println("Enter the new state of the game (THIS IS ONLY FOR TESTING):");
                     readKakuro();
-                    a.saveGame(user, idKakuro, idGame, time, hints, kakuro);
+//                    a.saveGame(user, idKakuro, idGame, time, hints, kakuro);
                     break;
                 case 6:
                     System.out.println("Enter the user name:");

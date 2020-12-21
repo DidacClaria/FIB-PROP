@@ -91,17 +91,6 @@ public class UserMenuView {
                 }
             }
         });
-        DELETEUSERButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                int option = JOptionPane.showConfirmDialog(userMenuPanel,"Are you sure?");
-                if (option == JOptionPane.YES_OPTION) {
-                    ctrlPresentation.eliminateUser(username);
-                    userMenuPanel.setVisible(false);
-                    ctrlPresentation.makeLogInViewVisible();
-                }
-            }
-        });
     }
 
     /**

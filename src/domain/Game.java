@@ -39,7 +39,6 @@ public class Game {
     }
 
 
-
     public Game (String user, int idKakuro, int idGame, String[][] estat) {
         this.player = user;
         this.gameScenario = estat;

@@ -8,6 +8,7 @@ import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 
 /**
  * This class represents the StartedGameView and with all the components added into the startedGamePanel it is represented. It also communicates with the Presentation Controller.
@@ -75,7 +76,7 @@ public class StartedGameView {
      * @param idGame Identifier of the game to erase.
      */
     public void deleteGame (int idGame) {
-        ctrlPresentation.deleteGame(idKakuro, idGame);
+        ctrlPresentation.deleteGame(idGame);
     }
 
     /**
@@ -119,14 +120,14 @@ public class StartedGameView {
     private void createListGames () {
 
         String username = ctrlPresentation.getActiveUser();
-        String [] files = ctrlPresentation.getGames(idKakuro);
+        ArrayList<Integer> files = ctrlPresentation.getGames(idKakuro);
         if (files == null) mygames = new JScrollPane();
         else {
             JPanel aux = new JPanel();
 
-            for (int i = 0; i < files.length; ++i) {
+            for (int i = 0; i < files.size(); ++i) {
                 if (i % 2 != 0) {
-                    int id = files[i].charAt(5) - '0';
+                    int id = files.get(i);
                     JPanel aux2 = new RowSelectGame(this, id);
                     aux2.setBorder(BorderFactory.createLineBorder(Color.black));
                     aux.add(aux2);

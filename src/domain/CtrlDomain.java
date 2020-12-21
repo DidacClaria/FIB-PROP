@@ -53,7 +53,7 @@ public class CtrlDomain {
         dataGame(users);
 
         //welcome to the system
-        iniExecution();
+//        iniExecution();
     }
 
 
@@ -379,7 +379,7 @@ public class CtrlDomain {
      * @param idKakuro Indicates the kakuro that is the gameScenario of all the games.
      * @return A list of game identifiers.
      */
-    public String[] getGames(int idKakuro) {
+    public ArrayList<Integer> getGames(int idKakuro) {
         String user=getActiveUser();
         return ctrlGame.getGames(idKakuro);
     }
@@ -390,9 +390,11 @@ public class CtrlDomain {
      * @return It returns either the id of the kakuro or -1 if it failed.
      */
     public int createNewGame(int idKakuro) {
+        // FALTA AGAFAR LA PLANTILLA DE LA LLISTA DE KAKUROS I PASARLA PER PARAMETRE
         String username = getActiveUser();
-        if(ctrlPersistence.newGame(username,idKakuro)) return ctrlGame.createNewGame(username,idKakuro);
-        else return -1;
+//        if(ctrlPersistence.newGame(username,idKakuro)) return ctrlGame.createNewGame(username,idKakuro);
+//        else return -1;
+        return -1;
     }
 
     /**

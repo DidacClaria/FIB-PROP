@@ -31,11 +31,11 @@ public class RowSelectGame extends JPanel {
 
         kakuro.setForeground(Color.black);
 
-        resume.setBackground(Color.blue);
-        resume.setForeground(Color.black);
+        resume.setBackground(Color.decode("#303030"));
+        resume.setForeground(Color.white);
 
-        delete.setBackground(Color.red);
-        delete.setForeground(Color.black);
+        delete.setBackground(Color.decode("#B10000"));
+        delete.setForeground(Color.white);
 
         kakuro.setText("GAME " + id);
         resume.setText("RESUME");
@@ -62,7 +62,7 @@ public class RowSelectGame extends JPanel {
         auxL.setLayout(new GridBagLayout());
         auxL.add(kakuro);
         auxL.setBorder(BorderFactory.createLineBorder(Color.black));
-        auxL.setBackground(Color.CYAN);
+        auxL.setBackground(Color.decode("#C493FF"));
 
         add(auxL);
         add(auxR);

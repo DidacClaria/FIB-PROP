@@ -8,6 +8,7 @@ import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 
 /**
  * This class represents the SelectGameView and with all the components added into the selectGamePanel it is represented. It also communicates with the Presentation Controller.
@@ -78,8 +79,7 @@ public class SelectGameView {
      */
     private void createUIComponents() {
         createBackImage();
-        listGamesContainer = new JScrollPane(new JPanel());
-//        createListKakuros();
+        createListKakuros();
     }
 
     /**
@@ -106,20 +106,24 @@ public class SelectGameView {
      */
     private void createListKakuros () {
 
-        String [] files = ctrlPresentation.getKakurosGlobals();
+//        String [] files = ctrlPresentation.getKakurosGlobals();
+        ArrayList<Integer> files = new ArrayList<Integer>();
+        if (files == null) listGamesContainer = new JScrollPane();
+        else {
+            for (int i = 0; i < 20; ++i) files.add(i);
+            JPanel aux = new JPanel();
 
-        JPanel aux = new JPanel();
-
-        for (int i = 0; i < files.length; ++i) {
-            if (i % 2 == 0) {
-                int id = files[i].charAt(6) - '0';
+            for (int i = 0; i < files.size(); ++i) {
+//            if (i % 2 == 0) {
+                int id = files.get(i);
                 JPanel aux2 = new RowSelectKakuro(this, id);
                 aux2.setBorder(BorderFactory.createLineBorder(Color.black));
                 aux.add(aux2);
+//            }
             }
+            aux.setLayout(new BoxLayout(aux, BoxLayout.Y_AXIS));
+            listGamesContainer = new JScrollPane(aux);
         }
-        aux.setLayout(new BoxLayout(aux, BoxLayout.Y_AXIS));
-        listGamesContainer = new JScrollPane(aux);
     }
 
     /**

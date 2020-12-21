@@ -58,7 +58,7 @@ public class RowSelectKakuro extends JPanel {
         auxL.setLayout(new GridBagLayout());
         auxL.add(kakuro);
         auxL.setBorder(BorderFactory.createLineBorder(Color.black));
-        auxL.setBackground(Color.CYAN);
+        auxL.setBackground(Color.decode("#845EC2"));
 
         add(auxL);
         add(auxR);

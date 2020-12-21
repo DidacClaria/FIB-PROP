@@ -104,6 +104,24 @@ public class PlayGameView {
 //        stringToKakuroGrid(sizeAndField);
 //        String stats = ctrlPresentation.getStats();
 //        stringToStats(stats);
+        /*
+        String[][] field = new String[9][9];
+        String f= "*,*,C19,C12,*,*,*,C7,C10,*,F14,?,?,C4,C11,C17F4,?,?,*,C7F36,?,?,?,?,?,?,?,F12,?,?,F10,?,?,?,C25,C14,F3,?,?,C20,C11F20,?,?,?,?,F17,?,?,?,?,C8,F6,?,?,*,C11,C7F13,?,?,?,C4F10,?,?,F28,?,?,?,?,?,?,?,*,F6,?,?,*,*,F8,?,?,*";
+        String[] l= f.split(",");
+        for (int i=0; i<9;++i){
+            for (int j=0; j<9; ++j){
+                field[i][j] = l[i*9+j];
+            }
+        }
+        gamesScenario = new KakuroGrid(9,9,field,true);
+        kakuroContainer.removeAll();
+        kakuroContainer.repaint();
+        kakuroContainer.revalidate();
+        kakuroContainer.add(gamesScenario);
+        kakuroContainer.repaint();
+        kakuroContainer.revalidate();
+        */
+        errorMessage.setText("");
         timerCount = 0;
         timerValue.setText(String.valueOf(timerCount));
         timer.restart();

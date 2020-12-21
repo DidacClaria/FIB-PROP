@@ -156,6 +156,7 @@ public class CreateKakuroView {
      * @param b Indicates whether the view must show or not.
      */
     public void setVisible(boolean b) {
+        ERRORdisplay.setText("");
         createKakuroPanel.setVisible(b);
     }
 

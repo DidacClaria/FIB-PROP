@@ -119,19 +119,20 @@ public class StartedGameView {
      */
     private void createListGames () {
 
-        String username = ctrlPresentation.getActiveUser();
-        ArrayList<Integer> files = ctrlPresentation.getGames(idKakuro);
+//        ArrayList<Integer> files = ctrlPresentation.getGames(idKakuro);
+        ArrayList<Integer> files = new ArrayList<Integer>();
         if (files == null) mygames = new JScrollPane();
         else {
+            for (int i = 0; i < 20; ++i) files.add(i);
             JPanel aux = new JPanel();
 
             for (int i = 0; i < files.size(); ++i) {
-                if (i % 2 != 0) {
+//                if (i % 2 != 0) {
                     int id = files.get(i);
                     JPanel aux2 = new RowSelectGame(this, id);
                     aux2.setBorder(BorderFactory.createLineBorder(Color.black));
                     aux.add(aux2);
-                }
+//                }
             }
             aux.setLayout(new BoxLayout(aux, BoxLayout.Y_AXIS));
             mygames = new JScrollPane(aux);

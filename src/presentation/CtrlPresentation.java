@@ -18,6 +18,7 @@ public class CtrlPresentation {
      */
     private final MainFrame mainFrame;
 
+
     //CONSTRUCTOR
     /**
      * Default empty Presentation Controller constructor.
@@ -178,7 +179,6 @@ public class CtrlPresentation {
      * @return It will contain in a formatted String the information of "posX:posY:value" if there are no more hints available it will return an error message.
      */
     public String askHint(String[][] field){
-//        return ctrlDomain.askHint(field);
         return null;
     }
 

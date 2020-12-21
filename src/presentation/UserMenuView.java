@@ -68,6 +68,7 @@ public class UserMenuView {
             @Override
             public void actionPerformed(ActionEvent e) {
                 userMenuPanel.setVisible(false);
+                ctrlPresentation.iniRanking(ctrlPresentation.listPersonalStats());
                 ctrlPresentation.makeRankingViewVisible(false);
             }
         });
@@ -75,6 +76,7 @@ public class UserMenuView {
             @Override
             public void actionPerformed(ActionEvent e) {
                 userMenuPanel.setVisible(false);
+                ctrlPresentation.iniRanking(ctrlPresentation.listGlobalRanking());
                 ctrlPresentation.makeRankingViewVisible(true);
             }
         });

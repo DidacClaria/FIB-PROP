@@ -216,18 +216,12 @@ public class CtrlPersistence {
      * @param global
      * @return
      */
-    public String listRankingOrStats(String user, boolean global){
+    public String[][] listRankingOrStats(String user, boolean global){
         File s;
         String r;
-        if (global) {
-            s = new File(route + "/" + "global_ranking.txt");
-            r = "NOBODY HAS PLAYED YET!";
-        }
-        else {
-            s = new File(route + "/" + user + "/" + "personal_stats.txt");
-            r = "YOU HAVE NOT DONE ANY KAKUROS!";
-        }
-        return dataStats.listRankingOrStats(s, r);
+        if (global) s = new File(route + "/" + "global_ranking.txt");
+        else s = new File(route + "/" + user + "/" + "personal_stats.txt");
+        return dataStats.listRankingOrStats(s);
     }
 
     public String[] getKakurosGlobals () {

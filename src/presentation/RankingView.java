@@ -19,15 +19,18 @@ public class RankingView {
     private JScrollPane rankingList;
     private JPanel headerContainer;
     private JLabel title;
+    private JTable list;
 
-    private JTextArea list;
+    private final String [][] dataAUX;
 
     /**
      * Default RankingView constructor.
      * @param ctrlPresentation Reference of the presentation controller.
+     * @param data This variable contains the information to be represented in the view.
      */
-    public RankingView(CtrlPresentation ctrlPresentation) {
+    public RankingView(CtrlPresentation ctrlPresentation, String [][] data) {
         this.ctrlPresentation = ctrlPresentation;
+        this.dataAUX = data;
         initComponents();
     }
 
@@ -65,8 +68,7 @@ public class RankingView {
      */
     private void createUIComponents() {
         createBackImage();
-        list = new JTextArea();
-        rankingList = new JScrollPane(list);
+        createRankingList();
     }
 
     /**
@@ -84,22 +86,15 @@ public class RankingView {
         }
     }
 
-    /**
-     * This method fills the table with the entries of the globalRanking.
-     */
-    public void createRGText () {
-        String text = ctrlPresentation.listGlobalRanking();
-        list.setText(text);
-        list.setEditable(false);
-    }
-
-    /**
-     * This method sets the talbe with the entries of the personalRanking.
-     */
-    public void createPSText () {
-        String text = ctrlPresentation.listPersonalStats();
-        list.setText(text);
-        list.setEditable(false);
+    private void createRankingList () {
+        String [] components = {"KAKURO ID", "USERNAME", "TIME", "ASK_HINTS", "SCORES"};
+        if (dataAUX != null) list = new JTable(dataAUX, components);
+        else {
+            String[][] nullMatrix = new String[1][5];
+            nullMatrix[0] = new String[]{"-", "-", "-", "-", "-"};
+            list = new JTable(nullMatrix, components);
+        }
+        rankingList = new JScrollPane(list);
     }
 
     /**

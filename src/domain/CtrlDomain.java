@@ -392,7 +392,7 @@ public class CtrlDomain {
 
     public void askHint(String[][] game, String idGame) {
         int cont = 0;
-        vector<Pair<int,int>> map = new Pair();
+        ArrayList<Pair<int,int>> map = new Pair();
         for (int i = 0; i < game.length; ++i) {
             for (int j = 0; j < game[i].length; ++j) {
                 if (game[i][j] == '?'){

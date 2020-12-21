@@ -47,7 +47,7 @@ public class Main {
                     System.out.println("\nEnter the size of kakuro you want to generate:");
                     f = sca.nextInt();
                     c = sca.nextInt();
-                    a.generateKakuro(f,c);
+                    a.generateKakuro(f,c, 0, 0);
                     printKakuro();
                     break;
                 case 3:
@@ -114,7 +114,7 @@ public class Main {
                     idKakuro = sca.nextInt();
                     System.out.println("Enter the id of game you want to remove:");
                     idGame = sca.nextInt();
-                    a.deleteGame(idKakuro, idGame);
+                    a.deleteGame(idGame);
                     break;
             }
         }
@@ -123,7 +123,7 @@ public class Main {
     /**
      * Auxiliar method used to read the kakuro format
      */
-    public static void readKakuro () {
+    public static String[][] readKakuro () {
         Scanner sca = new Scanner(System.in);
         String s = sca.nextLine(); // Llegir quantes files i quantes columnes;
 
@@ -139,22 +139,23 @@ public class Main {
                 kakuro[i][j] = text[j];
             }
         }
+        return kakuro;
     }
 
     /**
      * Auxiliar method used to print or represent the kakuro in console
      */
     public static void printKakuro () {
-        String[][] aux = a.listKakuro();
-        System.out.println(f + "," + c);
-
-        for (int i = 0; i < aux.length; ++i) {
-            for (int j = 0; j <aux[0].length; ++j){
-                System.out.print(aux[i][j]);
-                if (j != aux[0].length - 1) System.out.print(",");
-            }
-            System.out.println();
-        }
+//        String[][] aux = a.listKakuro();
+//        System.out.println(f + "," + c);
+//
+//        for (int i = 0; i < aux.length; ++i) {
+//            for (int j = 0; j <aux[0].length; ++j){
+//                System.out.print(aux[i][j]);
+//                if (j != aux[0].length - 1) System.out.print(",");
+//            }
+//            System.out.println();
+//        }
     }
 
 }

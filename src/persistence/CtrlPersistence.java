@@ -1,7 +1,11 @@
 package persistence;
 
 import domain.CtrlDomain;
+import domain.Pair;
+
 import java.io.*;
+import java.util.ArrayList;
+import java.util.Objects;
 
 /**
  * Persistence Controller Class.
@@ -50,6 +54,34 @@ public class CtrlPersistence {
                 }
             }
         }
+    }
+
+
+    public ArrayList<String[][]> loadKakuros(){
+        ArrayList<String[][]> kakuros = new ArrayList<>();
+        File f = new File(routek);
+        for( String k : Objects.requireNonNull(f.list())){
+           File kakuro = new File(routek + "/" + k);
+           kakuros.add(dataKakuro.showKakuro(kakuro));
+        }
+
+        return kakuros;
+    }
+
+    public ArrayList<String> loadUsers(){
+        ArrayList<String> users = new ArrayList<>();
+        File f = new File(route);
+        for (String u : Objects.requireNonNull(f.list())){
+            if (!u.equals("kakuros") && !u.equals("global_ranking.txt")){
+                users.add(u);
+            }
+        }
+        return users;
+    }
+
+    public String[] startedKakuros(String user){
+        File f = new File(route + "/" + user);
+        return f.list();
     }
 
     /**
@@ -234,4 +266,15 @@ public class CtrlPersistence {
         if (!f.exists()) return null;
         return f.list();
     }
+
+    public String[][] loadGame(String user, int idKakuro, int idGame){
+        File f = new File(route + "/" + user + "/" + "kakuro_" + idKakuro + "/" + "game_" + idGame + ".txt");
+        return dataKakuro.showKakuro(f);
+    }
+
+    public String loadStats(String user, int idKakuro, int idGame) {
+        File fStats = new File(route + "/" + user + "/" + "kakuro_" + idKakuro + "/" + "game_" + idGame + "_stats.txt");
+        return dataKakuro.showGameStats(fStats);
+    }
+
 }

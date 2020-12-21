@@ -33,10 +33,19 @@ public class CtrlKakuro {
      * Default Kakuro Controller constructor.
      * @param ctrlDomain Is the reference of the Domain Controller.
      */
-    public CtrlKakuro(CtrlDomain ctrlDomain) {
+    public CtrlKakuro(CtrlDomain ctrlDomain, ArrayList<String[][]> kakuros) {
         this.ctrlDomain = ctrlDomain;
-        this.kakuros = new ArrayList<Kakuro>();
-        this.numKakuros = 0;
+        this.kakuros = new ArrayList<>();
+        for (int i = 0; i < kakuros.size(); i += 2) {
+            ++numKakuros;
+            String[][] k_string = kakuros.get(i);
+            String[][] sol = kakuros.get(i + 1);
+            Kakuro k = new Kakuro();
+            k.setSolution(sol);
+            k.setCells(k_string);
+            k.setIdKakuro(numKakuros);
+            this.kakuros.add(k);
+        }
     }
 
     //GETTERS AND SETTERS
@@ -51,11 +60,12 @@ public class CtrlKakuro {
      * @param numRows It indicates the number of rows that the Kakuro will have.
      * @param numColumns It indicates the number of columns that the Kakuro will have.
      */
-    public void generateKakuro(int numRows, int numColumns){
+    public void generateKakuro(int numRows, int numColumns, int diff, int fc){
         if (numColumns>= 3 && numRows>=3 && numColumns<=10 && numRows<=10){
-            kakuroCreated = new Kakuro(numRows, numColumns);
+            kakuroCreated = new Kakuro(numRows, numColumns, diff, fc);
             kakuros.add(kakuroCreated);
             ++numKakuros;
+            kakuroCreated.setIdKakuro(numKakuros);
         }
         else if (numColumns<=10 && numRows<=10) {
             throw new ArithmeticException("The size of the Kakuro is too small");
@@ -72,6 +82,7 @@ public class CtrlKakuro {
      * @param field It has the information of every individual Cell in the Kakuro.
      * @return It will return true if the kakuro to be proposed has solution and otherwise false.
      */
+
     public int proposeKakuro(int numRows, int numColumns, String[][] field){
         kakuroCreated = new Kakuro();
         Boolean b = kakuroCreated.proposeKakuro(numRows,numColumns,field);
@@ -89,8 +100,11 @@ public class CtrlKakuro {
      * Consultant function
      * @return It returns a matrix of the information of all the cells of the kakuro
      */
-    public String [][] listKakuro () {
-        return kakuroCreated.listKakuro();
+    public String [][] listKakuro (int id) {
+        for (Kakuro k: kakuros){
+            if (k.getIdKakuro() == id) return k.listKakuro();
+        }
+        return null;
     }
 
 }

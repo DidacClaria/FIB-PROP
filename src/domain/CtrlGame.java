@@ -35,10 +35,16 @@ public class CtrlGame {
      */
     public CtrlGame(CtrlDomain ctrlDomain) {
         this.ctrlDomain = ctrlDomain;
-        this.games = new ArrayList<Game>();
+        this.games = new ArrayList<>();
+        this.numGames = 0;
     }
 
-    //WIP CLASS METHODS
+    public void loadGame(String u, int idk, int idg, String[][] game, String stats){
+        ++numGames;
+        Game g = new Game(u, idk, idg, game, stats);
+        this.games.add(g);
+    }
+
 
     /**
      * This method initializes a game and its stats.
@@ -46,9 +52,9 @@ public class CtrlGame {
      * @param idKakuro It references the id of the Kakuro to play
      * @return It returns the idGame of the game created.
      */
-    public int createNewGame(String user, int idKakuro){
+    public int createNewGame(String user, int idKakuro,  String[][] kakuro){
         ++this.numGames;
-        activeGame = new Game(user, idKakuro, numGames);
+        activeGame = new Game(user, idKakuro, numGames, kakuro);
         this.games.add(activeGame);
         return numGames;
     }
@@ -57,8 +63,47 @@ public class CtrlGame {
      * The execution of a Game it stops and the current state is saved.
      * @param idGame is the identification of the current game.
      */
-    public void saveGame(String user, int idKakuro){
+    public void saveGame(int time, int hints, String[][] state){
+        Game g = getGame(activeGame.getGameId());
+    }
 
+    public ArrayList<Integer> getGames(int id_kakuro){
+        ArrayList<Integer> list = new ArrayList<>();
+        for(Game g : games){
+            if (g.getKakuroId() == id_kakuro) list.add(g.getGameId());
+        }
+        return list;
+    }
+
+    public void setActiveGame(int id_game) {
+        boolean found = false;
+        for (Game g : games) {
+            if (!found && (g.getGameId() == id_game)) {
+                this.activeGame = g;
+                found = true;
+            }
+        }
+    }
+
+    public Game getGame(int id_game){
+        for (Game g : games) {
+            if ((g.getGameId() == id_game)) {
+                return g;
+            }
+        }
+        return null;
+    }
+
+    public void deleteGame(int id_game){
+        for (Game g : games) {
+            if ((g.getGameId() == id_game)) {
+                games.remove(g);
+            }
+        }
+    }
+
+    public Game getActiveGame(){
+        return activeGame;
     }
 
     /**
@@ -74,4 +119,5 @@ public class CtrlGame {
     public void listPersonalStats() {
         throw new ArithmeticException("Not implemented yet");
     }
+
 }

@@ -59,12 +59,19 @@ public class CtrlGame {
         return numGames;
     }
 
-    /*
+    /**
      * The execution of a Game it stops and the current state is saved.
-     * @param idGame is the identification of the current game.
+     * @param user
+     * @param time
+     * @param hints
+     * @param state
      */
-    public void saveGame(int time, int hints, String[][] state){
-        Game g = getGame(activeGame.getGameId());
+    public void saveGame(String user, int time, int hints, String[][] state){
+        Game g = getActiveGame();
+        games.remove(g);
+        String stats = time + ":" + hints;
+        g = new Game(user, g.getKakuroId(), g.getGameId(), state, stats);
+        games.add(g);
     }
 
     public ArrayList<Integer> getGames(int id_kakuro){
@@ -77,6 +84,7 @@ public class CtrlGame {
 
     public void setActiveGame(int id_game) {
         boolean found = false;
+        if (id_game == -1) this.activeGame = null;
         for (Game g : games) {
             if (!found && (g.getGameId() == id_game)) {
                 this.activeGame = g;
@@ -96,9 +104,13 @@ public class CtrlGame {
 
     public void deleteGame(int id_game){
         for (Game g : games) {
-            if ((g.getGameId() == id_game)) {
-                games.remove(g);
-            }
+            if ((g.getGameId() == id_game)) games.remove(g);
+        }
+    }
+
+    public void deleteGames(String user){
+        for (Game g : games){
+            if (g.getPlayer() == user) games.remove(g);
         }
     }
 

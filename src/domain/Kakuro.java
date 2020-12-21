@@ -252,6 +252,30 @@ public class Kakuro {
 
     /**
      * Consultant function
+     * @return It return the number of columns of the Kakuro
+     */
+    public int getNumColumns() {
+        return numColumns;
+    }
+
+    /**
+     * Consultant function
+     * @return It returns the number of rows of the Kakuro
+     */
+    public int getNumRows() {
+        return numRows;
+    }
+
+    /**
+     * Consultant function
+     * @return it returns the solution of the kakuro
+     */
+    public String[][] getSolution() {
+        return solution;
+    }
+
+    /**
+     * Consultant function
      * @return It returns a matrix of the information of all the cells of the kakuro
      */
     public String [][] listKakuro () {

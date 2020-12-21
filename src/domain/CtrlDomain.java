@@ -320,7 +320,7 @@ public class CtrlDomain {
     public int proposeKakuro(int numRows, int numColumns, String[][] field){
         int idKakuro = ctrlKakuro.proposeKakuro(numRows,numColumns,field);
         if (idKakuro!=-1) {
-            ctrlPersistence.newKakuro(ctrlKakuro.listIdKakuro(), ctrlKakuro.listKakuro(idKakuro));
+            ctrlPersistence.newKakuro(ctrlKakuro.listIdKakuro(), ctrlKakuro.listKakuro(idKakuro).listKakuro());
             return idKakuro;
         }
         return -1;
@@ -335,7 +335,7 @@ public class CtrlDomain {
      */
     public int generateKakuro(int numRows, int numColumns, int diff, int fc){
         ctrlKakuro.generateKakuro(numRows, numColumns, diff, fc);
-        ctrlPersistence.newKakuro(ctrlKakuro.listIdKakuro(), ctrlKakuro.listKakuro(ctrlKakuro.listIdKakuro()));
+        ctrlPersistence.newKakuro(ctrlKakuro.listIdKakuro(), ctrlKakuro.listKakuro(ctrlKakuro.listIdKakuro()).listKakuro());
         return ctrlKakuro.listIdKakuro();
     }
 
@@ -365,13 +365,11 @@ public class CtrlDomain {
     }
 
     /**
-     * This method is a getter of all the kakuros in the system.
-     * @return A list of the kakuros existing.
+     * This method is a getter of all the id of the kakuros in the system, from 1 to the last kakuro created id.
+     * @return The id of the last kakuro created.
      */
-    public String[] getKakurosGlobals() {
-//        return ctrlPersistence.getKakurosGlobals();
-//        AFEGIR CONSULTA A CTRLKAKURO ENLLOC DE PERSISTENCIA
-        return null;
+    public int getKakurosGlobals() {
+        return ctrlKakuro.listIdKakuro();
     }
 
     /**
@@ -380,21 +378,33 @@ public class CtrlDomain {
      * @return A list of game identifiers.
      */
     public ArrayList<Integer> getGames(int idKakuro) {
-        String user=getActiveUser();
         return ctrlGame.getGames(idKakuro);
     }
 
     /**
      * Method used to create a new Game in the persistence layer and in the domain layer.
      * @param idKakuro Indicates the id of the Kakuro gameScenario.
-     * @return It returns either the id of the kakuro or -1 if it failed.
+     * @return It returns either the Kakuro the game will be based on or null
      */
-    public int createNewGame(int idKakuro) {
-        // FALTA AGAFAR LA PLANTILLA DE LA LLISTA DE KAKUROS I PASARLA PER PARAMETRE
+    public String createNewGame(int idKakuro) {
         String username = getActiveUser();
-//        if(ctrlPersistence.newGame(username,idKakuro)) return ctrlGame.createNewGame(username,idKakuro);
-//        else return -1;
-        return -1;
+        if(ctrlPersistence.newGame(username,idKakuro)) {
+            String[][] kakuro = ctrlKakuro.listKakuro(idKakuro).listKakuro();
+            int numR = ctrlKakuro.listKakuro(idKakuro).getNumRows();
+            int numC = ctrlKakuro.listKakuro(idKakuro).getNumColumns();
+            int idGame = ctrlGame.createNewGame(username,idKakuro, kakuro);
+            String newGame = idGame + ":" + numR + "," + numC + ":";
+            for(int i=0; i<numR; i++){
+                for(int j=0; j<numC; j++){
+                    newGame += kakuro[i][j];
+                    if (i<numR-1 || j<numC-1){
+                        newGame += ",";
+                    }
+                }
+            }
+            return newGame;
+        }
+        return null;
     }
 
     /**
@@ -404,7 +414,21 @@ public class CtrlDomain {
      */
     public String getGameScenario(int idGame) {
         ctrlGame.setActiveGame(idGame);
-        return "";
+        String[][] kakuro =  ctrlGame.getActiveGame().getGameScenario();
+        int kakuroId = ctrlGame.getActiveGame().getKakuroId();
+        int numR = ctrlKakuro.listKakuro(kakuroId).getNumRows();
+        int numC = ctrlKakuro.listKakuro(kakuroId).getNumColumns();
+        String stats = ctrlGame.getActiveGame().getStat();
+        String Game = stats + ":" + numR + "," + numC + ":";
+        for(int i=0; i<numR; i++){
+            for(int j=0; j<numC; j++){
+                Game += kakuro[i][j];
+                if (i<numR-1 || j<numC-1){
+                    Game += ",";
+                }
+            }
+        }
+        return Game;
     }
 
     /**
@@ -424,36 +448,45 @@ public class CtrlDomain {
      * @param newState
      */
     public void saveGame(int time, int hints, String [][] newState){
+        ctrlGame.saveGame(ctrlUser.getActiveUser(), time, hints, newState);
         ctrlPersistence.saveGame(ctrlUser.getActiveUser(), ctrlGame.getActiveGame().getKakuroId(), ctrlGame.getActiveGame().getGameId(), time, hints, newState);
+
     }
 
     /**
      * This method checks if a specific game solution is correct. If it is the score is calculated.
-     * @param idKakuro Identifies the kakuro that is the gameScenario to check.
-     * @param idGame Identifies the game that is being checked.
      * @param time Indicates the value of the time passed playing the game.
      * @param hints Indicates the number of hints asked while playing.
      * @param kakuro It contains the solution provided by the user.
      */
-    public void validateGame (int idKakuro, int idGame, int time, int hints, String [][] kakuro) {
-        // CANVIAR VALIDATE CORRECTNESS PERQUE ES FACI DESDE DOMINI AMB SOLUTION DE KAKURO
+    public boolean validateGame (int time, int hints, String [][] kakuro) {
         String user = getActiveUser();
-        if (ctrlPersistence.validateCorrectnessGame(user, ctrlGame.getActiveGame().getKakuroId(), ctrlGame.getActiveGame().getGameId(), kakuro)) {
+        int kakuroId = ctrlGame.getActiveGame().getKakuroId();
+        String[][] solution = ctrlKakuro.listKakuro(kakuroId).getSolution();
+        if (solution == kakuro){
             int scores = (72000 - time);
             if (scores - (7200 * hints) > 0) scores -= (7200 * hints);
             else scores = 0;
             ctrlPersistence.updateStats(user, ctrlGame.getActiveGame().getKakuroId(), time, hints, scores, true);
             ctrlPersistence.updateStats(user, ctrlGame.getActiveGame().getKakuroId(), time, hints, scores, false);
+
+            // actualitzar els rankings a domini
+            //
+
+            deleteGame(ctrlGame.getActiveGame().getGameId());
+            return true;
         }
+        return false;
     }
 
     /**
      * This method deletes the user from the system.
      */
     public void deleteUser () {
-        // FALTA ESBORRAR DEL CONJUNT DE USERS QUE TE CTRL USER I ESBORRAR TOTS ELS GAMES QUE TINGUI A CTRL GAME
         String user = getActiveUser();
         ctrlPersistence.deleteUser(user);
+        ctrlUser.deleteUser(user);
+        ctrlGame.deleteGames(user);
     }
 
     /**
@@ -464,6 +497,7 @@ public class CtrlDomain {
         String user = getActiveUser();
         ctrlPersistence.deleteGame(user, ctrlGame.getGame(idGame).getKakuroId(), idGame);
         ctrlGame.deleteGame(idGame);
+        ctrlGame.setActiveGame(-1);
     }
 
     /**

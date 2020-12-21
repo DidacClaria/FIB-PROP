@@ -67,6 +67,14 @@ public class Game {
     }
 
     public String getStat() {
-        return String.valueOf(stat.getTime()) + ":" + String.valueOf(stat.getNumHints());
+        return stat.getTime() + ":" + stat.getNumHints();
+    }
+
+    public String getPlayer() {
+        return player;
+    }
+
+    public String[][] getGameScenario() {
+        return gameScenario;
     }
 }

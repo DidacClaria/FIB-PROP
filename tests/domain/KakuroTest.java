@@ -15,7 +15,7 @@ public class KakuroTest {
      * Test of getIdKakuro method of class Kakuro
      */
     @Test
-    public void Kakuro_test(){
+    public void KakuroTest(){
         System.out.println("Kakuro");
         Kakuro k = new Kakuro(5,5,"EASY",0);
         int id = k.getIdKakuro();
@@ -26,7 +26,7 @@ public class KakuroTest {
      * Test of getIdKakuro method of class Kakuro
      */
     @Test
-    public void getIdKakuro_test(){
+    public void getIdKakuroTest(){
         System.out.println("getIdKakuro");
         Kakuro k = new Kakuro(2,2,"EASY",0);
         k.setIdKakuro(23);
@@ -38,7 +38,7 @@ public class KakuroTest {
      * Test of setIdKakuro method of class Kakuro
      */
     @Test
-    public void setIdKakuro_test(){
+    public void setIdKakuroTest(){
         System.out.println("setIdKakuro");
         Kakuro k = new Kakuro(2,2,"EASY",0);
         k.setIdKakuro(5);
@@ -51,7 +51,7 @@ public class KakuroTest {
      * Test of listKakuro method of class Kakuro
      */
     @Test
-    public void listKakuro_test(){
+    public void listKakuroTest(){
         System.out.println("listKakuro");
         Kakuro k = new Kakuro();
         String field [][] = { {"*","C16","C6","*","*"},
@@ -72,7 +72,7 @@ public class KakuroTest {
      * Test of proposeKakuro method of class Kakuro
      */
     @Test
-    public void proposeKakuro_test(){
+    public void proposeKakuroTest(){
         System.out.println("proposeKakuro");
         int numR = 5, numC = 5;
         Kakuro k = new Kakuro(5,5,"EASY",0);

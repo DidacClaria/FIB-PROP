@@ -51,8 +51,7 @@ public class DataKakuro {
 
             return true;
 
-        } catch (IOException e){
-            System.out.println("\nError occurred during file writing");
+        } catch (IOException ignored){
             return false;
         }
     }
@@ -81,11 +80,9 @@ public class DataKakuro {
                 return kakuro;
             }
             else {
-                System.out.println("Kakuro not existed");
                 return null;
             }
-        } catch (IOException e){
-            System.out.println("\nError occurred during file reading");
+        } catch (IOException ignored){
         }
         return null;
     }
@@ -102,9 +99,7 @@ public class DataKakuro {
                 wr.close();
                 return idGame;
             }
-            else System.out.println("\nThe kakuro of the game or the user is not existed!!!");
-        } catch (IOException e){
-            System.out.println("\nError occurred during file writing");
+        } catch (IOException ignored){
         }
         return -1;
     }
@@ -131,8 +126,7 @@ public class DataKakuro {
             gameSavedStats.close();
 
             return true;
-        } catch (IOException e){
-            System.out.println("\nError occurred during file writing");
+        } catch (IOException ignored){
         }
         return false;
     }
@@ -165,7 +159,7 @@ public class DataKakuro {
                 if(mr.hasNextLine()) hints = mr.nextLine();
                 return time + ":" + hints;
             }
-        } catch (IOException e) {
+        } catch (IOException ignored) {
 
         }
         return null;

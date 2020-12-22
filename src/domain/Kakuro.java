@@ -709,7 +709,7 @@ public class Kakuro {
         aux = solveKakuro();
         endTime=System.currentTimeMillis();
         timeElapsed = endTime - startTime;
-        System.out.println("Solver Execution --> time in milliseconds: " + timeElapsed);
+//        System.out.println("Solver Execution --> time in milliseconds: " + timeElapsed);
         return aux;
     }
 

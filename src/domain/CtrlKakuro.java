@@ -90,7 +90,7 @@ public class CtrlKakuro {
             ++numKakuros;
             kakuroCreated.setIdKakuro(numKakuros);
             kakuros.add(kakuroCreated);
-            System.out.println("\nProposed Successfully");
+//            System.out.println("\nProposed Successfully");
             return numKakuros;
         }
         return -1;

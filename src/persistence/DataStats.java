@@ -39,7 +39,7 @@ public class DataStats {
             wr.close();
 
         }catch (IOException e){
-            System.out.println("\nError occurred during file writing");
+//            System.out.println("\nError occurred during file writing");
         }
     }
 
@@ -64,7 +64,7 @@ public class DataStats {
                 return result;
             }
         } catch (IOException e){
-            System.out.println("\nError occurred during file reading");
+//            System.out.println("\nError occurred during file reading");
         }
         return null;
     }

@@ -118,7 +118,7 @@ public class StartedGameView {
             GOBACKButton.setFocusPainted(false);
             GOBACKButton.setContentAreaFilled(false);
         } catch (IOException ex) {
-            System.out.println("The file does not exists");
+//            System.out.println("The file does not exists");
         }
     }
 

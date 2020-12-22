@@ -26,10 +26,9 @@ public class DataUser {
 
                     f.createNewFile();
                     return true;
-                } else System.out.println("User directory not created due an error");
-            } else System.out.println("\nUser existed!");
-        } catch (IOException e){
-            System.out.println("\nError occurred during file writing");
+                }
+            }
+        } catch (IOException ignored){
         }
         return false;
     }
@@ -53,13 +52,13 @@ public class DataUser {
                         }
                         currentFile.delete();
                     }
-                    else System.out.println("\nKakuro not existed");
+
                 }
                 else currentFile.delete();
             }
             f.delete();
         }
-        else System.out.println("\nUser not existed");
+
     }
 
     /**

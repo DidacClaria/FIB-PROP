@@ -140,7 +140,7 @@ public class PlayGameView {
     /**
      * This method sets the panel of the view as visible or not depending on the bool of the parameter. It also sets the timer to the correct value, and the current status of the field.
      * @param b Indicates whether the view must show or not.
-     * @param idGame Indicates which Game to load.
+     * @param game Indicates which Game to load.
      */
     public void setVisible(Boolean b, String game){
 
@@ -155,7 +155,6 @@ public class PlayGameView {
 
     /**
      * This operation interprets the formatted String as the different stats values.
-     * @param stats It has the current time, score, and numHints divided by ":".
      */
     private void stringToStats(String timerC, String numH) {
         timerCount = Integer.parseInt(timerC);
@@ -164,7 +163,6 @@ public class PlayGameView {
 
     /**
      * This operation interprets the formatted String as a KakuroGrid. It also repaints the custom component.
-     * @param sizeAndField It contains the information of a KakuroGrid divided by ":".
      */
     private void stringToKakuroGrid(String siz, String f) {
         String[] size = siz.split(",");

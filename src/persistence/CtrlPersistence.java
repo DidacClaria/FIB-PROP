@@ -220,10 +220,6 @@ public class CtrlPersistence {
     /**
      * This method overwrites the stats of a game.
      * @param user Indicates the player.
-     * @param idKakuro Indicates the gameScenario of the game to save.
-     * @param time Indicates the new value of time to save.
-     * @param hints Indicates the new value of number of hints to save.
-     * @param scores Indicates the new score to be saved with.
      * @param global Indicates if this stats are updated in the globalRanking or the personalStats list.
      */
     public void updateStats (String user, String [][] r, boolean global) {

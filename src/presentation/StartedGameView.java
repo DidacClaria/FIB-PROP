@@ -76,7 +76,7 @@ public class StartedGameView {
      * @param idGame Identifier of the game to erase.
      */
     public void deleteGame (int idGame) {
-        ctrlPresentation.deleteGame(idGame);
+        ctrlPresentation.deleteGame(idKakuro, idGame);
     }
 
     /**

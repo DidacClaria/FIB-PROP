@@ -390,19 +390,20 @@ public class CtrlDomain {
     }
 
 
-    public void askHint(String[][] game, String idGame) {
+    public String askHint(String[][] game, String idGame) {
         int cont = 0;
-        ArrayList<Pair<int,int>> map = new ArrayList();
+        ArrayList<Pair> g = new ArrayList<Pair>();
         for (int i = 0; i < game.length; ++i) {
             for (int j = 0; j < game[i].length; ++j) {
-                if (game[i][j] == '?'){
+                if (game[i][j] == "?"){
+                    g.add(new Pair(i, j));
                     ++cont;
-                    map.add(new Pair(i, j));
                 }
             }
         }
         int random = (int)(Math.random()*cont+1);
         String[][] solution = ctrlKakuro.listKakuro(idGame).getSolution();
+        String r = solution[g.get(random-1).first()]+":"+solution[g.get(random-1).second()]+":"+g.get(random-1).first()+":"+g.get(random-1).second();
         return r;
     }
 

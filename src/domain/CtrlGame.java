@@ -236,6 +236,11 @@ public class CtrlGame {
         }
     }
 
+    /**
+     * This method updates the stats of the active Game.
+     * @param time Updated time.
+     * @param numHints Updated number of hints.
+     */
     public void updateGameInfo(int time, int numHints) {
         for (Game g : games) {
             if (activeGame.getPlayer().equals(g.getPlayer()) && activeGame.getKakuroId() == g.getKakuroId() && activeGame.getGameId() == g.getGameId()) {

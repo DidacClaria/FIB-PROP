@@ -92,10 +92,6 @@ public class Game {
         return stat.getTime() + ":" + stat.getNumHints();
     }
 
-    public String getPlayer() {
-        return player;
-    }
-
     public String[][] getGameScenario() {
         return gameScenario;
     }

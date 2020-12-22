@@ -309,21 +309,6 @@ public class CtrlDomain {
         }
     }
 
-
-    /**
-     * Consultant function of the ranking of punctuations that all the different users made in their games.
-     */
-    public String[][] listGlobalRanking(){
-        return ctrlGame.listRankingOrStats("", true);
-    }
-
-    /**
-     * Consultant function of the personal ranking of punctuations for one user from all his games.
-     */
-    public String[][] listPersonalStats(){
-        return ctrlGame.listRankingOrStats(getActiveUser(), false);
-    }
-
     /**
      * If the proposed Kakuro by the User at the Presentation Layer is valid, it is saved at the Persistence Layer and it's added to the collection of Kakuros that a User has.
      * @param numRows indicates the number of rows that the field has
@@ -401,7 +386,7 @@ public class CtrlDomain {
      * @param idKakuro Indicates the id of the Kakuro gameScenario.
      * @return It returns either the id of the kakuro or -1 if it failed.
      */
-    public int createNewGame(int idKakuro) {
+    public String createNewGame(int idKakuro) {
         String username = getActiveUser();
         int idGame = ctrlPersistence.newGame(username,idKakuro);
 
@@ -471,7 +456,7 @@ public class CtrlDomain {
      */
     public void saveGame(int time, int hints, String [][] newState){
         ctrlPersistence.saveGame(getActiveUser(), ctrlGame.getActiveGame().getKakuroId(), ctrlGame.getActiveGame().getGameId(), time, hints, newState);
-        ctrlGame.saveGame(time, hints, newState);
+        ctrlGame.saveGame(getActiveUser(),time, hints, newState);
     }
 
     /**
@@ -513,27 +498,23 @@ public class CtrlDomain {
     public void deleteGame (int idKakuro, int idGame) {
         String user = getActiveUser();
         ctrlPersistence.deleteGame(user, ctrlGame.getGame(idGame).getKakuroId(), idGame);
-        ctrlGame.deleteGame(idGame);
-        ctrlGame.setActiveGame(-1);
+        ctrlGame.deleteGame(user,ctrlGame.getGame(idGame).getKakuroId(),idGame);
+        ctrlGame.setActiveGame(user,idKakuro,-1);
     }
 
     /**
      * Consultant function of the ranking of punctuations that all the different users made in their games.
      */
     public String[][] listGlobalRanking(){
-        //HAURIA DE CONSULTAR EL RANKING A CTRL GAME
-//        return ctrlPersistence.listRankingOrStats(null, true);
-        return null;
+        return ctrlGame.listRankingOrStats("", true);
     }
 
     /**
      * Consultant function of the personal ranking of punctuations for one user from all his games.
      */
     public String[][] listPersonalStats(){
-        String user = getActiveUser();
-        //HAURIA DE CONSULTAR EL RANKING A CTRL GAME
-//        return ctrlPersistence.listRankingOrStats(user, false);
-        return null;
+        return ctrlGame.listRankingOrStats(getActiveUser(), false);
     }
+
 
 }

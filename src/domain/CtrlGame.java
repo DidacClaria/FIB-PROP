@@ -168,10 +168,10 @@ public class CtrlGame {
         return null;
     }
 
-    public void deleteGame(String user, int id_kakuro, int id_game) {
+    public void deleteGame(String user, int idKakuro, int idGame) {
         for (int i = 0; i < games.size(); ++i) {
             Game g = games.get(i);
-            if (g.getPlayer().equals(user) && g.getKakuroId() == id_kakuro && g.getGameId() == id_game) {
+            if (g.getPlayer().equals(user) && g.getKakuroId() == idKakuro && g.getGameId() == idGame) {
                 games.remove(g);
             }
         }

@@ -59,16 +59,27 @@ public class CtrlDomain {
         }
     }
 
-
-
+    /**
+     * Consultant function
+     * @return It returns a ArrayList of the information of all the kakuros
+     */
     private ArrayList<String[][]> dataKakuros(){
         return ctrlPersistence.loadKakuros();
     }
 
+    /**
+     * Consultant function
+     * @return It returns a ArrayList of the information of all the users
+     */
     private ArrayList<String> dataUsers(){
         return ctrlPersistence.loadUsers();
     }
 
+
+
+    /**
+     * Function that saves de data Games of the active user in the system.
+     */
     private void dataGame(ArrayList<String> users){
         for (String u: users){
             String[] kakuros = ctrlPersistence.startedKakuros(u);
@@ -235,12 +246,12 @@ public class CtrlDomain {
         String[][] solution = ctrlKakuro.listKakuro(idKakuro).getSolution();
         return solution[g.get(random).first()][g.get(random).second()]+":"+g.get(random).first()+":"+g.get(random).second();
     }
-    
+
     /**
      * This method updates the current state of the gameScenario being played.
-     * @param time 
-     * @param hints
-     * @param newState
+     * @param time Indicates the time the user has been solving the kakuro
+     * @param hints Indicates the number of hints that the user has used
+     * @param newState Indicates the state of the Game
      */
     public void saveGame(int time, int hints, String [][] newState){
         ctrlPersistence.saveGame(getActiveUser(), ctrlGame.getActiveGame().getKakuroId(), ctrlGame.getActiveGame().getGameId(), time, hints, newState);
@@ -250,7 +261,6 @@ public class CtrlDomain {
     /**
      * This method checks if a specific game solution is correct. If it is the score is calculated.
      * @param idKakuro Identifies the kakuro that is the gameScenario to check.
-     * @param idKakuro Identifies the game that is being checked.
      * @param time Indicates the value of the time passed playing the game.
      * @param hints Indicates the number of hints asked while playing.
      * @param game It contains the solution provided by the user.
@@ -284,6 +294,7 @@ public class CtrlDomain {
         ctrlUser.deleteUser(user);
         ctrlGame.deleteGames(user);
     }
+
 
     /**
      * This method deletes a specified game from the active user.

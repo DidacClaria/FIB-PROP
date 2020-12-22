@@ -351,21 +351,77 @@ public class CtrlDomain {
         if (ctrlPersistence.createUser(name)) ctrlUser.createUser(name);
         else ctrlUser.setActiveUser(name);
     }
-
+    /**
+     * This method is a getter of the active user in the system.
+     * @return username of the active user.
+     */
     public String getActiveUser() {
         return ctrlUser.getActiveUser();
     }
-
+    /**
+     * This method is a getter of all the id of the kakuros in the system, from 1 to the last kakuro created id.
+     * @return The id of the last kakuro created.
+     */
     public String[] getKakurosGlobals() {
         return ctrlPersistence.getKakurosGlobals();
     }
 
-    public String[] getGames(String user, int id_game) {
-        return ctrlPersistence.getGames(user, id_game);
+    /**
+     * This method is a getter of all the existing games of a specific Kakuro from the active user.
+     * @param idKakuro Indicates the kakuro that is the gameScenario of all the games.
+     * @return A list of game identifiers.
+     */
+    public ArrayList<Integer> getGames(int idKakuro) {
+        return ctrlGame.getGames(idKakuro);
     }
-
-
-
+    /**
+     * Method used to create a new Game in the persistence layer and in the domain layer.
+     * @param idKakuro Indicates the id of the Kakuro gameScenario.
+     * @return It returns either the Kakuro the game will be based on or null
+     */
+    public String createNewGame(int idKakuro) {
+        String username = getActiveUser();
+        if(ctrlPersistence.newGame(username,idKakuro)) {
+            String[][] kakuro = ctrlKakuro.listKakuro(idKakuro).listKakuro();
+            int numR = ctrlKakuro.listKakuro(idKakuro).getNumRows();
+            int numC = ctrlKakuro.listKakuro(idKakuro).getNumColumns();
+            int idGame = ctrlGame.createNewGame(username,idKakuro, kakuro);
+            String newGame = idGame + ":" + numR + "," + numC + ":";
+            for(int i=0; i<numR; i++){
+                for(int j=0; j<numC; j++){
+                    newGame += kakuro[i][j];
+                    if (i<numR-1 || j<numC-1){
+                        newGame += ",";
+                    }
+                }
+            }
+            return newGame;
+        }
+        return null;
+    }
+    /**
+     * This method is used to continue playing a started game.
+     * @param idGame Identifies the game to resume.
+     * @return It returns the field in a formatted String.
+     */
+    public String getGameScenario(int idGame) {
+        ctrlGame.setActiveGame(idGame);
+        String[][] kakuro =  ctrlGame.getActiveGame().getGameScenario();
+        int kakuroId = ctrlGame.getActiveGame().getKakuroId();
+        int numR = ctrlKakuro.listKakuro(kakuroId).getNumRows();
+        int numC = ctrlKakuro.listKakuro(kakuroId).getNumColumns();
+        String stats = ctrlGame.getActiveGame().getStat();
+        String Game = stats + ":" + numR + "," + numC + ":";
+        for(int i=0; i<numR; i++){
+            for(int j=0; j<numC; j++){
+                Game += kakuro[i][j];
+                if (i<numR-1 || j<numC-1){
+                    Game += ",";
+                }
+            }
+        }
+        return Game;
+    }
     /**
      *
      * @param user It indicates the user who is playing the game
@@ -390,6 +446,12 @@ public class CtrlDomain {
     }
 
 
+    /**
+     * This method will recieve the current status of the game being played and it will return a hint to solve it.
+     * @param field Contains all the information of the game Scenario being played.
+     * @return It returns the value of the Hint and the position X and Y as well as the number of current hints
+     * in a formatted string like: "value:posX:posY:numHints". If it fails it will return the error message.
+     */
     public String askHint(String[][] game, String idGame) {
         int cont = 0;
         ArrayList<Pair> g = new ArrayList<Pair>();
@@ -408,12 +470,20 @@ public class CtrlDomain {
     }
 
     /**
-     * Function used to save the current state of a game.
+     * This method updates the current state of the gameScenario being played.
+     * @param time
+     * @param hints
+     * @param newState
      */
     public void saveGame(int time, int hints, String [][] newState){
         ctrlPersistence.saveGame(ctrlUser.getActiveUser(), ctrlGame.getActiveGame().get_kakuro_id(), ctrlGame.getActiveGame().get_game_id(), time, hints, newState);
     }
-
+    /**
+     * This method checks if a specific game solution is correct. If it is the score is calculated.
+     * @param time Indicates the value of the time passed playing the game.
+     * @param hints Indicates the number of hints asked while playing.
+     * @param kakuro It contains the solution provided by the user.
+     */
     public void validateGame (int time, int hints, String [][] kakuro) {
         if (ctrlPersistence.validateCorrectnessGame(ctrlUser.getActiveUser(), ctrlGame.getActiveGame().get_kakuro_id(), ctrlGame.getActiveGame().get_game_id(), kakuro)) {
             int scores = (72000 - time);
@@ -423,12 +493,24 @@ public class CtrlDomain {
             ctrlPersistence.updateStats(ctrlUser.getActiveUser(), ctrlGame.getActiveGame().get_kakuro_id(), time, hints, scores, false);
         }
     }
-
+    /**
+     * This method deletes the user from the system.
+     */
     public void deleteUser () {
         ctrlPersistence.deleteUser(ctrlUser.getActiveUser());
     }
 
 
+    /**
+     * This method deletes a specified game from the active user.
+     * @param idGame Identifies the game to delete.
+     */
+    public void deleteGame (int idGame) {
+        String user = getActiveUser();
+        ctrlPersistence.deleteGame(user, ctrlGame.getGame(idGame).getKakuroId(), idGame);
+        ctrlGame.deleteGame(idGame);
+        ctrlGame.setActiveGame(-1);
+    }
 
     /**
      * Consultant function of the ranking of punctuations that all the different users made in their games.

@@ -46,9 +46,9 @@ public class CtrlDomain {
         //initialization
         this.ctrlPresentation = ctrlPresentation;
         ctrlPersistence = new CtrlPersistence(this);
-        ctrlKakuro = new CtrlKakuro(this, dataKakuros());
+        ctrlKakuro = new CtrlKakuro(dataKakuros());
         ArrayList<String> users = dataUsers();
-        ctrlUser = new CtrlUser(this, users);
+        ctrlUser = new CtrlUser(users);
         ctrlGame = new CtrlGame(this);
         dataGame(users);
 

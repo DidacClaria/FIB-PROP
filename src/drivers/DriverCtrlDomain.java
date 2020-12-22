@@ -166,7 +166,7 @@ public class DriverCtrlDomain {
                                         gameExecution(k);
                                         break;
                                     case 2:
-                                        ctrlDomain.deleteGame(k,idGame);
+                                        ctrlDomain.deleteGame(k,idGame,true);
                                         break;
                                 }
                             }

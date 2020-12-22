@@ -103,7 +103,7 @@ public class CtrlPresentation {
      * @param idGame Indicate the exact game to delete.
      */
     public void deleteGame(int idKakuro, int idGame){
-        ctrlDomain.deleteGame(idKakuro, idGame);
+        ctrlDomain.deleteGame(idKakuro, idGame, true);
     }
 
     /**

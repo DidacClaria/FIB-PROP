@@ -13,31 +13,12 @@ public class DataStats {
     public DataStats() {
     }
 
-    public void updateStats (String user, int idKakuro, int time, int hints, int scores, File f, FileWriter wr) {
+    public void updateStats (String [][] r,  FileWriter f) {
         try {
-            Scanner sca = new Scanner(f);
-            StringBuilder result = new StringBuilder();
-            boolean found = false;
-            if (!sca.hasNextLine())
-                result = new StringBuilder("Kakuro: " + idKakuro + ",Username: " + user + ",Time_used: " + time + ",Hints_asked: " + hints + ",Scores: " + scores);
-            else {
-                while (sca.hasNextLine()) {
-                    String aux = sca.nextLine();
-                    if (!found && aux.contains("Kakuro: " + idKakuro)) {
-                        found = true;
-                        int oldScore = Integer.parseInt(aux.substring(aux.indexOf("Scores: ") + 8));
-                        if (scores > oldScore) {
-                            result.append("Kakuro: ").append(idKakuro).append(",Username: ").append(user).append(",Time_used: ").append(time).append(",Hints_asked: ").append(hints).append(",Scores: ").append(scores).append("\n");
-                        }
-                    } else result.append(aux).append("\n");
-                }
-                if (!found) {
-                    result.append("Kakuro: ").append(idKakuro).append(",Username: ").append(user).append(",Time_used: ").append(time).append(",Hints_asked: ").append(hints).append(",Scores: ").append(scores).append("\n");
-                }
+            for (int i = 0; i < r.length; ++i) {
+                f.write("Kakuro: " + r[i][0] + ",Username: " + r[i][1] + ",Time_used: " + r[i][2] + ",Hints_asked: " + r[i][3] + ",Scores: " + r[i][4]);
             }
-            wr.write(result.toString());
-            wr.close();
-
+            f.close();
         }catch (IOException e){
             System.out.println("\nError occurred during file writing");
         }

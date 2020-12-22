@@ -54,8 +54,10 @@ public class CtrlDomain {
 
         String[][] r = ctrlPersistence.listRankingOrStats("", true);
         if (r != null) {
-            for (int i = 0; i < r.length; ++i)
+            for (int i = 0; i < r.length; ++i) {
                 ctrlGame.loadRanking(Integer.parseInt(r[i][0]), r[i][1], Integer.parseInt(r[i][2]), Integer.parseInt(r[i][3]), Integer.parseInt(r[i][4]));
+                ctrlUser.setGSuser(r[i][1], 1);
+            }
         }
     }
 
@@ -92,6 +94,7 @@ public class CtrlDomain {
                                 stats = stats.replace("Execution Time: ", "");
                                 stats = stats.replace("Hints asked: ", "");
                                 ctrlGame.loadGame(u, idk, idg, game, stats);
+                                ctrlUser.setGSuser(u, 1);
                             }
                         }
                     }
@@ -404,12 +407,13 @@ public class CtrlDomain {
      */
     public String createNewGame(int idKakuro) {
         String username = getActiveUser();
-        int idGame = ctrlPersistence.newGame(username,idKakuro);
+        int idGame = ctrlUser.getGSuser() + 1;
 
-        if(idGame != -1) {
+        if(ctrlPersistence.newGame(username, idKakuro, idGame)) {
 
             String[][] kakuro = ctrlKakuro.listKakuro(idKakuro).listKakuro();
 
+            ctrlUser.setGSuser(username, 1);
             ctrlGame.loadGame(username, idKakuro, idGame, kakuro, "0:0");
             ctrlGame.setActiveGame(username, idKakuro, idGame);
 
@@ -451,7 +455,7 @@ public class CtrlDomain {
         ArrayList<Pair> g = new ArrayList<>();
         for (int i = 0; i < game.length; ++i) {
             for (int j = 0; j < game[0].length; ++j) {
-                if (game[i][j].equals("0")) g.add(new Pair(i, j));
+                if (game[i][j].equals("0") || game[i][j].equals("?")) g.add(new Pair(i, j));
             }
         }
         if (g.size() == 0) return null;
@@ -491,12 +495,15 @@ public class CtrlDomain {
         }
 
         String user = getActiveUser();
-        int idGame = ctrlGame.getActiveGame().getGameId();
-        int scores = ctrlGame.getActiveGame().getScores();
+        ctrlGame.updateGameInfo(time, hints);
 
-        ctrlPersistence.updateStats(user, idKakuro, time, hints, scores, true);
-        ctrlPersistence.updateStats(user, idKakuro, time, hints, scores, false);
-        return false;
+        ctrlPersistence.updateStats(user, ctrlGame.listRankingOrStats(user, true), true);
+        ctrlPersistence.updateStats(user, ctrlGame.listRankingOrStats(user, false), false);
+
+        int idGame = ctrlGame.getActiveGame().getGameId();
+        deleteGame(idKakuro, idGame, false);
+
+        return true;
     }
 
     /**
@@ -514,10 +521,10 @@ public class CtrlDomain {
      * This method deletes a specified game from the active user.
      * @param idGame Identifies the game to delete.
      */
-    public void deleteGame (int idKakuro, int idGame) {
+    public void deleteGame (int idKakuro, int idGame, boolean actDomini) {
         String user = getActiveUser();
         ctrlPersistence.deleteGame(user, idKakuro, idGame);
-        ctrlGame.deleteGame(user, idKakuro, idGame);
+        if (actDomini) ctrlGame.deleteGame(user, idKakuro, idGame);
     }
 
 }

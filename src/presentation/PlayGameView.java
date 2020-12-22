@@ -60,31 +60,43 @@ public class PlayGameView {
         VALIDATESOLUTIONButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                ctrlPresentation.validateSolution(kakuro_id, timerCount, numHints, gamesScenario.getFieldStatus());
+                if (ctrlPresentation.validateSolution(kakuro_id, timerCount, numHints, gamesScenario.getFieldStatus())) {
+                    timer.stop();
+                    JOptionPane.showMessageDialog(null,"Congratulations!");
+                    playGamePanel.setVisible(false);
+                    ctrlPresentation.makeUserMenuViewVisible();
+                }
+                else {
+                    timer.stop();
+                    JOptionPane.showMessageDialog(null,"Wrong Answer!");
+                    timer.start();
+                }
             }
         });
         ASKHINTButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (numHints+1 <= 3) {
-                    ++numHints;
-                    String newValue = ctrlPresentation.askHint(kakuro_id, gamesScenario.getFieldStatus());
-                    String[] parts = newValue.split(":");
-                    gamesScenario.setValueField(Integer.parseInt(parts[1]), Integer.parseInt(parts[2]), Integer.parseInt(parts[0]));
+                String newValue = ctrlPresentation.askHint(kakuro_id, gamesScenario.getFieldStatus());
+                if (newValue != null) {
+                    if (numHints+1 <= 3) {
+                        ++numHints;
+                        String[] parts = newValue.split(":");
+                        gamesScenario.setValueField(Integer.parseInt(parts[1]), Integer.parseInt(parts[2]), Integer.parseInt(parts[0]));
 
-                    String [][] GamesHint = gamesScenario.getFieldStatus();
+                        String [][] GamesHint = gamesScenario.getFieldStatus();
 
-                    kakuroContainer.removeAll();
-                    kakuroContainer.repaint();
-                    kakuroContainer.revalidate();
+                        kakuroContainer.removeAll();
+                        kakuroContainer.repaint();
+                        kakuroContainer.revalidate();
 
-                    gamesScenario = new KakuroGrid(GamesHint.length,GamesHint[0].length,GamesHint,true);
-                    kakuroContainer.add(gamesScenario);
-                    kakuroContainer.repaint();
-                    kakuroContainer.revalidate();
-                }
-                else {
-                    errorMessage.setText("You have already used it 3 times!");
+                        gamesScenario = new KakuroGrid(GamesHint.length,GamesHint[0].length,GamesHint,true);
+                        kakuroContainer.add(gamesScenario);
+                        kakuroContainer.repaint();
+                        kakuroContainer.revalidate();
+                    }
+                    else {
+                        errorMessage.setText("You have already used it 3 times!");
+                    }
                 }
             }
         });

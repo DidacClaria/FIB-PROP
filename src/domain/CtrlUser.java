@@ -74,4 +74,17 @@ public class CtrlUser {
         }
     }
 
+    public int getGSuser () {
+        return activeUser.getGSuser();
+    }
+
+    public void setGSuser (String username, int x) {
+        for (User u : users) {
+            if (u.getNom().equals(username)) {
+                u.setGSuser(x);
+                break;
+            }
+        }
+    }
+
 }

@@ -120,23 +120,18 @@ public class CtrlPersistence {
      * @param idKakuro
      * @return
      */
-    public int newGame (String user, int idKakuro){
+    public boolean newGame (String user, int idKakuro, int idGame){
         try{
             File pathOri = new File(routek + "/" + "model_" + idKakuro + ".txt");
             File pathUser = new File(route + "/" + user);
             File kakuro = new File(route + "/" + user + "/" + "kakuro_" + idKakuro);
 
-            int idGame = 0;
-            if (!kakuro.exists()) kakuro.mkdir();
-            String[] quantity = kakuro.list();
-            idGame = quantity.length / 2 + 1;
-
             File pathDes = new File(route + "/" + user + "/" + "kakuro_" + idKakuro + "/" + "game_" + idGame + ".txt");
             FileWriter wr = new FileWriter(route + "/" + user + "/" + "kakuro_" + idKakuro + "/" +"game_" + idGame + "_stats.txt");
-            return dataKakuro.newGame(pathOri, pathUser, pathDes, wr, idGame);
+            return dataKakuro.newGame(pathOri, pathUser, pathDes, wr);
         } catch (IOException e){
         }
-        return -1;
+        return false;
     }
 
     /**
@@ -223,19 +218,12 @@ public class CtrlPersistence {
      * @param scores
      * @param global
      */
-    public void updateStats (String user, int idKakuro, int time, int hints, int scores, boolean global) {
+    public void updateStats (String user, String [][] r, boolean global) {
         try{
-            File f;
-            FileWriter wr;
-            if (global){
-                f = new File(route + "/" + "global_ranking.txt");
-                wr = new FileWriter(route + "/" + "global_ranking.txt");
-            }
-            else{
-                f = new File(route + "/" + user + "/" + "personal_stats.txt");
-                wr = new FileWriter(route + "/" + user + "/" + "personal_stats.txt");
-            }
-            dataStats.updateStats(user, idKakuro, time, hints, scores, f, wr);
+            FileWriter f;
+            if (global) f = new FileWriter(route + "/" + "global_ranking.txt");
+            else f = new FileWriter(route + "/" + user + "/" + "personal_stats.txt");
+            dataStats.updateStats(r, f);
         } catch (IOException e){
 
         }

@@ -12,7 +12,7 @@ import static org.junit.Assert.*;
 public class KakuroTest {
 
     /**
-     * Test of getIdKakuro method of class Kakuro
+     * Test of the constructor method of class Kakuro
      */
     @Test
     public void KakuroTest(){

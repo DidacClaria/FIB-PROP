@@ -10,11 +10,6 @@ public class CtrlUser {
     //ATTRIBUTES
 
     /**
-     * Domain controller. Used to communicate back the result of the class methods.
-     */
-    private final CtrlDomain ctrlDomain;
-
-    /**
      * Collection of all the users in the system.
      */
     private final ArrayList<User> users;
@@ -27,10 +22,8 @@ public class CtrlUser {
     //CONSTRUCTORS
     /**
      * Default empty User Controller constructor.
-     * @param ctrlDomain Is the reference of the Domain Controller.
      */
-    public CtrlUser(CtrlDomain ctrlDomain, ArrayList<String> users) {
-        this.ctrlDomain = ctrlDomain;
+    public CtrlUser(ArrayList<String> users) {
         this.users = new ArrayList<>();
         for (String u: users) this.users.add(new User(u));
     }
@@ -46,6 +39,10 @@ public class CtrlUser {
         users.add (activeUser);
     }
 
+    /**
+     * This method returns the username of the active user.
+     * @return Username of the active user.
+     */
     public String getActiveUser () {
         return activeUser.getNom();
     }
@@ -65,6 +62,10 @@ public class CtrlUser {
         if (!found) createUser(n);
     }
 
+    /**
+     * This method deletes a user from domain layer, erasing it from the collection of users.
+     * @param user Username to delete.
+     */
     public void deleteUser(String user){
         for (User u : users){
             if (u.getNom().equals(user)) {

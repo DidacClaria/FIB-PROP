@@ -1,7 +1,5 @@
 package domain;
 
-import java.util.ArrayList;
-
 /**
  * Generic class used to created Users.
  */
@@ -17,15 +15,17 @@ public class User {
     //CONSTRUCTORS
 
     /**
-     * Default empty User constructor.
+     * Default User creator
+      * @param n
      */
-    public User() {
-    }
-
     public User(String n) {
         this.name = n;
     }
 
+    /**
+     * Getter of name
+     * @return name
+     */
     public String getNom () {
         return this.name;
     }

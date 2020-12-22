@@ -8,7 +8,6 @@ import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
 
 /**
  * This class represents the SelectGameView and with all the components added into the selectGamePanel it is represented. It also communicates with the Presentation Controller.
@@ -21,13 +20,17 @@ public class SelectGameView {
     private JLabel titleLabel;
     private JScrollPane listGamesContainer;
 
+    private int [] ids;
+
     /**
      * Default SelectGameView constructor.
      * @param ctrlPresentation Reference of the presentation controller.
      */
-    public SelectGameView(CtrlPresentation ctrlPresentation) {
+    public SelectGameView(CtrlPresentation ctrlPresentation, int [] gamesId) {
         this.ctrlPresentation = ctrlPresentation;
+        this.ids = gamesId;
         initComponents();
+
     }
 
     /**
@@ -53,9 +56,9 @@ public class SelectGameView {
 
     /**
      * This method indicates to the presentation controller to set the specified game view visible.
-     * @param idGame Indicates whether the view must show or not.
+     * @param game Indicates whether the view must show or not.
      */
-    public void setGameVisible(int idGame) {ctrlPresentation.makePlayGameViewVisible(idGame);}
+    public void setGameVisible(String game) {ctrlPresentation.makePlayGameViewVisible(game);}
 
     /**
      * This method initializes the StartedGamesView.
@@ -106,24 +109,15 @@ public class SelectGameView {
      */
     private void createListKakuros () {
 
-//        String [] files = ctrlPresentation.getKakurosGlobals();
-        ArrayList<Integer> files = new ArrayList<Integer>();
-        if (files == null) listGamesContainer = new JScrollPane();
-        else {
-            for (int i = 0; i < 20; ++i) files.add(i);
-            JPanel aux = new JPanel();
+        JPanel aux = new JPanel();
 
-            for (int i = 0; i < files.size(); ++i) {
-//            if (i % 2 == 0) {
-                int id = files.get(i);
-                JPanel aux2 = new RowSelectKakuro(this, id);
+        for (int i = 0; i < ids.length; ++i) {
+                JPanel aux2 = new RowSelectKakuro(this, i+1);
                 aux2.setBorder(BorderFactory.createLineBorder(Color.black));
                 aux.add(aux2);
-//            }
-            }
-            aux.setLayout(new BoxLayout(aux, BoxLayout.Y_AXIS));
-            listGamesContainer = new JScrollPane(aux);
         }
+        aux.setLayout(new BoxLayout(aux, BoxLayout.Y_AXIS));
+        listGamesContainer = new JScrollPane(aux);
     }
 
     /**
@@ -131,7 +125,7 @@ public class SelectGameView {
      * @param idKakuro Identifies the kakuro to be played.
      * @return It returns the identifier of the new Game created.
      */
-    public int createNewGame(int idKakuro) {
+    public String createNewGame(int idKakuro) {
         return ctrlPresentation.createNewGame(idKakuro);
     }
 }

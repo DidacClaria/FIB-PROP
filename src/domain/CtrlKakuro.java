@@ -60,7 +60,7 @@ public class CtrlKakuro {
      * @param numRows It indicates the number of rows that the Kakuro will have.
      * @param numColumns It indicates the number of columns that the Kakuro will have.
      */
-    public void generateKakuro(int numRows, int numColumns, int diff, int fc){
+    public void generateKakuro(int numRows, int numColumns, String diff, int fc){
         if (numColumns>= 3 && numRows>=3 && numColumns<=10 && numRows<=10){
             kakuroCreated = new Kakuro(numRows, numColumns, diff, fc);
             kakuros.add(kakuroCreated);
@@ -100,11 +100,19 @@ public class CtrlKakuro {
      * Consultant function
      * @return It returns a matrix of the information of all the cells of the kakuro
      */
-    public String [][] listKakuro (int id) {
+    public Kakuro listKakuro (int id) {
         for (Kakuro k: kakuros){
-            if (k.getIdKakuro() == id) return k.listKakuro();
+            if (k.getIdKakuro() == id) return k;
         }
         return null;
+    }
+
+    public int [] listIdKakuros () {
+        if (numKakuros == 0) return null;
+
+        int [] result = new int[numKakuros];
+        for (int i = 1; i <= numKakuros; ++i) result[i-1] = i;
+        return result;
     }
 
 }

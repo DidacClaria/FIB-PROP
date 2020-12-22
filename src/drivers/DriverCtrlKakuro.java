@@ -139,7 +139,7 @@ public class DriverCtrlKakuro {
         long startTime,endTime,timeElapsed;
         for (int i=3; i<10; ++i){
             startTime=System.currentTimeMillis();
-            ctrlKakuro.generateKakuro(i,i,0,0);
+            ctrlKakuro.generateKakuro(i,i,"",0);
             endTime=System.currentTimeMillis();
             timeElapsed = endTime - startTime;
             System.out.println("Execution "+i+" time in milliseconds: " + timeElapsed);
@@ -153,7 +153,7 @@ public class DriverCtrlKakuro {
         System.out.println("First we'll go with the small one (Press any button...)");
         scanner.nextLine();
         try {
-            ctrlKakuro.generateKakuro(1,1,0,0);
+            ctrlKakuro.generateKakuro(1,1,"",0);
         } catch (ArithmeticException e){
             System.out.println("The method launched the following exception:");
             e.printStackTrace();
@@ -162,7 +162,7 @@ public class DriverCtrlKakuro {
         System.out.println("In second place we'll go with the small one (Press any button...)");
         scanner.nextLine();
         try {
-            ctrlKakuro.generateKakuro(11,11,0,0);
+            ctrlKakuro.generateKakuro(11,11,"",0);
         } catch (ArithmeticException e){
             System.out.println("The method launched the following exception:");
             e.printStackTrace();

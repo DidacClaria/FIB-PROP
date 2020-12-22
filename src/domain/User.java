@@ -26,7 +26,7 @@ public class User {
         this.name = n;
     }
 
-    public String get_Nom () {
+    public String getNom () {
         return this.name;
     }
 

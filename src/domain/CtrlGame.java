@@ -1,6 +1,8 @@
 package domain;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 
 /**
  * Game controller class. Used to collect and manage the use cases of a Game.
@@ -45,6 +47,11 @@ public class CtrlGame {
         this.games.add(g);
     }
 
+    public void loadRanking(int idk, String u, int time, int hints, int scores) {
+        ++numGames;
+        Game g = new Game(idk, u, time, hints, scores);
+        this.games.add(g);
+    }
 
     /**
      * This method initializes a game and its stats.
@@ -63,26 +70,31 @@ public class CtrlGame {
      * The execution of a Game it stops and the current state is saved.
      * @param idGame is the identification of the current game.
      */
-    public void saveGame(int time, int hints, String[][] state){
-        Game g = getGame(activeGame.getGameId());
+    public void saveGame(int time, int hints, String[][] new_state){
+        activeGame.updateStats(time, hints, new_state);
     }
 
-    public ArrayList<Integer> getGames(int id_kakuro){
+    public ArrayList<Integer> getGames(String username, int id_kakuro){
         ArrayList<Integer> list = new ArrayList<>();
         for(Game g : games){
-            if (g.getKakuroId() == id_kakuro) list.add(g.getGameId());
+            if (g.getKakuroId() == id_kakuro && g.getPlayer().equals(username)) {
+                list.add(g.getGameId());
+            }
         }
         return list;
     }
 
-    public void setActiveGame(int id_game) {
-        boolean found = false;
+    public void setActiveGame(String username, int idKakuro, int idGame) {
         for (Game g : games) {
-            if (!found && (g.getGameId() == id_game)) {
+            if (g.getPlayer().equals(username) && g.getKakuroId() == idKakuro && g.getGameId() == idGame) {
                 this.activeGame = g;
-                found = true;
+                break;
             }
         }
+    }
+
+    public Game getActiveGame(){
+        return activeGame;
     }
 
     public Game getGame(int id_game){
@@ -94,30 +106,76 @@ public class CtrlGame {
         return null;
     }
 
-    public void deleteGame(int id_game){
+    /**
+     * It returns the global ranking or the personal stats depending on the parameter global
+     * @param username
+     * @param global
+     * @return
+     */
+    public String [][] listRankingOrStats(String username, boolean global) {
+        ArrayList<Ranking> rankingList = new ArrayList<>();
         for (Game g : games) {
-            if ((g.getGameId() == id_game)) {
+            if (global) rankingList.add(new Ranking(g.getKakuroId(), g.getPlayer(), g.getTime(), g.getNumHints(), g.getScores()));
+            else if (g.getPlayer().equals(username))
+                rankingList.add(new Ranking(g.getKakuroId(), username, g.getTime(), g.getNumHints(), g.getScores()));
+        }
+
+        Collections.sort(rankingList);
+
+        int a = -1;
+        int size = 0;
+        for (Ranking r : rankingList) {
+            if (r.getKakuroId() != a) {
+                ++size;
+                a = r.getKakuroId();
+            }
+        }
+
+        if (rankingList.size() != 0) {
+            String[][] result = new String[size][5];
+            int i = 0;
+            int aux = -1;
+            for (Ranking r : rankingList) {
+                if (r.getKakuroId() != aux) {
+                    result[i][0] = String.valueOf(r.getKakuroId());
+                    result[i][1] = r.getUser();
+                    result[i][2] = String.valueOf(r.getTime());
+                    result[i][3] = String.valueOf(r.getHints());
+                    result[i][4] = String.valueOf(r.getScores());
+                    ++i;
+                    aux = r.getKakuroId();
+                }
+            }
+            return result;
+        }
+        else return null;
+    }
+
+    public String getGameScenario (String username, int idKakuro, int idGame) {
+        for (Game g : games) {
+            if (g.getPlayer().equals(username) && g.getKakuroId() == idKakuro && g.getGameId() == idGame)
+                return g.getAllInfo();
+        }
+        return null;
+    }
+
+    public void deleteGame(String user, int id_kakuro, int id_game) {
+        for (int i = 0; i < games.size(); ++i) {
+            Game g = games.get(i);
+            if (g.getPlayer().equals(user) && g.getKakuroId() == id_kakuro && g.getGameId() == id_game) {
                 games.remove(g);
             }
         }
     }
 
-    public Game getActiveGame(){
-        return activeGame;
+    public void deleteGames(String user) {
+        for (Game g : games) {
+            if (g.getPlayer().equals(user)) {
+                games.remove(g);
+                break;
+            }
+        }
     }
 
-    /**
-     * It returns the global ranking of punctuations from the system.
-     */
-    public void listRanking() {
-        throw new ArithmeticException("Not implemented yet");
-    }
-
-    /**
-     * It returns all the punctuations of the current User in all their Games.
-     */
-    public void listPersonalStats() {
-        throw new ArithmeticException("Not implemented yet");
-    }
 
 }

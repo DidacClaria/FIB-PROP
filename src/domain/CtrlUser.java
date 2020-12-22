@@ -47,7 +47,7 @@ public class CtrlUser {
     }
 
     public String getActiveUser () {
-        return activeUser.get_Nom();
+        return activeUser.getNom();
     }
 
     /**
@@ -57,7 +57,7 @@ public class CtrlUser {
     public void setActiveUser (String n) {
         boolean found = false;
         for (User i : users) {
-            if (!found && i.get_Nom().equals(n)) {
+            if (!found && i.getNom().equals(n)) {
                 activeUser = i;
                 found = true;
             }
@@ -65,5 +65,13 @@ public class CtrlUser {
         if (!found) createUser(n);
     }
 
+    public void deleteUser(String user){
+        for (User u : users){
+            if (u.getNom().equals(user)) {
+                users.remove(u);
+                break;
+            }
+        }
+    }
 
 }

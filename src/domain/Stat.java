@@ -41,6 +41,21 @@ public class Stat {
     public Stat(int time, int hints){
         this.time = time;
         this.numHints = hints;
+
+        int scores = (72000 - time);
+        if (scores - (7200 * numHints) > 0) scores -= (7200 * hints);
+        else scores = 0;
+
+        this.score = scores;
+
+        this.completed = false;
+    }
+
+    public Stat (int time, int hints, int scores) {
+        this.time = time;
+        this.numHints = hints;
+        this.score = scores;
+        this.completed = true;
     }
 
     public int getTime() {
@@ -49,5 +64,20 @@ public class Stat {
 
     public int getNumHints() {
         return numHints;
+    }
+
+    public int getScores() {
+        return score;
+    }
+
+    public void updateStats (int time, int hints) {
+        this.time = time;
+        this.numHints = hints;
+
+        int scores = (72000 - time);
+        if (scores - (7200 * numHints) > 0) scores -= (7200 * hints);
+        else scores = 0;
+
+        this.score = scores;
     }
 }

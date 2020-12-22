@@ -52,9 +52,17 @@ public class CtrlDomain {
         ctrlGame = new CtrlGame(this);
         dataGame(users);
 
+        String[][] r = ctrlPersistence.listRankingOrStats("", true);
+        if (r != null) {
+            for (int i = 0; i < r.length; ++i)
+                ctrlGame.loadRanking(Integer.parseInt(r[i][0]), r[i][1], Integer.parseInt(r[i][2]), Integer.parseInt(r[i][3]), Integer.parseInt(r[i][4]));
+        }
+    }
+
+
         //welcome to the system
 //        iniExecution();
-    }
+
 
 
     private ArrayList<String[][]> dataKakuros(){
@@ -110,7 +118,7 @@ public class CtrlDomain {
                     System.out.println("\nEnter your user name:");
                     sca = new Scanner(System.in);
                     logInUser(sca.nextLine());
-                    contExecution();
+                    //contExecution();
                     break;
 
                 case 2:
@@ -120,7 +128,7 @@ public class CtrlDomain {
 
         }
     }
-
+/*
     //segon panell
     private void contExecution(){
         boolean exit = false;
@@ -159,7 +167,7 @@ public class CtrlDomain {
             }
         }
     }
-
+*//*
     // tercer panell
     private void createKakuro(){
         boolean exit = false;
@@ -205,7 +213,8 @@ public class CtrlDomain {
             }
         }
     }
-
+    */
+/*
     // cuart panell
     private void playGames(){
         boolean exit = false;
@@ -264,7 +273,7 @@ public class CtrlDomain {
             }
         }
     }
-
+*/
     // cinquè panell
     private void gameExecution() {
         boolean exit = false;
@@ -300,15 +309,21 @@ public class CtrlDomain {
         }
     }
 
-    //sisè panell
-    private void personalStats(){
-        listPersonalStats(); // no implementada
+
+    /**
+     * Consultant function of the ranking of punctuations that all the different users made in their games.
+     */
+    public String[][] listGlobalRanking(){
+        return ctrlGame.listRankingOrStats("", true);
     }
 
-    //sisè panell
-    private void globalRanking(){
-        listGlobalRanking(); // no implementada
+    /**
+     * Consultant function of the personal ranking of punctuations for one user from all his games.
+     */
+    public String[][] listPersonalStats(){
+        return ctrlGame.listRankingOrStats(getActiveUser(), false);
     }
+
 
     /**
      * If the proposed Kakuro by the User at the Presentation Layer is valid, it is saved at the Persistence Layer and it's added to the collection of Kakuros that a User has.
@@ -320,7 +335,7 @@ public class CtrlDomain {
     public int proposeKakuro(int numRows, int numColumns, String[][] field){
         int idKakuro = ctrlKakuro.proposeKakuro(numRows,numColumns,field);
         if (idKakuro!=-1) {
-            ctrlPersistence.newKakuro(ctrlKakuro.listIdKakuro(), ctrlKakuro.listKakuro(idKakuro));
+            ctrlPersistence.newKakuro(ctrlKakuro.listIdKakuro(), ctrlKakuro.listKakuro(idKakuro).listKakuro());
             return idKakuro;
         }
         return -1;
@@ -333,9 +348,9 @@ public class CtrlDomain {
      * @param diff It indicates the difficulty of the game.
      * @param fc It indicates the number of filled cells.
      */
-    public int generateKakuro(int numRows, int numColumns, int diff, int fc){
+    public int generateKakuro(int numRows, int numColumns, String diff, int fc){
         ctrlKakuro.generateKakuro(numRows, numColumns, diff, fc);
-        ctrlPersistence.newKakuro(ctrlKakuro.listIdKakuro(), ctrlKakuro.listKakuro(ctrlKakuro.listIdKakuro()));
+        ctrlPersistence.newKakuro(ctrlKakuro.listIdKakuro(), ctrlKakuro.listKakuro(ctrlKakuro.listIdKakuro()).listKakuro());
         return ctrlKakuro.listIdKakuro();
     }
 
@@ -368,10 +383,9 @@ public class CtrlDomain {
      * This method is a getter of all the kakuros in the system.
      * @return A list of the kakuros existing.
      */
-    public String[] getKakurosGlobals() {
-//        return ctrlPersistence.getKakurosGlobals();
-//        AFEGIR CONSULTA A CTRLKAKURO ENLLOC DE PERSISTENCIA
-        return null;
+    public int[] getKakurosGlobals() {
+
+        return ctrlKakuro.listIdKakuros();
     }
 
     /**
@@ -380,8 +394,7 @@ public class CtrlDomain {
      * @return A list of game identifiers.
      */
     public ArrayList<Integer> getGames(int idKakuro) {
-        String user=getActiveUser();
-        return ctrlGame.getGames(idKakuro);
+        return ctrlGame.getGames(getActiveUser(), idKakuro);
     }
 
     /**
@@ -389,12 +402,32 @@ public class CtrlDomain {
      * @param idKakuro Indicates the id of the Kakuro gameScenario.
      * @return It returns either the id of the kakuro or -1 if it failed.
      */
-    public int createNewGame(int idKakuro) {
-        // FALTA AGAFAR LA PLANTILLA DE LA LLISTA DE KAKUROS I PASARLA PER PARAMETRE
+    public String createNewGame(int idKakuro) {
         String username = getActiveUser();
-//        if(ctrlPersistence.newGame(username,idKakuro)) return ctrlGame.createNewGame(username,idKakuro);
-//        else return -1;
-        return -1;
+        int idGame = ctrlPersistence.newGame(username,idKakuro);
+
+        if(idGame != -1) {
+
+            String[][] kakuro = ctrlKakuro.listKakuro(idKakuro).listKakuro();
+
+            ctrlGame.loadGame(username, idKakuro, idGame, kakuro, "0:0");
+            ctrlGame.setActiveGame(username, idKakuro, idGame);
+
+            int numR = ctrlKakuro.listKakuro(idKakuro).getNumRows();
+            int numC = ctrlKakuro.listKakuro(idKakuro).getNumColumns();
+            String newGame = "0:0"  + ":" + numR + "," + numC + ":";
+            for(int i=0; i<numR; i++){
+                for(int j=0; j<numC; j++){
+                    newGame += kakuro[i][j];
+                    if (i<numR-1 || j<numC-1){
+                        newGame += ",";
+                    }
+                }
+            }
+            return newGame;
+        }
+        return null;
+
     }
 
     /**
@@ -402,9 +435,9 @@ public class CtrlDomain {
      * @param idGame Identifies the game to resume.
      * @return It returns the field in a formatted String.
      */
-    public String getGameScenario(int idGame) {
-        ctrlGame.setActiveGame(idGame);
-        return "";
+    public String resumeGame(int idKakuro, int idGame) {
+        ctrlGame.setActiveGame(getActiveUser(), idKakuro, idGame);
+        return ctrlGame.getGameScenario(getActiveUser(), idKakuro ,idGame);
     }
 
     /**
@@ -424,7 +457,8 @@ public class CtrlDomain {
      * @param newState
      */
     public void saveGame(int time, int hints, String [][] newState){
-        ctrlPersistence.saveGame(ctrlUser.getActiveUser(), ctrlGame.getActiveGame().getKakuroId(), ctrlGame.getActiveGame().getGameId(), time, hints, newState);
+        ctrlPersistence.saveGame(getActiveUser(), ctrlGame.getActiveGame().getKakuroId(), ctrlGame.getActiveGame().getGameId(), time, hints, newState);
+        ctrlGame.saveGame(time, hints, newState);
     }
 
     /**
@@ -435,16 +469,17 @@ public class CtrlDomain {
      * @param hints Indicates the number of hints asked while playing.
      * @param kakuro It contains the solution provided by the user.
      */
+
     public void validateGame (int idKakuro, int idGame, int time, int hints, String [][] kakuro) {
         // CANVIAR VALIDATE CORRECTNESS PERQUE ES FACI DESDE DOMINI AMB SOLUTION DE KAKURO
+        /*
         String user = getActiveUser();
         if (ctrlPersistence.validateCorrectnessGame(user, ctrlGame.getActiveGame().getKakuroId(), ctrlGame.getActiveGame().getGameId(), kakuro)) {
-            int scores = (72000 - time);
-            if (scores - (7200 * hints) > 0) scores -= (7200 * hints);
-            else scores = 0;
             ctrlPersistence.updateStats(user, ctrlGame.getActiveGame().getKakuroId(), time, hints, scores, true);
             ctrlPersistence.updateStats(user, ctrlGame.getActiveGame().getKakuroId(), time, hints, scores, false);
         }
+        */
+
     }
 
     /**
@@ -454,35 +489,18 @@ public class CtrlDomain {
         // FALTA ESBORRAR DEL CONJUNT DE USERS QUE TE CTRL USER I ESBORRAR TOTS ELS GAMES QUE TINGUI A CTRL GAME
         String user = getActiveUser();
         ctrlPersistence.deleteUser(user);
+        ctrlUser.deleteUser(user);
+        ctrlGame.deleteGames(user);
     }
 
     /**
      * This method deletes a specified game from the active user.
      * @param idGame Identifies the game to delete.
      */
-    public void deleteGame (int idGame) {
+    public void deleteGame (int idKakuro, int idGame) {
         String user = getActiveUser();
-        ctrlPersistence.deleteGame(user, ctrlGame.getGame(idGame).getKakuroId(), idGame);
-        ctrlGame.deleteGame(idGame);
+        ctrlPersistence.deleteGame(user, idKakuro, idGame);
+        ctrlGame.deleteGame(user, idKakuro, idGame);
     }
 
-    /**
-     * Consultant function of the ranking of punctuations that all the different users made in their games.
-     */
-    public String[][] listGlobalRanking(){
-        //HAURIA DE CONSULTAR EL RANKING A CTRL GAME
-//        return ctrlPersistence.listRankingOrStats(null, true);
-        return null;
-    }
-
-    /**
-     * Consultant function of the personal ranking of punctuations for one user from all his games.
-     */
-    public String[][] listPersonalStats(){
-        String user = getActiveUser();
-        //HAURIA DE CONSULTAR EL RANKING A CTRL GAME
-//        return ctrlPersistence.listRankingOrStats(user, false);
-        return null;
-    }
-    
 }

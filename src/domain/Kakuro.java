@@ -199,12 +199,12 @@ public class Kakuro {
      * @param x It indicates the number of rows that the Kakuro will have.
      * @param y It indicates the number of columns that the Kakuro will have.
      */
-    public Kakuro(int x, int y, int d, int fc) {
+    public Kakuro(int x, int y, String d, int fc) {
         this.numRows = x;
         this.numColumns = y;
-        if(d == 1) this.difficulty = 100;
-        else if (d==2) this.difficulty = 75;
-        else this.difficulty = 50;
+        if(d.equals("DIFFICULT")) this.difficulty = 30;
+        else if (d.equals("INTERMEDIATE")) this.difficulty = 50;
+        else if (d.equals("EASY")) this.difficulty = 100;
         this.cells = new Cell[numRows][numColumns];
         this.solutions = 0;
 
@@ -215,7 +215,7 @@ public class Kakuro {
             }
         }
 
-        for(int k = 0; k < 10; ++k) generateRandomBlack(numRows-1, numColumns-1, 1, 1);
+        for(int k = 0; k < difficulty; ++k) generateRandomBlack(numRows-1, numColumns-1, 1, 1);
         correctFormat();    
 
 
@@ -233,6 +233,30 @@ public class Kakuro {
     }
 
     //GETTERS & SETTERS
+
+    /**
+     * Consultant function
+     * @return It return the number of columns of the Kakuro
+     */
+    public int getNumColumns() {
+        return numColumns;
+    }
+
+    /**
+     * Consultant function
+     * @return It returns the number of rows of the Kakuro
+     */
+    public int getNumRows() {
+        return numRows;
+    }
+
+    /**
+     * Consultant function
+     * @return it returns the solution of the kakuro
+     */
+    public String[][] getSolution() {
+        return solution;
+    }
 
     /**
      * Consultant function
@@ -696,7 +720,7 @@ public class Kakuro {
      */
     private boolean solveKakuro () {
         ArrayList<Pair> posWhites = searchWhites();
-        searchIntersections();
+        if (!searchIntersections()) return false;
         return solve (posWhites, 0);
     }
 
@@ -707,7 +731,7 @@ public class Kakuro {
      */
     private boolean solveKakuroMultiple() {
         ArrayList <Pair> posWhites = searchWhites();
-        searchIntersections();
+        if (!searchIntersections()) return false;
         return solveMultiple (posWhites, 0);
     }
 
@@ -761,18 +785,20 @@ public class Kakuro {
     /**
      * This method searches the intersection of each white cells and saves it to the map notes
      */
-    private void searchIntersections () {
+    private boolean searchIntersections () {
         notes = new HashMap<>();
         for (int i = 0; i < numRows; ++i) {
             for (int j = 0; j < numColumns; ++j) {
                 if (cells[i][j] instanceof WhiteCell) {
                     Pair top = search_SN_blackTOP(i, j);
                     Pair left = search_SN_blackLEFT(i, j);
+                    if (!comb.containsKey(top.second()*100 + top.first()) || !comb.containsKey(left.second()*100 + left.first())) return false;
                     Integer aux = comb.get(top.second()*100 + top.first()) & comb.get(left.second()*100 + left.first());
                     notes.put(i*100+j, aux);
                 }
             }
         }
+        return true;
     }
 
     /**

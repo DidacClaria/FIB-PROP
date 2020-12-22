@@ -55,6 +55,10 @@ public class CreateKakuroView {
         GOBACKbutton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                ERRORdisplay.setText("");
+                widthField.setText("");
+                heightField.setText("");
+                numFilledCellsField.setText("");
                 createKakuroPanel.setVisible(false);
                 ctrlPresentation.makeUserMenuViewVisible();
             }
@@ -113,6 +117,9 @@ public class CreateKakuroView {
                     }
                     else {
                         ERRORdisplay.setText("");
+                        widthField.setText("");
+                        heightField.setText("");
+                        numFilledCellsField.setText("");
                     }
                     int width = Integer.parseInt(widthField.getText());
                     int height = Integer.parseInt(heightField.getText());

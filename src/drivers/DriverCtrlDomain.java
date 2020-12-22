@@ -140,7 +140,7 @@ public class DriverCtrlDomain {
                     switch (option){
                         case 1:
                             ctrlDomain.createNewGame(k);
-                            gameExecution();
+                            gameExecution(k);
                             break;
                         case 2:
                             ArrayList<Integer> games = ctrlDomain.getGames(k);
@@ -163,7 +163,7 @@ public class DriverCtrlDomain {
                                 switch (option) {
                                     case 1:
                                         ctrlDomain.resumeGame(k,idGame);
-                                        gameExecution();
+                                        gameExecution(k);
                                         break;
                                     case 2:
                                         ctrlDomain.deleteGame(k,idGame);
@@ -181,7 +181,7 @@ public class DriverCtrlDomain {
     }
 
 
-    private static void gameExecution() {
+    private static void gameExecution(int k) {
         boolean exit = false;
         while (!exit) {
             System.out.println("1 - Fill cell");
@@ -192,19 +192,22 @@ public class DriverCtrlDomain {
             System.out.print("\nCHOOSE ONE OPTION: ");
             Scanner sca = new Scanner(System.in);
             int option = sca.nextInt();
-
             switch (option) {
                 case 1:
-//                    ctrlDomain.validateGame();
+                    System.out.print("\nPLEASE INSERT THE SOLUTION TO CHECK: ");
+                    String[][] solution = readKakuro();
+                    ctrlDomain.validateGame(k,0,0,solution);
                     break;
                 case 2:
+                    System.out.print("\nPLEASE INSERT A FIELD: ");
                     String[][] field = readKakuro();
-//                    ctrlDomain.askHint(field,);
-                    //demanar pista random
+                    String returnValue = ctrlDomain.askHint(k,field);
+                    System.out.println(returnValue);
                     break;
                 case 3:
-                    //guardar joc
-                    ctrlDomain.saveGame(0, 0, null);
+                    System.out.print("\nPLEASE INSERT THE NEW STATE: ");
+                    String[][] newState = readKakuro();
+                    ctrlDomain.saveGame(0, 0, newState);
                     exit = true;
                     break;
                 case 4:

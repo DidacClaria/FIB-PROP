@@ -77,7 +77,7 @@ public class RowSelectGame extends JPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
                 gameView.setVisible(false);
-                gameView.setGameVisible(idGame);
+                gameView.setGameVisible(gameView.resumeGame(idGame));
             }
         });
 

@@ -93,19 +93,20 @@ public class DataKakuro {
     /**
      * Starts a new game for User = user
      */
-    public boolean newGame (File pathOri, File pathUser, File pathDes, FileWriter wr){
+    public int newGame (File pathOri, File pathUser, File pathDes, FileWriter wr, int idGame){
         try {
             if (pathOri.exists() && pathUser.exists()) {
                 Files.copy(Paths.get(pathOri.getAbsolutePath()), Paths.get(pathDes.getAbsolutePath()), StandardCopyOption.REPLACE_EXISTING);
                 wr.write("Execution Time: 0\n");
                 wr.write("Hints asked: 0\n");
                 wr.close();
+                return idGame;
             }
             else System.out.println("\nThe kakuro of the game or the user is not existed!!!");
         } catch (IOException e){
             System.out.println("\nError occurred during file writing");
         }
-        return false;
+        return -1;
     }
 
     /**
@@ -113,6 +114,8 @@ public class DataKakuro {
      */
     public boolean saveGame (FileWriter gameSaved, FileWriter gameSavedStats, int time, int hints, String [][] kakuro){
         try {
+            gameSaved.write(kakuro.length +","+kakuro[0].length);
+            gameSaved.write(System.getProperty("line.separator"));
             for (int i = 0; i < kakuro.length; i++) {
                 for (int j = 0; j < kakuro[0].length; j++) {
                     if (kakuro[i][j].equals("?")) gameSaved.write("0");

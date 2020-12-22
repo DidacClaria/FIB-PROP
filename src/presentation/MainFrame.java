@@ -31,7 +31,6 @@ public class MainFrame extends JFrame {
 
         this.logInView = new LogInView(ctrlPresentation);
         this.createKakuroView = new CreateKakuroView(ctrlPresentation);
-        this.selectGameView = new SelectGameView(ctrlPresentation);
         this.playGameView = new PlayGameView(ctrlPresentation);
 
         mainFrameInit();
@@ -56,6 +55,12 @@ public class MainFrame extends JFrame {
      * @param data This variable contains the info that the rankingView will load.
      */
     public void iniRanking (String [][] data) {this.rankingView = new RankingView(ctrlPresentation, data);}
+
+    /**
+     * This method initializes a new instance of the SelectGameView class.
+     * @param gamesId This variable contains all the identifiers of kakuros of the global repository.
+     */
+    public void iniSelectGameList (int [] gamesId) {this.selectGameView = new SelectGameView(ctrlPresentation, gamesId);}
 
     /**
      * This method initialize the properties of the frame created.
@@ -105,8 +110,8 @@ public class MainFrame extends JFrame {
      * This method sets the playGameView for an specific idGame to visible.
      * @param idGame Indicates the identifier of the game to play.
      */
-    public void makePlayGameViewVisible(int idGame){
-        playGameView.setVisible(true, idGame);
+    public void makePlayGameViewVisible(String game){
+        playGameView.setVisible(true, game);
         setContentPane(playGameView.getPlayGamePanel());
     }
 

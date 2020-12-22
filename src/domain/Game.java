@@ -58,6 +58,12 @@ public class Game {
         this.stat = new Stat(time, hints);
     }
 
+    public Game (int idKakuro, String user, int time, int hints, int scores) {
+        this.kakuroId = idKakuro;
+        this.player = user;
+        this.stat = new Stat(time, hints, scores);
+    }
+
     public int getKakuroId(){
         return kakuroId;
     }
@@ -66,7 +72,39 @@ public class Game {
         return idGame;
     }
 
+    public String getPlayer() {
+        return player;
+    }
+
+    public int getTime() {
+        return stat.getTime();
+    }
+
+    public int getNumHints() {
+        return stat.getNumHints();
+    }
+
+    public int getScores() {
+        return stat.getScores();
+    }
+
     public String getStat() {
         return String.valueOf(stat.getTime()) + ":" + String.valueOf(stat.getNumHints());
+    }
+
+    public String getAllInfo() {
+        String result = getStat() + ":" + gameScenario.length + "," + gameScenario[0].length + ":";
+        for (int i = 0; i < gameScenario.length; ++i) {
+            for (int j = 0; j < gameScenario[0].length; ++j) {
+                result += gameScenario[i][j];
+                if (i<gameScenario.length-1 || j<gameScenario[0].length-1) result += ",";
+            }
+        }
+        return result;
+    }
+
+    public void updateStats (int time, int hints, String [][] new_stats) {
+        stat.updateStats(time, hints);
+        this.gameScenario = new_stats;
     }
 }

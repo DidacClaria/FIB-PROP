@@ -61,6 +61,7 @@ public class UserMenuView {
             @Override
             public void actionPerformed(ActionEvent e) {
                 userMenuPanel.setVisible(false);
+                ctrlPresentation.iniSelectGameList(ctrlPresentation.getKakurosGlobals());
                 ctrlPresentation.makeSelectGameViewVisible();
             }
         });

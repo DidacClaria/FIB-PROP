@@ -29,7 +29,7 @@ public class KakuroGrid extends JPanel {
                 if (field == null) add(new KakuroCell(-1,i,j,enabled,this));
                 else  {
                     String[] parts = field[i][j].split("(?<=\\D)(?=\\d)|(?<=\\d)(?=\\D)");
-                    if (field[i][j].equals("?")) add(new KakuroCell(-1,i,j,enabled,this));
+                    if (field[i][j].equals("?") || field[i][j].equals("0")) add(new KakuroCell(-1,i,j,enabled,this));
                     else if (field[i][j].equals("*")) add(new KakuroCell(-1,-1));
                     else if (field[i][j].startsWith("F")) add (new KakuroCell(-1,Integer.parseInt(parts[1])));
                     else if (parts[0].equals("C") && field[i][j].contains("F")) add (new KakuroCell(Integer.parseInt(parts[1]),Integer.parseInt(parts[3])));

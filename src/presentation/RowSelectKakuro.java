@@ -72,9 +72,8 @@ public class RowSelectKakuro extends JPanel {
         newGame.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                int idGame = gameView.createNewGame(idKakuro);
                 gameView.setVisible(false);
-                gameView.setGameVisible(idGame);
+                gameView.setGameVisible(gameView.createNewGame(idKakuro));
             }
         });
 

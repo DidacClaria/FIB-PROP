@@ -64,7 +64,7 @@ public class StartedGameView {
      * This method indicates to the presentation controller to set the specified game view visible.
      * @param idGame Indicates whether the view must show or not.
      */
-    public void setGameVisible(int idGame) {ctrlPresentation.makePlayGameViewVisible(idGame);}
+    public void setGameVisible(String game) {ctrlPresentation.makePlayGameViewVisible(game);}
 
     /**
      * This method indicates to the presentation controller to set the SelectGameView visible.
@@ -76,7 +76,7 @@ public class StartedGameView {
      * @param idGame Identifier of the game to erase.
      */
     public void deleteGame (int idGame) {
-        ctrlPresentation.deleteGame(idGame);
+        ctrlPresentation.deleteGame(idKakuro, idGame);
     }
 
     /**
@@ -124,18 +124,24 @@ public class StartedGameView {
         if (files == null) mygames = new JScrollPane();
         else {
             JPanel aux = new JPanel();
-
             for (int i = 0; i < files.size(); ++i) {
-                if (i % 2 != 0) {
-                    int id = files.get(i);
-                    JPanel aux2 = new RowSelectGame(this, id);
-                    aux2.setBorder(BorderFactory.createLineBorder(Color.black));
-                    aux.add(aux2);
-                }
+                int id = files.get(i);
+                JPanel aux2 = new RowSelectGame(this, id);
+                aux2.setBorder(BorderFactory.createLineBorder(Color.black));
+                aux.add(aux2);
             }
             aux.setLayout(new BoxLayout(aux, BoxLayout.Y_AXIS));
             mygames = new JScrollPane(aux);
         }
+    }
+
+    /**
+     * This method sends the signal to the presentation control that loads game for the active user and the idKakuro specified needs to be created.
+     * @param idGame Identifies the game to be played.
+     * @return It returns the identifier of a game started.
+     */
+    public String resumeGame(int idGame) {
+        return ctrlPresentation.resumeGame (idKakuro, idGame);
     }
 
 

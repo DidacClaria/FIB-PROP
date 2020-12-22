@@ -51,7 +51,7 @@ public class DataUser {
                             File currentFile_k = new File(currentFile.getPath(), s_k);
                             currentFile_k.delete();
                         }
-                        f.delete();
+                        currentFile.delete();
                     }
                     else System.out.println("\nKakuro not existed");
                 }

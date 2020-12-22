@@ -21,7 +21,7 @@ public class Main {
         int idGame;
         int time;
         int hints;
-
+/*
         while (true){
             System.out.println("\n1 - Propose Kakuro");
             System.out.println("2 - Generate Kakuro");
@@ -47,7 +47,7 @@ public class Main {
                     System.out.println("\nEnter the size of kakuro you want to generate:");
                     f = sca.nextInt();
                     c = sca.nextInt();
-                    a.generateKakuro(f,c, 0, 0);
+                    a.generateKakuro(f,c, "", 0);
                     printKakuro();
                     break;
                 case 3:
@@ -119,10 +119,12 @@ public class Main {
             }
         }
     }
-
+*/
+        /*
     /**
      * Auxiliar method used to read the kakuro format
      */
+        /*
     public static String[][] readKakuro () {
         Scanner sca = new Scanner(System.in);
         String s = sca.nextLine(); // Llegir quantes files i quantes columnes;
@@ -142,9 +144,11 @@ public class Main {
         return kakuro;
     }
 
-    /**
-     * Auxiliar method used to print or represent the kakuro in console
-     */
+         */
+        /**
+         * Auxiliar method used to print or represent the kakuro in console
+         */
+    /*
     public static void printKakuro () {
 //        String[][] aux = a.listKakuro();
 //        System.out.println(f + "," + c);
@@ -156,6 +160,8 @@ public class Main {
 //            }
 //            System.out.println();
 //        }
+    }
+    */
     }
 
 }

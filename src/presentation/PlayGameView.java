@@ -8,6 +8,7 @@ import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 
 /**
  * This class represents the PlayGameView and with all the components added into the playGamePanel it is represented. It also communicates with the Presentation Controller.
@@ -28,7 +29,7 @@ public class PlayGameView {
     private JButton VALIDATESOLUTIONButton;
 
     private KakuroGrid gamesScenario;
-    private static int cnt=0, timerCount, numHints;
+    private static int cnt=0, timerCount=0, numHints=0;
     Timer  timer;
 
     /**
@@ -70,8 +71,7 @@ public class PlayGameView {
         SAVEANDEXITButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-//                ctrlPresentation.updateStats;
-//                ctrlPresentation.updateFieldStatus;
+                ctrlPresentation.saveGame (timerCount, numHints, gamesScenario.getFieldStatus());
                 playGamePanel.setVisible(false);
                 ctrlPresentation.makeSelectGameViewVisible();
                 timer.stop();
@@ -81,9 +81,21 @@ public class PlayGameView {
             public void actionPerformed(ActionEvent e)
             {
                 ++timerCount;
-                timerValue.setText(String.valueOf(timerCount));
+                timerValue.setText(formatTimer(timerCount));
             }
         });
+    }
+
+    private String formatTimer (int t) {
+        String h = String.valueOf(t/3600);
+        String m = String.valueOf((t%3600)/60);
+        String s = String.valueOf((t%3600)%60);
+
+        if (h.length() < 2) h = "0"+h;
+        if (m.length() < 2) m = "0"+m;
+        if (s.length() < 2) s = "0"+s;
+
+        return h+":"+m+":"+s;
     }
 
     /**
@@ -99,13 +111,13 @@ public class PlayGameView {
      * @param b Indicates whether the view must show or not.
      * @param idGame Indicates which Game to load.
      */
-    public void setVisible(Boolean b, int idGame){
-//        String sizeAndField = ctrlPresentation.getGameScenario();
-//        stringToKakuroGrid(sizeAndField);
-//        String stats = ctrlPresentation.getStats();
-//        stringToStats(stats);
-        timerCount = 0;
-        timerValue.setText(String.valueOf(timerCount));
+    public void setVisible(Boolean b, String game){
+
+        String[] parts = game.split(":");
+        stringToKakuroGrid(parts[2], parts[3]);
+        stringToStats(parts[0],parts[1]);
+
+        timerValue.setText(formatTimer(timerCount));
         timer.restart();
         playGamePanel.setVisible(b);
     }
@@ -114,23 +126,21 @@ public class PlayGameView {
      * This operation interprets the formatted String as the different stats values.
      * @param stats It has the current time, score, and numHints divided by ":".
      */
-    private void stringToStats(String stats) {
-        String[] parts = stats.split(":");
-        timerCount = Integer.parseInt(parts[0]);
-        numHints = Integer.parseInt(parts[1]);
+    private void stringToStats(String timerC, String numH) {
+        timerCount = Integer.parseInt(timerC);
+        numHints = Integer.parseInt(numH);
     }
 
     /**
      * This operation interprets the formatted String as a KakuroGrid. It also repaints the custom component.
      * @param sizeAndField It contains the information of a KakuroGrid divided by ":".
      */
-    private void stringToKakuroGrid(String sizeAndField) {
-        String[] parts = sizeAndField.split(":");
-        String[] size = parts[0].split(",");
+    private void stringToKakuroGrid(String siz, String f) {
+        String[] size = siz.split(",");
         int numRows = Integer.parseInt(size[0]);
         int numCols = Integer.parseInt(size[1]);
         String[][] kakuroField = new String[numRows][numCols];
-        String[] field = parts[1].split(",");
+        String[] field = f.split(",");
         for (int i = 0; i<numRows; ++i) {
             for (int j=0; j<numCols; ++j){
                 kakuroField[i][j] = field[i*numCols+j];

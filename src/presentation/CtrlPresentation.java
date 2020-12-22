@@ -60,6 +60,12 @@ public class CtrlPresentation {
     }
 
     /**
+     * This method instantiates a new SelectGameView for all kakuros existed in the repository.
+     * @param gamesId This variable contains all the identifiers of kakuros of the global repository.
+     */
+    public void iniSelectGameList (int [] gamesId) {mainFrame.iniSelectGameList(gamesId);}
+
+    /**
      * This method sends the information collected in the LogInView to be processed by the domain
      * @param username This attribute indicates the username the new user logged in.
      */
@@ -84,10 +90,11 @@ public class CtrlPresentation {
 
     /**
      * This method sends a request to domain that deletes a game of a Kakuro from the Active User.
+     * @param idKakuro It has the identifier of the kakuro to search games of.
      * @param idGame Indicate the exact game to delete.
      */
-    public void deleteGame(int idGame){
-        ctrlDomain.deleteGame(idGame);
+    public void deleteGame(int idKakuro, int idGame){
+        ctrlDomain.deleteGame(idKakuro, idGame);
     }
 
     /**
@@ -152,7 +159,7 @@ public class CtrlPresentation {
      * This method asks for all the kakuros in the system.
      * @return It returns a list with the information of all the existing kakuros.
      */
-    public String[] getKakurosGlobals() {
+    public int[] getKakurosGlobals() {
         return ctrlDomain.getKakurosGlobals();
     }
 
@@ -201,8 +208,8 @@ public class CtrlPresentation {
      * This method will send a signal to the domain controller in order to update the state of the current game scenario for the current one.
      * @param field It will contain the current state of the game scenario.
      */
-    public void saveGame(String[][] field){
-
+    public void saveGame(int time, int hints, String[][] field){
+        ctrlDomain.saveGame(time, hints, field);
     }
 
     /**
@@ -237,7 +244,7 @@ public class CtrlPresentation {
      * This method will make the PlayGameView visible.
      * @param idGame It indicates which game has to be loaded.
      */
-    public void makePlayGameViewVisible(int idGame) { mainFrame.makePlayGameViewVisible(idGame); }
+    public void makePlayGameViewVisible(String game) { mainFrame.makePlayGameViewVisible(game); }
 
     /**
      * This method will make the RankingView visible.
@@ -261,7 +268,7 @@ public class CtrlPresentation {
      * @param idKakuro Indicates the id of the kakuro to play
      * @return It returns the id of the new created game if exists -1 if not.
      */
-    public int createNewGame(int idKakuro) {
+    public String createNewGame(int idKakuro) {
         return ctrlDomain.createNewGame(idKakuro);
     }
 
@@ -271,8 +278,7 @@ public class CtrlPresentation {
      * @param idGame Identifies the Game that will be resumed.
      * @return It returns the stats of the game and the current state of the field in a formatted string. All different attributes are divided by ":".
      */
-    public String playStartedGame(int idKakuro, int idGame){
-//        return ctrlDomain.getGameScenario();
-        return "";
+    public String resumeGame(int idKakuro, int idGame){
+        return ctrlDomain.resumeGame(idKakuro, idGame);
     }
 }

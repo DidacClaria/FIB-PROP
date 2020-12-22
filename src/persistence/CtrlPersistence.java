@@ -94,7 +94,7 @@ public class CtrlPersistence {
         try{
             FileWriter wr = new FileWriter(routek + "/" + "model_" + idKakuro + ".txt");
             FileWriter wrSol = new FileWriter(routek + "/" + "model_" + idKakuro + "_sol.txt");
-            File GlobalRanking = new File (route + "/" + "globalranking.txt");
+            File GlobalRanking = new File (route + "/" + "global_ranking.txt");
             return dataKakuro.newKakuro(wr, wrSol, kakuro, GlobalRanking);
         } catch (IOException e){
             return false;
@@ -120,7 +120,7 @@ public class CtrlPersistence {
      * @param idKakuro
      * @return
      */
-    public boolean newGame (String user, int idKakuro){
+    public int newGame (String user, int idKakuro){
         try{
             File pathOri = new File(routek + "/" + "model_" + idKakuro + ".txt");
             File pathUser = new File(route + "/" + user);
@@ -133,11 +133,10 @@ public class CtrlPersistence {
 
             File pathDes = new File(route + "/" + user + "/" + "kakuro_" + idKakuro + "/" + "game_" + idGame + ".txt");
             FileWriter wr = new FileWriter(route + "/" + user + "/" + "kakuro_" + idKakuro + "/" +"game_" + idGame + "_stats.txt");
-            return dataKakuro.newGame(pathOri, pathUser, pathDes, wr);
+            return dataKakuro.newGame(pathOri, pathUser, pathDes, wr, idGame);
         } catch (IOException e){
-            return false;
         }
-
+        return -1;
     }
 
     /**

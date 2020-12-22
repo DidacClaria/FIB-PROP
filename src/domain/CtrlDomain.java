@@ -250,10 +250,10 @@ public class CtrlDomain {
     /**
      * This method checks if a specific game solution is correct. If it is the score is calculated.
      * @param idKakuro Identifies the kakuro that is the gameScenario to check.
-     * @param idGame Identifies the game that is being checked.
+     * @param idKakuro Identifies the game that is being checked.
      * @param time Indicates the value of the time passed playing the game.
      * @param hints Indicates the number of hints asked while playing.
-     * @param kakuro It contains the solution provided by the user.
+     * @param game It contains the solution provided by the user.
      */
 
     public boolean validateGame (int idKakuro, int time, int hints, String [][] game) {

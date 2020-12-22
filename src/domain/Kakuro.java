@@ -198,8 +198,9 @@ public class Kakuro {
      * Kakuro constructor that generates a kakuro with random black cells and it has unique solution
      * @param x It indicates the number of rows that the Kakuro will have.
      * @param y It indicates the number of columns that the Kakuro will have.
+     * @param d It indicates the difficulty that the Kakuro will have
      */
-    public Kakuro(int x, int y, String d, int fc) {
+    public Kakuro(int x, int y, String d) {
         this.numRows = x;
         this.numColumns = y;
         if(d.equals("DIFFICULT")) this.difficulty = 30;
@@ -230,6 +231,7 @@ public class Kakuro {
             this.solutions = 0;
         }
         solveKakuro();
+        this.solution = listKakuro();
     }
 
     //GETTERS & SETTERS
@@ -929,6 +931,46 @@ public class Kakuro {
         }
 
         return true;
+    }
+
+    /**
+     * This method creates a String[][] to represent a kakuro with fc white cells filled.
+     * @param fc It indicates the number of white cells to be filled.
+     * @return It returns the kakuro with some white cells filled indicated by fc.
+     */
+    public String [][] kakuroFilledCell(int fc) {
+        ArrayList<Pair> posWhites = searchWhites();
+
+        if (fc > posWhites.size()) return null;
+        else {
+            ArrayList<Pair> randomWhites = new ArrayList<>();
+
+            String [][] kakuroFC = new String[solution.length][solution[0].length];
+
+            for (int i = 0; i < solution.length; ++i) {
+                for (int j = 0; j < solution[0].length; ++j) {
+                    if (solution[i][j].length() == 1 && !solution[i][j].equals("*")) {
+                        kakuroFC[i][j] = "0";
+                    }
+                    else kakuroFC[i][j] = solution[i][j];
+                }
+            }
+
+            int i = 0;
+            while (i < fc) {
+                int random = (int)(Math.random()*posWhites.size());
+                if (!randomWhites.contains(posWhites.get(random))) {
+                    randomWhites.add (posWhites.get(random));
+                    ++i;
+                }
+            }
+            for (Pair j : randomWhites) {
+                int x = j.first();
+                int y = j.second();
+                kakuroFC[x][y] = solution [x][y];
+            }
+            return kakuroFC;
+        }
     }
 
 }

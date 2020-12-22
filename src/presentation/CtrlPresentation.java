@@ -112,11 +112,10 @@ public class CtrlPresentation {
      * @param cols Indicates the cols of the new Kakuro to create.
      * @param difficulty Indicates the difficulty of the new Kakuro to create.
      * @param numFilledCells Indicates the number of filled cells that the new Kakuro to create will contain.
-     * @return It returns the id of the new Kakuro created or -1 if it could'nt be created.
+     * @return It returns the kakuro representated in String [][] with some white cells filled indicated by fc.
      */
-    public int generateKakuro(int rows, int cols, int difficulty, int numFilledCells) {
-//        return ctrlDomain.generateKakuro(rows,cols);
-        return -1;
+    public String[][] generateKakuro(int rows, int cols, String difficulty, int numFilledCells) {
+        return ctrlDomain.generateKakuro(rows, cols, difficulty, numFilledCells);
     }
 
     /**

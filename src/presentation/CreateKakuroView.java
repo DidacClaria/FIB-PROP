@@ -123,27 +123,32 @@ public class CreateKakuroView {
                     }
                     else {
                         ERRORdisplay.setText("");
+
+                        int width = Integer.parseInt(widthField.getText());
+                        int height = Integer.parseInt(heightField.getText());
+                        String difficulty = (String) difficultyComboBox.getItemAt(difficultyComboBox.getSelectedIndex());
+                        int numFilledCells = Integer.parseInt(numFilledCellsField.getText());
+                        String[][] field = ctrlPresentation.generateKakuro(width, height, difficulty, numFilledCells);
+
+                        kakuroPanel.removeAll();
+                        kakuroPanel.repaint();
+                        kakuroPanel.revalidate();
+
+                        kakuroPanel.add(new KakuroGrid(width, height, field, false));
+                        kakuroPanel.repaint();
+                        kakuroPanel.revalidate();
+
                         widthField.setText("");
                         heightField.setText("");
                         numFilledCellsField.setText("");
+
+                        int aux [] = ctrlPresentation.getKakurosGlobals();
+                        int kakuroID = aux.length;
+                        JOptionPane.showMessageDialog(null, "The kakuro with id #" + kakuroID + "was created succesfully!");
+                        setVisible(false);
+                        ctrlPresentation.makeUserMenuViewVisible();
+
                     }
-                    int width = Integer.parseInt(widthField.getText());
-                    int height = Integer.parseInt(heightField.getText());
-                    int difficulty = difficultyComboBox.getSelectedIndex();
-                    int numFilledCells = Integer.parseInt(numFilledCellsField.getText());
-                    int kakuroID = ctrlPresentation.generateKakuro(width,height,difficulty,numFilledCells);
-
-                    kakuroPanel.removeAll();
-                    kakuroPanel.repaint();
-                    kakuroPanel.revalidate();
-
-                    kakuroPanel.add(new KakuroGrid(rows,cols,field,false));
-                    kakuroPanel.repaint();
-                    kakuroPanel.revalidate();
-
-                    JOptionPane.showMessageDialog(null,"The kakuro with id #"+kakuroID+"was created succesfully!");
-                    setVisible(false);
-                    ctrlPresentation.makeUserMenuViewVisible();
                 }
                 catch (NumberFormatException ignored){
                     ERRORdisplay.setText("Please add the size of the field.");

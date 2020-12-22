@@ -58,13 +58,18 @@ public class CtrlKakuro {
      * This method uses a generation algorithm of a Kakuro, according to the following parameters.
      * @param numRows It indicates the number of rows that the Kakuro will have.
      * @param numColumns It indicates the number of columns that the Kakuro will have.
+     * @param diff It indicates the difficulty that the Kakuro will have
+     * @param fc It indicates the number of white cells filled that the Kakuro will have.
+     * @return It returns the kakuro representated in String [][] with some white cells filled indicated by fc.
      */
-    public void generateKakuro(int numRows, int numColumns, String diff, int fc){
+    public String [][] generateKakuro(int numRows, int numColumns, String diff, int fc){
         if (numColumns>= 3 && numRows>=3 && numColumns<=10 && numRows<=10){
-            kakuroCreated = new Kakuro(numRows, numColumns, diff, fc);
+            kakuroCreated = new Kakuro(numRows, numColumns, diff);
             kakuros.add(kakuroCreated);
             ++numKakuros;
             kakuroCreated.setIdKakuro(numKakuros);
+
+            return kakuroCreated.kakuroFilledCell(fc);
         }
         else if (numColumns<=10 && numRows<=10) {
             throw new ArithmeticException("The size of the Kakuro is too small");

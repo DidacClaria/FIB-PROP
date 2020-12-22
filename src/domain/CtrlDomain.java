@@ -430,25 +430,19 @@ public class CtrlDomain {
     public void playKakuro (String user, int idKakuro) {
         if (ctrlPersistence.newGame(user, idKakuro)) ctrlGame.startKakuro(user, idKakuro);
     }
-
+    /**
+     * @param id_kakuro It indicates the game scenario
+     */
     public ArrayList<Integer> seeGames(int id_kakuro){
         return ctrlGame.getGames(id_kakuro);
     }
 
-    public void continueGame(int id_game){
-        ctrlGame.setActiveGame(id_game);
-    }
-
-    public void deleteGame (int id_game) {
-        ctrlPersistence.deleteGame(ctrlUser.getActiveUser(), ctrlGame.getGame(id_game).get_kakuro_id(), id_game);
-        ctrlGame.deleteGame(id_game);
-
-    }
 
 
     /**
      * This method will recieve the current status of the game being played and it will return a hint to solve it.
-     * @param field Contains all the information of the game Scenario being played.
+     * @param game Contains all the information of the game Scenario being played.
+     * @param idGame Is the id of the game Scenario being played.
      * @return It returns the value of the Hint and the position X and Y as well as the number of current hints
      * in a formatted string like: "value:posX:posY:numHints". If it fails it will return the error message.
      */

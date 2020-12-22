@@ -217,7 +217,7 @@ public class CtrlDomain {
     /**
      * This method will recieve the current status of the game being played and it will return a hint to solve it.
      * @param game Contains all the information of the game Scenario being played.
-     * @param idGame Is the id of the game Scenario being played.
+     * @param idKakuro Is the id of the game Scenario being played.
      * @return It returns the value of the Hint and the position X and Y as well as the number of current hints
      * in a formatted string like: "value:posX:posY:numHints". If it fails it will return the error message.
      */

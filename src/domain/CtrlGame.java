@@ -68,12 +68,12 @@ public class CtrlGame {
 
     /**
      * The execution of a Game it stops and the current state is saved.
-     * @param user
      * @param time
      * @param hints
      * @param state
      */
-    public void saveGame(String user, int time, int hints, String[][] state){
+    public void saveGame(int time, int hints, String[][] state){
+        String user = ctrlDomain.getActiveUser();
         Game g = getActiveGame();
         games.remove(g);
         String stats = time + ":" + hints;

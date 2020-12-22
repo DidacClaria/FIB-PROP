@@ -1,0 +1,6 @@
+1. Iniciar el programa
+2. Introdir un nom o alias al camp d'USERNAME.
+3. Fer clic al botó ENTER.
+4. Fer clic al botó CREATE KAKURO.
+5. Fer clic al botó AUTOMATIC GENERATION.
+6. Comprovar que no s'ha pogut crear.

@@ -1,0 +1,3 @@
+1. Iniciar el programa
+2. Introdir un nom o alias al camp d'USERNAME.
+3. Fer clic al botó ENTER.

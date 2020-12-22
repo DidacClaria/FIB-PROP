@@ -1,0 +1,11 @@
+1. Iniciar el programa
+2. Introdir un nom o alias al camp d'USERNAME.
+3. Fer clic al botó ENTER.
+4. Fer clic al botó CREATE KAKURO.
+5. Fer clic al botó READ FROM FILE.
+6. Navegar fins aquesta carpeta i llegir el fitxer model_2.txt .
+7. Fer clic a PLAY GAME.
+8. Fer clic a NEW GAME per al kakuro creat.
+9. Omplir el kakuro amb la solució que hi ha al fitxer model_2_sol.txt .
+10. Fer clic a VALIDATE SOLUTION.
+12. Fer clic a PERSONAL RANKING i comprovar que apareix la nova entrada.

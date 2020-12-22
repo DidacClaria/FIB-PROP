@@ -1,0 +1,10 @@
+1. Iniciar el programa
+2. Introdir un nom o alias al camp d'USERNAME.
+3. Fer clic al botó ENTER.
+4. Crear un kakuro automàtic de mida 3x3.
+5. Crear un nou game.
+6. Tornar a la pàgina principal.
+7. Fer clic al botó LOG OUT.
+8. Confirmar sortida del sistema.
+9. Tornar a entrar amb el mateix USERNAME.
+10. Comprovar que el game creat es pot reanudar.

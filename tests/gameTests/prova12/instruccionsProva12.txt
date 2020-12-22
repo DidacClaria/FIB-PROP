@@ -1,0 +1,19 @@
+1. Iniciar el programa
+2. Introdir un nom o alias al camp d'USERNAME.
+3. Fer clic al botó ENTER.
+4. Fer clic al botó CREATE KAKURO.
+5. Fer clic al botó READ FROM FILE.
+6. Navegar fins aquesta carpeta i llegir el fitxer kakuroInvalidWhiteCell.txt.
+7. Comprovar que no s'ha pogut representar correctament.
+8. Fer clic al botó READ FROM FILE.
+9. Navegar fins aquesta carpeta i llegir el fitxer kakuroInvalidBlackCellColumn.txt.
+10. Comprovar que no s'ha pogut representar correctament.
+11. Fer clic al botó READ FROM FILE.
+12. Navegar fins aquesta carpeta i llegir el fitxer kakuroInvalidBlackCellRow.txt.
+13. Comprovar que no s'ha pogut representar correctament.
+14. Fer clic al botó READ FROM FILE.
+15. Navegar fins aquesta carpeta i llegir el fitxer kakuroInvalidBlackCellRowAndColumn.txt.
+16. Comprovar que no s'ha pogut representar correctament.
+17. Fer clic al botó READ FROM FILE.
+18. Navegar fins aquesta carpeta i llegir el fitxer kakuroInvalidCell.txt.
+19. Comprovar que no s'ha pogut representar correctament.

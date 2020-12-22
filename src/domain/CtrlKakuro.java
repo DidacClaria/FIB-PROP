@@ -38,11 +38,11 @@ public class CtrlKakuro {
         this.kakuros = new ArrayList<>();
         for (int i = 0; i < kakuros.size(); i += 2) {
             ++numKakuros;
-            String[][] k_string = kakuros.get(i);
+            String[][] kString = kakuros.get(i);
             String[][] sol = kakuros.get(i + 1);
             Kakuro k = new Kakuro();
             k.setSolution(sol);
-            k.setCells(k_string);
+            k.setCells(kString);
             k.setIdKakuro(numKakuros);
             this.kakuros.add(k);
         }

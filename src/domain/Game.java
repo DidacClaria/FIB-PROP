@@ -107,8 +107,8 @@ public class Game {
         return result;
     }
 
-    public void updateStats (int time, int hints, String [][] new_stats) {
+    public void updateStats (int time, int hints, String [][] newStats) {
         stat.updateStats(time, hints);
-        this.gameScenario = new_stats;
+        this.gameScenario = newStats;
     }
 }

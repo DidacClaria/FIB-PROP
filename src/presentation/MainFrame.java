@@ -1,7 +1,5 @@
 package presentation;
 
-import domain.Main;
-
 import javax.swing.*;
 import java.awt.*;
 

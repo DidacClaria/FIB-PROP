@@ -47,9 +47,9 @@ public class DataUser {
 
                     if (currentFile.exists()) {
                         String[] entriesK = currentFile.list();
-                        for (String s_k : entriesK) {
-                            File currentFile_k = new File(currentFile.getPath(), s_k);
-                            currentFile_k.delete();
+                        for (String sK : entriesK) {
+                            File currentFileK = new File(currentFile.getPath(), sK);
+                            currentFileK.delete();
                         }
                         currentFile.delete();
                     }

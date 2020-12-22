@@ -742,13 +742,13 @@ public class Kakuro {
      * @return It returns the column value of the black cell TOP of the white cell indicated by x and y
      * and also his number of white vertical cells
      */
-    private Pair search_SN_blackTOP (int x, int y) {
-        int num_whites = 1;
+    private Pair searchSNBlackTOP (int x, int y) {
+        int numWhites = 1;
         int auxX = x;
-        for (--x; cells[x][y] instanceof WhiteCell; --x) ++num_whites;
-        for (++auxX; auxX < numRows && cells[auxX][y] instanceof WhiteCell; ++auxX) ++num_whites;
+        for (--x; cells[x][y] instanceof WhiteCell; --x) ++numWhites;
+        for (++auxX; auxX < numRows && cells[auxX][y] instanceof WhiteCell; ++auxX) ++numWhites;
 
-        return new Pair (cells[x][y].getColumnValue(), num_whites);
+        return new Pair (cells[x][y].getColumnValue(), numWhites);
     }
 
     /**
@@ -758,13 +758,13 @@ public class Kakuro {
      * @return It returns the row value of the black cell LEFT of the white cell indicated by x and y
      * and also his number of white horizontal cells
      */
-    private Pair search_SN_blackLEFT (int x, int y) {
-        int num_whites = 1;
+    private Pair searchSNBlackLEFT (int x, int y) {
+        int numWhites = 1;
         int auxY = y;
-        for (--y; cells[x][y] instanceof WhiteCell; --y) ++num_whites;
-        for (++auxY; auxY < numColumns && cells[x][auxY] instanceof WhiteCell; ++auxY) ++num_whites;
+        for (--y; cells[x][y] instanceof WhiteCell; --y) ++numWhites;
+        for (++auxY; auxY < numColumns && cells[x][auxY] instanceof WhiteCell; ++auxY) ++numWhites;
 
-        return new Pair (cells[x][y].getRowValue(), num_whites);
+        return new Pair (cells[x][y].getRowValue(), numWhites);
     }
 
 
@@ -790,8 +790,8 @@ public class Kakuro {
         for (int i = 0; i < numRows; ++i) {
             for (int j = 0; j < numColumns; ++j) {
                 if (cells[i][j] instanceof WhiteCell) {
-                    Pair top = search_SN_blackTOP(i, j);
-                    Pair left = search_SN_blackLEFT(i, j);
+                    Pair top = searchSNBlackTOP(i, j);
+                    Pair left = searchSNBlackLEFT(i, j);
                     if (!comb.containsKey(top.second()*100 + top.first()) || !comb.containsKey(left.second()*100 + left.first())) return false;
                     Integer aux = comb.get(top.second()*100 + top.first()) & comb.get(left.second()*100 + left.first());
                     notes.put(i*100+j, aux);
@@ -821,10 +821,10 @@ public class Kakuro {
             }
         }
         else {
-            int possible_numbers = notes.get(posX*100 + posY);
+            int possibleNumbers = notes.get(posX*100 + posY);
             int number = 1;
-            while (possible_numbers!= 0) {
-                if (possible_numbers % 2 != 0) {
+            while (possibleNumbers!= 0) {
+                if (possibleNumbers % 2 != 0) {
                     if (checkH(posX, posY, number) && checkV(posX, posY, number)) {
                         cells[posX][posY].setValue(number);
 
@@ -833,7 +833,7 @@ public class Kakuro {
                     }
                 }
                 ++number;
-                possible_numbers /= 2;
+                possibleNumbers /= 2;
             }
         }
         return false;
@@ -855,10 +855,10 @@ public class Kakuro {
         Pair aux = posWhites.get(k);
         int posX = aux.first();
         int posY = aux.second();
-        int possible_numbers = notes.get(posX*100 + posY);
+        int possibleNumbers = notes.get(posX*100 + posY);
         int number = 1;
-        while (possible_numbers!= 0) {
-            if (possible_numbers % 2 != 0) {
+        while (possibleNumbers!= 0) {
+            if (possibleNumbers % 2 != 0) {
                 if (checkH(posX, posY, number) && checkV(posX, posY, number)) {
                     cells[posX][posY].setValue(number);
                     if (solveMultiple(posWhites, k + 1) && solutions == 2) return true;
@@ -866,7 +866,7 @@ public class Kakuro {
                 }
             }
             ++number;
-            possible_numbers /= 2;
+            possibleNumbers /= 2;
         }
         return false;
     }

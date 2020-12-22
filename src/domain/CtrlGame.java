@@ -82,10 +82,10 @@ public class CtrlGame {
         activeGame.updateStats(time, hints, state);
     }
 
-    public ArrayList<Integer> getGames(String username, int id_kakuro){
+    public ArrayList<Integer> getGames(String username, int idKakuro){
         ArrayList<Integer> list = new ArrayList<>();
         for(Game g : games){
-            if (g.getKakuroId() == id_kakuro && g.getPlayer().equals(username)) {
+            if (g.getKakuroId() == idKakuro && g.getPlayer().equals(username)) {
                 list.add(g.getGameId());
             }
         }
@@ -106,9 +106,9 @@ public class CtrlGame {
         return activeGame;
     }
 
-    public Game getGame(int id_game){
+    public Game getGame(int idGame){
         for (Game g : games) {
-            if ((g.getGameId() == id_game)) {
+            if ((g.getGameId() == idGame)) {
                 return g;
             }
         }

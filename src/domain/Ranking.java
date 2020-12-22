@@ -1,14 +1,14 @@
 package domain;
 
 public class Ranking implements Comparable<Ranking> {
-    private int kakuro_id;
+    private int kakuroId;
     private String username;
     private int time;
     private int hints;
     private int scores;
 
     public Ranking (int k, String u, int t, int h, int s) {
-        this.kakuro_id = k;
+        this.kakuroId = k;
         this.username = u;
         this.time = t;
         this.hints = h;
@@ -16,7 +16,7 @@ public class Ranking implements Comparable<Ranking> {
     }
 
     public int getKakuroId () {
-        return kakuro_id;
+        return kakuroId;
     }
 
     public String getUser () {
@@ -39,12 +39,12 @@ public class Ranking implements Comparable<Ranking> {
     public int compareTo(Ranking ranking) {
         int id = ranking.getKakuroId();
         int sc = ranking.getScores();
-        if (this.kakuro_id == id) return sc - this.scores;
-        else return this.kakuro_id - id;
+        if (this.kakuroId == id) return sc - this.scores;
+        else return this.kakuroId - id;
     }
 
     @Override
     public String toString() {
-        return "KAKURO_ID:" + kakuro_id + ", USERNAME: " + username + ", TIME:" + time + ", HINTS: " + hints + ", SCORES: " + scores;
+        return "kakuroId:" + kakuroId + ", USERNAME: " + username + ", TIME:" + time + ", HINTS: " + hints + ", SCORES: " + scores;
     }
 }

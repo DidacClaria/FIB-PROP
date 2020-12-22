@@ -1,2 +1,0 @@
-Execution Time: 3701
-Hints asked: 2

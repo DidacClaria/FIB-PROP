@@ -59,7 +59,6 @@ public class KakuroGrid extends JPanel {
             field[posX][posY] = String.valueOf(value);
         }
         catch (Exception e){
-//            System.out.println("Value: "+value+" not added at :"+posX+posY);
         }
     }
 }

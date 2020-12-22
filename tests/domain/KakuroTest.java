@@ -17,7 +17,7 @@ public class KakuroTest {
     @Test
     public void KakuroTest(){
         System.out.println("Kakuro");
-        Kakuro k = new Kakuro(5,5,"EASY",0);
+        Kakuro k = new Kakuro(5,5,"EASY");
         int id = k.getIdKakuro();
         assertNotNull(k);
     }
@@ -28,7 +28,7 @@ public class KakuroTest {
     @Test
     public void getIdKakuroTest(){
         System.out.println("getIdKakuro");
-        Kakuro k = new Kakuro(2,2,"EASY",0);
+        Kakuro k = new Kakuro(2,2,"EASY");
         k.setIdKakuro(23);
 
         int id = k.getIdKakuro();
@@ -40,7 +40,7 @@ public class KakuroTest {
     @Test
     public void setIdKakuroTest(){
         System.out.println("setIdKakuro");
-        Kakuro k = new Kakuro(2,2,"EASY",0);
+        Kakuro k = new Kakuro(2,2,"EASY");
         k.setIdKakuro(5);
 
         int id = k.getIdKakuro();
@@ -75,7 +75,7 @@ public class KakuroTest {
     public void proposeKakuroTest(){
         System.out.println("proposeKakuro");
         int numR = 5, numC = 5;
-        Kakuro k = new Kakuro(5,5,"EASY",0);
+        Kakuro k = new Kakuro(5,5,"EASY");
         String [][] field = {{"*","C16","C6","*","*"}, {"F9","0","0","C13","*"},{"F16","0","0","0","C16"},{"*","F12","0","0","0"},
                {"*","*","F14","0","0"}};
         boolean prop = k.proposeKakuro(numR,numC,field);

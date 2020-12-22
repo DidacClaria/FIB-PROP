@@ -62,7 +62,6 @@ public class StartedGameView {
 
     /**
      * This method initializes a new game with the kakuro indicated
-     * @param idKakuro Indicates the identifier of the kakuro referenced.
      */
     public void iniPlayGameView () {
         ctrlPresentation.iniPlayGameView(idKakuro);

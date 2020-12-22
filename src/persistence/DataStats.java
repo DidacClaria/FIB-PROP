@@ -8,11 +8,20 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Scanner;
 
+/**
+ * This class has the responsibility of scrapping through the stats data stored in the persistance layer. It communicates with the Persistance Controller.
+ */
 public class DataStats {
 
+    /**
+     * Default empty class constructor
+     */
     public DataStats() {
     }
 
+    /**
+     * This method is in charge of writing in the file where are stored the stats of a game.
+     */
     public void updateStats (String user, int idKakuro, int time, int hints, int scores, File f, FileWriter wr) {
         try {
             Scanner sca = new Scanner(f);
@@ -43,6 +52,9 @@ public class DataStats {
         }
     }
 
+    /**
+     * This method is in charge of listing the ranking or stats.
+     */
     public String[][] listRankingOrStats (File s){
         try {
             Path path = Paths.get(s.getPath());

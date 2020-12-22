@@ -3,20 +3,20 @@ package persistence;
 import java.io.File;
 import java.io.IOException;
 
+/**
+ * This class has the responsibility of scrapping through the user data stored in the persistence layer. It communicates with the Persistence Controller.
+ */
 public class DataUser {
 
 
     /**
-     *
+     * Default empty class constructor
      */
     public DataUser() {
     }
 
     /**
-     *
-     * @param user
-     * @param f
-     * @return
+     * This method creates a new user in persistence layer.
      */
     public boolean createUser(File user, File f) {
         try {
@@ -34,8 +34,7 @@ public class DataUser {
     }
 
     /**
-     *
-     * @param f
+     * This method is responsible to delete a User and the files with all his information.
      */
     public void deleteUser (File f) {
         if (f.exists()) {
@@ -61,12 +60,12 @@ public class DataUser {
 
     }
 
-    /**
-     * Returns true if a user exists
-
-     public boolean exists_user(String name){
-     File user = new File(route + "/" + name);
-     if (user.exists()) return true;
-     return false;
-     }*/
+//    /**
+//     * Returns true if a user exists
+//
+//     public boolean exists_user(String name){
+//     File user = new File(route + "/" + name);
+//     if (user.exists()) return true;
+//     return false;
+//     }*/
 }

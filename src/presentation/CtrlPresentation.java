@@ -253,12 +253,13 @@ public class CtrlPresentation {
 
     /**
      * This method will make the PlayGameView visible.
-     * @param idGame It indicates which game has to be loaded.
+     * @param game It indicates which game has to be loaded.
      */
     public void makePlayGameViewVisible(String game) { mainFrame.makePlayGameViewVisible(game); }
 
     /**
      * This method will make the RankingView visible.
+     * @param globalRank Indicates whether it has to show the globalRanking or the PersonalStats view.
      */
     public void makeRankingViewVisible(boolean globalRank) { mainFrame.makeRankingViewVisible(globalRank); }
 

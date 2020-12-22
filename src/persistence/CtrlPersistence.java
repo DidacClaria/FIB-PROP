@@ -1,21 +1,16 @@
 package persistence;
 
 import domain.CtrlDomain;
-import domain.Pair;
-
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Objects;
 
 /**
- * Persistence Controller Class.
+ * Persistence Controller Class. It communicates with the Domain Controller and with the specific classes of the data in this layer.
  */
 public class CtrlPersistence {
     //ATTRIBUTES
 
-    /**
-     * Domain Controller.
-     */
     private final CtrlDomain ctrlDomain;
     private final DataKakuro dataKakuro;
     private final DataStats dataStats;
@@ -37,11 +32,10 @@ public class CtrlPersistence {
         route = "./src/persistence/data";
         routek = route + "/kakuros";
         InitializePersistance();
-
     }
 
     /**
-     *
+     * This method initializes the layer creating new folders in the specified route if they don't exist.
      */
     private void InitializePersistance(){
         File data = new File(route);
@@ -57,6 +51,10 @@ public class CtrlPersistence {
     }
 
 
+    /**
+     * This method provides all the information saved in persistence about the kakuros created.
+     * @return A list with all the kakuros existing in the system.
+     */
     public ArrayList<String[][]> loadKakuros(){
         ArrayList<String[][]> kakuros = new ArrayList<>();
         File f = new File(routek);
@@ -68,6 +66,10 @@ public class CtrlPersistence {
         return kakuros;
     }
 
+    /**
+     * This method provides all the information about the users registered in the system.
+     * @return A list with all the usernames.
+     */
     public ArrayList<String> loadUsers(){
         ArrayList<String> users = new ArrayList<>();
         File f = new File(route);
@@ -79,16 +81,21 @@ public class CtrlPersistence {
         return users;
     }
 
+    /**
+     * This method provides a list with all the started games of a User.
+     * @param user Indicates the username that requires this information.
+     * @return A list with all the information of the games and stats
+     */
     public String[] startedKakuros(String user){
         File f = new File(route + "/" + user);
         return f.list();
     }
 
     /**
-     *
-     * @param idKakuro
-     * @param kakuro
-     * @return
+     * This method creates a new Kakuro in persistence layer.
+     * @param idKakuro Indicates the id to be saved with.
+     * @param kakuro It contains all the information of the kakuro created.
+     * @return If the return value is true the new Kakuro was saved correctly, if not it will return false.
      */
     public boolean newKakuro(int idKakuro, String [][] kakuro){
         try{
@@ -102,10 +109,10 @@ public class CtrlPersistence {
     }
 
     /**
-     *
-     * @param idKakuro
-     * @param solution
-     * @return
+     * This method is used to show either the solution or the field saved in persistence of a single game.
+     * @param idKakuro It indicates the identifier of the kakuro.
+     * @param solution If true means that is asking for the solution, if false for the actual status.
+     * @return It returns the information of each cell in a String matrix.
      */
     public String[][] showKakuro(int idKakuro, boolean solution){
         File k;
@@ -115,10 +122,10 @@ public class CtrlPersistence {
     }
 
     /**
-     *
-     * @param user
-     * @param idKakuro
-     * @return
+     * This method is used to save a new Game in persistence.
+     * @param user Indicates the user that wants to create a new Game.
+     * @param idKakuro Indicates the identifier of the game scenario.
+     * @return It returns the id of the Game created.
      */
     public int newGame (String user, int idKakuro){
         try{
@@ -140,14 +147,14 @@ public class CtrlPersistence {
     }
 
     /**
-     *
-     * @param user
-     * @param idKakuro
-     * @param idGame
-     * @param time
-     * @param hints
-     * @param kakuro
-     * @return
+     * This method is used to overwrite a game in persistence layer.
+     * @param user Indicates the player.
+     * @param idKakuro Identifies the gameScenario.
+     * @param idGame Identifies the game to overwrite.
+     * @param time Indicates the time passed.
+     * @param hints Indicates the number of hints asked.
+     * @param kakuro It contains all the information of the field.
+     * @return It returns if it was possible to save or not.
      */
     public boolean saveGame (String user, int idKakuro, int idGame, int time, int hints, String [][] kakuro){
         try{
@@ -160,25 +167,26 @@ public class CtrlPersistence {
 
     }
 
-    /**
-     *
-     * @param user
-     * @param idKakuro
-     * @param idGame
-     * @param kakuro
-     * @return
-     */
-    public boolean validateCorrectnessGame (String user, int idKakuro, int idGame, String [][] kakuro){
-        String [][] solution = showKakuro(idKakuro, true);
-        File f = new File(route + "/" + user + "/" + "kakuro_" + idKakuro + "/" + "game_" + idGame + ".txt");
-        File fStats = new File(route + "/" + user + "/" + "kakuro_" + idKakuro + "/" + "game_" + idGame + "_stats.txt");
-        return dataKakuro.validateCorrectnessGame(solution, f, fStats, kakuro);
-    }
+//    /**
+//     *
+//     * @param user
+//     * @param idKakuro
+//     * @param idGame
+//     * @param kakuro
+//     * @return
+//     */
+//    public boolean validateCorrectnessGame (String user, int idKakuro, int idGame, String [][] kakuro){
+//        String [][] solution = showKakuro(idKakuro, true);
+//        File f = new File(route + "/" + user + "/" + "kakuro_" + idKakuro + "/" + "game_" + idGame + ".txt");
+//        File fStats = new File(route + "/" + user + "/" + "kakuro_" + idKakuro + "/" + "game_" + idGame + "_stats.txt");
+//        return dataKakuro.validateCorrectnessGame(solution, f, fStats, kakuro);
+//    }
 
     /**
-     * @param user
-     * @param idKakuro
-     * @param idGame
+     * This operation is used to delete an existing game.
+     * @param user Indicates the user that wants to delete a game.
+     * @param idKakuro Indicates the game scenario of the game to delete.
+     * @param idGame Identifies the game to delete.
      */
     public void deleteGame (String user, int idKakuro, int idGame) {
         File f = new File(route + "/" + user + "/" + "kakuro_" + idKakuro + "/" + "game_" + idGame + ".txt");
@@ -195,9 +203,9 @@ public class CtrlPersistence {
     }
 
     /**
-     *
-     * @param name
-     * @return
+     * This method is used to register a new User in the system.
+     * @param name Indicates the username that the user specified.
+     * @return It indicates whether the user was possible to create or not.
      */
     public boolean createUser (String name){
         File user = new File(route + "/" + name);
@@ -206,8 +214,8 @@ public class CtrlPersistence {
     }
 
     /**
-     *
-     * @param user
+     * This method is in charge to delete a specified user.
+     * @param user Indicates the username of the user to delete.
      */
     public void deleteUser (String user) {
         File f = new File(route + "/" + user);
@@ -215,13 +223,13 @@ public class CtrlPersistence {
     }
 
     /**
-     *
-     * @param user
-     * @param idKakuro
-     * @param time
-     * @param hints
-     * @param scores
-     * @param global
+     * This method overwrites the stats of a game.
+     * @param user Indicates the player.
+     * @param idKakuro Indicates the gameScenario of the game to save.
+     * @param time Indicates the new value of time to save.
+     * @param hints Indicates the new value of number of hints to save.
+     * @param scores Indicates the new score to be saved with.
+     * @param global Indicates if this stats are updated in the globalRanking or the personalStats list.
      */
     public void updateStats (String user, int idKakuro, int time, int hints, int scores, boolean global) {
         try{
@@ -242,10 +250,10 @@ public class CtrlPersistence {
     }
 
     /**
-     *
-     * @param user
-     * @param global
-     * @return
+     * This method lists all the entries on the personal stats list or global ranking.
+     * @param user Indicates the active user.
+     * @param global Indicates whether is requested the global ranking list or the personal stats list.
+     * @return A list with all the entries in the selected ranking.
      */
     public String[][] listRankingOrStats(String user, boolean global){
         File s;
@@ -255,17 +263,37 @@ public class CtrlPersistence {
         return dataStats.listRankingOrStats(s);
     }
 
+    /**
+     * This method is used to get the information of all the games of a User.
+     * @param user Indicates the user to search for.
+     * @param idKakuro Indicates the game scenario for the games to search.
+     * @return A list of all the identifiers of games created.
+     */
     public String[] getGames (String user, int idKakuro) {
         File f = new File(route + "/" + user + "/" + "kakuro_" + idKakuro);
         if (!f.exists()) return null;
         return f.list();
     }
 
+    /**
+     * This method asks for the information of a single game.
+     * @param user Indicates the creator.
+     * @param idKakuro Indicates the game scenario of the game.
+     * @param idGame Indicates the id of the game to get.
+     * @return The information of the field of the specified game.
+     */
     public String[][] loadGame(String user, int idKakuro, int idGame){
         File f = new File(route + "/" + user + "/" + "kakuro_" + idKakuro + "/" + "game_" + idGame + ".txt");
         return dataKakuro.showKakuro(f);
     }
 
+    /**
+     * This method asks for the stats of a single game.
+     * @param user Indicates the creator.
+     * @param idKakuro Indicates the game scenario of the game.
+     * @param idGame Indicates the identifier of the game to search for.
+     * @return The stats of that specified game.
+     */
     public String loadStats(String user, int idKakuro, int idGame) {
         File fStats = new File(route + "/" + user + "/" + "kakuro_" + idKakuro + "/" + "game_" + idGame + "_stats.txt");
         return dataKakuro.showGameStats(fStats);

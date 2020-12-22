@@ -66,6 +66,15 @@ public class CtrlPresentation {
     public void iniSelectGameList (int [] gamesId) {mainFrame.iniSelectGameList(gamesId);}
 
     /**
+     * This method initializes a game view in progress or starts a new game.
+     * @param idKakuro It identifies the kakuro of the games.
+     */
+    public void iniPlayGameView (int idKakuro) {
+        mainFrame.iniPlayGameView(idKakuro);
+    }
+
+
+    /**
      * This method sends the information collected in the LogInView to be processed by the domain
      * @param username This attribute indicates the username the new user logged in.
      */

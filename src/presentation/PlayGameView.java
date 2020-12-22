@@ -32,12 +32,15 @@ public class PlayGameView {
     private static int cnt=0, timerCount=0, numHints=0;
     Timer  timer;
 
+    private int kakuro_id;
+
     /**
      * Default PlayGameView constructor.
      * @param ctrlPresentation Reference of the presentation controller.
      */
-    public PlayGameView(CtrlPresentation ctrlPresentation) {
+    public PlayGameView(CtrlPresentation ctrlPresentation, int idKakuro) {
         this.ctrlPresentation = ctrlPresentation;
+        this.kakuro_id = idKakuro;
         initComponents();
     }
 
@@ -64,8 +67,8 @@ public class PlayGameView {
             @Override
             public void actionPerformed(ActionEvent e) {
                 ++numHints;
-//                String newValue = ctrlPresentation.askHint(numHints);
-//
+                String newValue = ctrlPresentation.askHint(gamesScenario.getFieldStatus());
+
             }
         });
         SAVEANDEXITButton.addActionListener(new ActionListener() {

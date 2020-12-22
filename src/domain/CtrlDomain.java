@@ -446,8 +446,18 @@ public class CtrlDomain {
      * @return It returns the value of the Hint and the position X and Y as well as the number of current hints
      * in a formatted string like: "value:posX:posY:numHints". If it fails it will return the error message.
      */
-    public String askHint(String[][] field){
-        return "No hints available";
+    public String askHint(String[][] game, int idKakuro) {
+
+        ArrayList<Pair> g = new ArrayList<>();
+        for (int i = 0; i < game.length; ++i) {
+            for (int j = 0; j < game[0].length; ++j) {
+                if (game[i][j].equals("0")) g.add(new Pair(i, j));
+            }
+            if (g.size() == 0) return null;
+        }
+        int random = (int)(Math.random()*g.size());
+        String[][] solution = ctrlKakuro.listKakuro(idKakuro).getSolution();
+        return solution[g.get(random).first()][g.get(random).second()]+":"+g.get(random).first()+":"+g.get(random).second();
     }
     
     /**

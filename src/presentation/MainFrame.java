@@ -31,7 +31,6 @@ public class MainFrame extends JFrame {
 
         this.logInView = new LogInView(ctrlPresentation);
         this.createKakuroView = new CreateKakuroView(ctrlPresentation);
-        this.playGameView = new PlayGameView(ctrlPresentation);
 
         mainFrameInit();
 
@@ -61,6 +60,12 @@ public class MainFrame extends JFrame {
      * @param gamesId This variable contains all the identifiers of kakuros of the global repository.
      */
     public void iniSelectGameList (int [] gamesId) {this.selectGameView = new SelectGameView(ctrlPresentation, gamesId);}
+
+    /**
+     * This method initializes a game view in progress or starts a new game.
+     * @param idKakuro It identifies the kakuro of the games.
+     */
+    public void iniPlayGameView (int idKakuro) {this.playGameView = new PlayGameView(ctrlPresentation, idKakuro);}
 
     /**
      * This method initialize the properties of the frame created.

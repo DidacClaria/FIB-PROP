@@ -61,6 +61,14 @@ public class StartedGameView {
     }
 
     /**
+     * This method initializes a new game with the kakuro indicated
+     * @param idKakuro Indicates the identifier of the kakuro referenced.
+     */
+    public void iniPlayGameView () {
+        ctrlPresentation.iniPlayGameView(idKakuro);
+    }
+
+    /**
      * This method indicates to the presentation controller to set the specified game view visible.
      * @param idGame Indicates whether the view must show or not.
      */

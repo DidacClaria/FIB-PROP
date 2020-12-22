@@ -73,6 +73,10 @@ public class CtrlDomain {
     }
 
 
+
+    /**
+     * Function that saves de data Games of the active user in the system.
+     */
     private void dataGame(ArrayList<String> users){
         for (String u: users){
             String[] kakuros = ctrlPersistence.startedKakuros(u);

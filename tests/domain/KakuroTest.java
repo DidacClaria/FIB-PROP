@@ -12,12 +12,12 @@ import static org.junit.Assert.*;
 public class KakuroTest {
 
     /**
-     * Test of getIdKakuro method of class Kakuro
+     * Test of Kakuro method of class Kakuro
      */
     @Test
-    public void Kakuro_test(){
+    public void Kakuro_test(int x, int y, int d, int fc){
         System.out.println("Kakuro");
-        Kakuro k = new Kakuro(5,5);
+        Kakuro k = new Kakuro(5,5,);
         int id = k.getIdKakuro();
         assertNotNull(k);
     }

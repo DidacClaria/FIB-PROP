@@ -68,17 +68,27 @@ public class CtrlDomain {
     private void dataGame(ArrayList<String> users){
         for (String u: users){
             String[] kakuros = ctrlPersistence.startedKakuros(u);
-            for (String k : kakuros){
-                if (k != "personal_stats.txt"){
-                    k = k.replace("kakuro_", "");
-                    int idk = Integer.parseInt(k);
-                    String[] games = ctrlPersistence.getGames(u, idk);
-                    for (String g : games) {
-                        String[][] game = ctrlPersistence.loadGame(u, idk, );
+            if (kakuros != null) {
+                for (String k : kakuros) {
+                    if (k.contains("kakuro_")) {
+                        k = k.replace("kakuro_", "");
+                        int idk = Integer.parseInt(k);
+                        String[] games = ctrlPersistence.getGames(u, idk);
+                        for (String g : games) {
+                            if (!g.contains("_stats")) {
+                                g = g.replace("game_", "");
+                                g = g.replace(".txt", "");
+                                int idg = Integer.parseInt(g);
+                                String[][] game = ctrlPersistence.loadGame(u, idk, idg);
+                                String stats = ctrlPersistence.loadStats(u, idk, idg);
+                                stats = stats.replace("Execution Time: ", "");
+                                stats = stats.replace("Hints asked: ", "");
+                                ctrlGame.loadGame(u, idk, idg, game, stats);
+                            }
+                        }
                     }
                 }
             }
-
         }
     }
 

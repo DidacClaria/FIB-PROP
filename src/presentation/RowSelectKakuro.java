@@ -73,6 +73,7 @@ public class RowSelectKakuro extends JPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
                 gameView.setVisible(false);
+                gameView.iniPlayGameView(idKakuro);
                 gameView.setGameVisible(gameView.createNewGame(idKakuro));
             }
         });

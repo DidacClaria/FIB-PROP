@@ -66,6 +66,15 @@ public class CtrlPresentation {
     public void iniSelectGameList (int [] gamesId) {mainFrame.iniSelectGameList(gamesId);}
 
     /**
+     * This method initializes a game view in progress or starts a new game.
+     * @param idKakuro It identifies the kakuro of the games.
+     */
+    public void iniPlayGameView (int idKakuro) {
+        mainFrame.iniPlayGameView(idKakuro);
+    }
+
+
+    /**
      * This method sends the information collected in the LogInView to be processed by the domain
      * @param username This attribute indicates the username the new user logged in.
      */
@@ -193,8 +202,8 @@ public class CtrlPresentation {
      * @param field Current state of the game scenario.
      * @return It will contain in a formatted String the information of "posX:posY:value" if there are no more hints available it will return an error message.
      */
-    public String askHint(String[][] field){
-        return null;
+    public String askHint(int idKakuro, String[][] field){
+        return ctrlDomain.askHint(idKakuro, field);
     }
 
     /**
@@ -202,7 +211,9 @@ public class CtrlPresentation {
      * @param field It will contain the current state of the game scenario.
      * @return If the field is correct the boolean will be true either way will be false.
      */
-    public boolean validateSolution(String[][] field){return false;}
+    public boolean validateSolution(int idKakuro, int time, int hints, String[][] field){
+        return ctrlDomain.validateGame(idKakuro, time, hints, field);
+    }
 
     /**
      * This method will send a signal to the domain controller in order to update the state of the current game scenario for the current one.

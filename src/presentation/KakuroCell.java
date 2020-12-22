@@ -59,8 +59,8 @@ public class KakuroCell extends JFormattedTextField implements KeyListener {
         setHorizontalAlignment(JLabel.CENTER);
         setForeground(Color.black);
         setBackground(Color.white);
-        if (value>=1 && value<=9) setText(String.valueOf(value));
-        else setText("");
+        if (value == -1) setText("");
+        else setText(String.valueOf(value));
         setEnabled(enabled);
         if (enabled) this.addKeyListener(this);
     }
@@ -90,11 +90,10 @@ public class KakuroCell extends JFormattedTextField implements KeyListener {
                         parent.setValueField(posX,posY,c-'0');
                     }
                 }
+
             }
             catch (Exception ignored) {
             }
-
-
         }
     }
 

@@ -221,22 +221,19 @@ public class CtrlDomain {
      * @return It returns the value of the Hint and the position X and Y as well as the number of current hints
      * in a formatted string like: "value:posX:posY:numHints". If it fails it will return the error message.
      */
-    public String askHint(String[][] game, String idGame) {
-        int cont = 0;
-        ArrayList<Pair> g = new ArrayList<Pair>();
+    public String askHint(int idKakuro, String[][] game) {
+
+        ArrayList<Pair> g = new ArrayList<>();
         for (int i = 0; i < game.length; ++i) {
-            for (int j = 0; j < game[i].length; ++j) {
-                if (game[i][j] == "?"){
-                    g.add(new Pair(i, j));
-                    ++cont;
-                }
+            for (int j = 0; j < game[0].length; ++j) {
+                if (game[i][j].equals("0")) g.add(new Pair(i, j));
             }
         }
-        int random = (int)(Math.random()*cont+1);
-//        String[][] solution = ctrlKakuro.listKakuro(idGame).getSolution();
-//        String r = solution[g.get(random-1).first()]+":"+solution[g.get(random-1).second()]+":"+g.get(random-1).first()+":"+g.get(random-1).second();
-//        return r;
-        return null;
+        if (g.size() == 0) return null;
+
+        int random = (int)(Math.random()*g.size());
+        String[][] solution = ctrlKakuro.listKakuro(idKakuro).getSolution();
+        return solution[g.get(random).first()][g.get(random).second()]+":"+g.get(random).first()+":"+g.get(random).second();
     }
     
     /**
@@ -247,7 +244,7 @@ public class CtrlDomain {
      */
     public void saveGame(int time, int hints, String [][] newState){
         ctrlPersistence.saveGame(getActiveUser(), ctrlGame.getActiveGame().getKakuroId(), ctrlGame.getActiveGame().getGameId(), time, hints, newState);
-        ctrlGame.saveGame(getActiveUser(),time, hints, newState);
+        ctrlGame.saveGame(time, hints, newState);
     }
 
     /**
@@ -259,16 +256,22 @@ public class CtrlDomain {
      * @param kakuro It contains the solution provided by the user.
      */
 
-    public void validateGame (int idKakuro, int idGame, int time, int hints, String [][] kakuro) {
-        // CANVIAR VALIDATE CORRECTNESS PERQUE ES FACI DESDE DOMINI AMB SOLUTION DE KAKURO
-        /*
-        String user = getActiveUser();
-        if (ctrlPersistence.validateCorrectnessGame(user, ctrlGame.getActiveGame().getKakuroId(), ctrlGame.getActiveGame().getGameId(), kakuro)) {
-            ctrlPersistence.updateStats(user, ctrlGame.getActiveGame().getKakuroId(), time, hints, scores, true);
-            ctrlPersistence.updateStats(user, ctrlGame.getActiveGame().getKakuroId(), time, hints, scores, false);
-        }
-        */
+    public boolean validateGame (int idKakuro, int time, int hints, String [][] game) {
 
+        String [][] solution = ctrlKakuro.listKakuro(idKakuro).getSolution();
+        for (int i = 0; i < game.length; ++i) {
+            for (int j = 0; j < game[0].length; ++j) {
+                if (!game[i][j].equals(solution[i][j])) return false;
+            }
+        }
+
+        String user = getActiveUser();
+        int idGame = ctrlGame.getActiveGame().getGameId();
+        int scores = ctrlGame.getActiveGame().getScores();
+
+        ctrlPersistence.updateStats(user, idKakuro, time, hints, scores, true);
+        ctrlPersistence.updateStats(user, idKakuro, time, hints, scores, false);
+        return false;
     }
 
     /**
@@ -288,9 +291,8 @@ public class CtrlDomain {
      */
     public void deleteGame (int idKakuro, int idGame) {
         String user = getActiveUser();
-        ctrlPersistence.deleteGame(user, ctrlGame.getGame(idGame).getKakuroId(), idGame);
-        ctrlGame.deleteGame(user,ctrlGame.getGame(idGame).getKakuroId(),idGame);
-        ctrlGame.setActiveGame(user,idKakuro,-1);
+        ctrlPersistence.deleteGame(user, idKakuro, idGame);
+        ctrlGame.deleteGame(user, idKakuro, idGame);
     }
 
     /**
@@ -306,6 +308,5 @@ public class CtrlDomain {
     public String[][] listPersonalStats(){
         return ctrlGame.listRankingOrStats(getActiveUser(), false);
     }
-
 
 }

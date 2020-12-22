@@ -31,12 +31,15 @@ public class PlayGameView {
     private static int cnt=0, timerCount=0, numHints=0;
     Timer  timer;
 
+    private int kakuro_id;
+
     /**
      * Default PlayGameView constructor.
      * @param ctrlPresentation Reference of the presentation controller.
      */
-    public PlayGameView(CtrlPresentation ctrlPresentation) {
+    public PlayGameView(CtrlPresentation ctrlPresentation, int idKakuro) {
         this.ctrlPresentation = ctrlPresentation;
+        this.kakuro_id = idKakuro;
         initComponents();
     }
 
@@ -56,15 +59,32 @@ public class PlayGameView {
         VALIDATESOLUTIONButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-//                ctrlPresentation.validateSolution(gamesScenario.getField());
+                ctrlPresentation.validateSolution(kakuro_id, timerCount, numHints, gamesScenario.getFieldStatus());
             }
         });
         ASKHINTButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                ++numHints;
-//                String newValue = ctrlPresentation.askHint(numHints);
-//
+                if (numHints+1 <= 3) {
+                    ++numHints;
+                    String newValue = ctrlPresentation.askHint(kakuro_id, gamesScenario.getFieldStatus());
+                    String[] parts = newValue.split(":");
+                    gamesScenario.setValueField(Integer.parseInt(parts[1]), Integer.parseInt(parts[2]), Integer.parseInt(parts[0]));
+
+                    String [][] GamesHint = gamesScenario.getFieldStatus();
+
+                    kakuroContainer.removeAll();
+                    kakuroContainer.repaint();
+                    kakuroContainer.revalidate();
+
+                    gamesScenario = new KakuroGrid(GamesHint.length,GamesHint[0].length,GamesHint,true);
+                    kakuroContainer.add(gamesScenario);
+                    kakuroContainer.repaint();
+                    kakuroContainer.revalidate();
+                }
+                else {
+                    errorMessage.setText("You have already used it 3 times!");
+                }
             }
         });
         SAVEANDEXITButton.addActionListener(new ActionListener() {

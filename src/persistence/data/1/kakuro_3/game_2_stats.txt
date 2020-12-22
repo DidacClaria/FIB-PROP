@@ -1,2 +1,2 @@
 Execution Time: 100
-Hints asked: 3
+Hints asked: 0

@@ -29,6 +29,8 @@ public class DataKakuro {
      */
     public boolean newKakuro(FileWriter wr, FileWriter wrSol, String [][] kakuro, File GlobalRanking){
         try {
+            wr.write(kakuro.length + "," + kakuro[0].length + "\n");
+            wrSol.write(kakuro.length + "," + kakuro[0].length + "\n");
             for (int i = 0; i < kakuro.length; i++) {
                 for (int j = 0; j < kakuro[0].length; j++) {
                     if (kakuro[i][j].length() == 1 && kakuro[i][j] != "*") wr.write("0");

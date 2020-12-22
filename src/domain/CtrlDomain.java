@@ -350,11 +350,12 @@ public class CtrlDomain {
      * @param numColumns It indicates the number of columns that the Kakuro will have.
      * @param diff It indicates the difficulty of the game.
      * @param fc It indicates the number of filled cells.
+     * @return It returns the kakuro representated in String [][] with some white cells filled indicated by fc.
      */
-    public int generateKakuro(int numRows, int numColumns, String diff, int fc){
-        ctrlKakuro.generateKakuro(numRows, numColumns, diff, fc);
+    public String [][] generateKakuro(int numRows, int numColumns, String diff, int fc){
+        String [][] result = ctrlKakuro.generateKakuro(numRows, numColumns, diff, fc);
         ctrlPersistence.newKakuro(ctrlKakuro.listIdKakuro(), ctrlKakuro.listKakuro(ctrlKakuro.listIdKakuro()).listKakuro());
-        return ctrlKakuro.listIdKakuro();
+        return result;
     }
 
 //    /**

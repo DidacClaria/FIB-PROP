@@ -56,14 +56,22 @@ public class CtrlDomain {
         ini_execution();
     }
 
-
+    /**
+     * Consultant function
+     * @return It returns a ArrayList of the information of all the kakuros
+     */
     private ArrayList<String[][]> dataKakuros(){
         return ctrlPersistence.loadKakuros();
     }
 
+    /**
+     * Consultant function
+     * @return It returns a ArrayList of the information of all the users
+     */
     private ArrayList<String> dataUsers(){
         return ctrlPersistence.loadUsers();
     }
+
 
     private void dataGame(ArrayList<String> users){
         for (String u: users){
@@ -310,11 +318,6 @@ public class CtrlDomain {
         listGlobalRanking(); // no implementada
     }
 
-    public String[] getGames(String user, int id_game) {
-        return ctrlPersistence.getGames(user, id_game);
-    }
-
-
 
     /**
      * If the proposed Kakuro by the User at the Presentation Layer is valid, it is saved at the Persistence Layer and it's added to the collection of Kakuros that a User has.
@@ -336,6 +339,8 @@ public class CtrlDomain {
      * This method uses a generation algorithm of a Kakuro, according to the following parameters.
      * @param numRows It indicates the number of rows that the Kakuro will have.
      * @param numColumns It indicates the number of columns that the Kakuro will have.
+     * @param diff It indicates the difficulty of the game.
+     * @param fc It indicates the number of filled cells.
      */
     public int generateKakuro(int numRows, int numColumns, int diff, int fc){
         ctrlKakuro.generateKakuro(numRows, numColumns, diff, fc);
@@ -433,7 +438,7 @@ public class CtrlDomain {
         return Game;
     }
     /**
-     *
+     * This method is used to continue playing a started game.
      * @param user It indicates the user who is playing the game
      * @param idKakuro It indicates the game scenario
      */
@@ -475,9 +480,9 @@ public class CtrlDomain {
 
     /**
      * This method updates the current state of the gameScenario being played.
-     * @param time
-     * @param hints
-     * @param newState
+     * @param time Indicates the time the user has been solving the kakuro
+     * @param hints Indicates the number of hints that the user has used
+     * @param newState Indicates the state of the Game
      */
     public void saveGame(int time, int hints, String [][] newState){
         ctrlPersistence.saveGame(ctrlUser.getActiveUser(), ctrlGame.getActiveGame().get_kakuro_id(), ctrlGame.getActiveGame().get_game_id(), time, hints, newState);
@@ -488,20 +493,41 @@ public class CtrlDomain {
      * @param hints Indicates the number of hints asked while playing.
      * @param kakuro It contains the solution provided by the user.
      */
-    public void validateGame (int time, int hints, String [][] kakuro) {
-        if (ctrlPersistence.validateCorrectnessGame(ctrlUser.getActiveUser(), ctrlGame.getActiveGame().get_kakuro_id(), ctrlGame.getActiveGame().get_game_id(), kakuro)) {
+
+    /**
+     * This method checks if a specific game solution is correct. If it is the score is calculated.
+     * @param time Indicates the value of the time passed playing the game.
+     * @param hints Indicates the number of hints asked while playing.
+     * @param kakuro It contains the solution provided by the user.
+     */
+    public boolean validateGame (int time, int hints, String [][] kakuro) {
+        String user = getActiveUser();
+        int kakuroId = ctrlGame.getActiveGame().getKakuroId();
+        String[][] solution = ctrlKakuro.listKakuro(kakuroId).getSolution();
+        if (solution == kakuro){
             int scores = (72000 - time);
             if (scores - (7200 * hints) > 0) scores -= (7200 * hints);
             else scores = 0;
-            ctrlPersistence.updateStats(ctrlUser.getActiveUser(), ctrlGame.getActiveGame().get_kakuro_id(), time, hints, scores, true);
-            ctrlPersistence.updateStats(ctrlUser.getActiveUser(), ctrlGame.getActiveGame().get_kakuro_id(), time, hints, scores, false);
+            ctrlPersistence.updateStats(user, ctrlGame.getActiveGame().getKakuroId(), time, hints, scores, true);
+            ctrlPersistence.updateStats(user, ctrlGame.getActiveGame().getKakuroId(), time, hints, scores, false);
+
+            // actualitzar els rankings a domini
+            //
+
+            deleteGame(ctrlGame.getActiveGame().getGameId());
+            return true;
         }
+        return false;
+
     }
     /**
      * This method deletes the user from the system.
      */
     public void deleteUser () {
-        ctrlPersistence.deleteUser(ctrlUser.getActiveUser());
+        String user = getActiveUser();
+        ctrlPersistence.deleteUser(user);
+        ctrlUser.deleteUser(user);
+        ctrlGame.deleteGames(user);
     }
 
 
@@ -517,16 +543,23 @@ public class CtrlDomain {
     }
 
     /**
+     /**
      * Consultant function of the ranking of punctuations that all the different users made in their games.
      */
-    public String listGlobalRanking(){
-        return ctrlPersistence.listRankingOrStats(null, true);
+    public String[][] listGlobalRanking(){
+        //HAURIA DE CONSULTAR EL RANKING A CTRL GAME
+//        return ctrlPersistence.listRankingOrStats(null, true);
+        return null;
     }
 
     /**
      * Consultant function of the personal ranking of punctuations for one user from all his games.
      */
-    public String listPersonalStats(){
-        return ctrlPersistence.listRankingOrStats(ctrlUser.getActiveUser(), false);
+    public String[][] listPersonalStats(){
+        String user = getActiveUser();
+        //HAURIA DE CONSULTAR EL RANKING A CTRL GAME
+//        return ctrlPersistence.listRankingOrStats(user, false);
+        return null;
     }
+
 }

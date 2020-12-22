@@ -25,7 +25,7 @@ public class Logo extends JPanel {
             image = ImageIO.read(new File("DOCS/kakuroLogo.jpg"));
             newImage = image.getScaledInstance(width, height, Image.SCALE_DEFAULT);
         } catch (IOException ex) {
-            System.out.println("The file does not exists");
+//            System.out.println("The file does not exists");
         }
     }
 

@@ -1,0 +1,10 @@
+1. Iniciar el programa
+2. Introdir un nom o alias al camp d'USERNAME.
+3. Fer clic al botó ENTER.
+4. Fer clic al botó CREATE KAKURO.
+5. Fer clic al botó READ FROM FILE.
+6. Navegar fins aquesta carpeta i llegir el fitxer kakuroValid.txt .
+7. Fer clic a PLAY GAME.
+8. Fer clic a NEW GAME per al kakuro creat.
+9. Afegir algun valor al kakuro i fer clic al botó SAVE GAME.
+10. Tornar a la execució del joc guardat i comprovar que s'han guardat els canvis.

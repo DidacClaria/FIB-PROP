@@ -9,6 +9,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.Scanner;
+import java.util.concurrent.ExecutionException;
 
 /**
  * This class represents the CreateKakuroView and with all the components added into the createKakuroPanel it is represented. It communicates with the Presentation Controller.
@@ -98,14 +99,19 @@ public class CreateKakuroView {
         VALIDATEButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                int idKakuro = ctrlPresentation.proposeKakuro(rows,cols,field);
-                if (idKakuro == -1) ERRORdisplay.setText("The kakuro has no solution");
-                else {
-                    JOptionPane.showMessageDialog(null,"The kakuro with id "+idKakuro+" was created succesfully!");
-                    createKakuroPanel.setVisible(false);
-                    ctrlPresentation.makeUserMenuViewVisible();
-                    ERRORdisplay.setText("");
+                try {
+                    if (field != null) {
+                        int idKakuro = ctrlPresentation.proposeKakuro(rows, cols, field);
+                        if (idKakuro == -1) ERRORdisplay.setText("The kakuro has no solution");
+                        else {
+                            JOptionPane.showMessageDialog(null, "The kakuro with id " + idKakuro + " was created succesfully!");
+                            createKakuroPanel.setVisible(false);
+                            ctrlPresentation.makeUserMenuViewVisible();
+                            ERRORdisplay.setText("");
+                        }
+                    }
                 }
+                catch (Exception ignored){}
             }
         });
         AUTOMATICGENERATIONButton.addActionListener(new ActionListener() {
@@ -177,6 +183,13 @@ public class CreateKakuroView {
      * @param b Indicates whether the view must show or not.
      */
     public void setVisible(boolean b) {
+        kakuroPanel.removeAll();
+        kakuroPanel.repaint();
+        kakuroPanel.revalidate();
+        kakuroPanel.add(new KakuroGrid(10,10,null,false));
+        kakuroPanel.repaint();
+        kakuroPanel.revalidate();
+        ERRORdisplay.setText("");
         createKakuroPanel.setVisible(b);
     }
 

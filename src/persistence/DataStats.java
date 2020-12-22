@@ -8,11 +8,20 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Scanner;
 
+/**
+ * This class has the responsibility of scrapping through the stats data stored in the persistance layer. It communicates with the Persistance Controller.
+ */
 public class DataStats {
 
+    /**
+     * Default empty class constructor
+     */
     public DataStats() {
     }
 
+    /**
+     * This method is in charge of writing in the file where are stored the stats of a game.
+     */
     public void updateStats (String [][] r,  FileWriter f) {
         try {
             for (int i = 0; i < r.length; ++i) {
@@ -20,10 +29,13 @@ public class DataStats {
             }
             f.close();
         }catch (IOException e){
-            System.out.println("\nError occurred during file writing");
+//            System.out.println("\nError occurred during file writing");
         }
     }
 
+    /**
+     * This method is in charge of listing the ranking or stats.
+     */
     public String[][] listRankingOrStats (File s){
         try {
             Path path = Paths.get(s.getPath());
@@ -45,7 +57,7 @@ public class DataStats {
                 return result;
             }
         } catch (IOException e){
-            System.out.println("\nError occurred during file reading");
+//            System.out.println("\nError occurred during file reading");
         }
         return null;
     }

@@ -46,9 +46,9 @@ public class CtrlDomain {
         //initialization
         this.ctrlPresentation = ctrlPresentation;
         ctrlPersistence = new CtrlPersistence(this);
-        ctrlKakuro = new CtrlKakuro(this, dataKakuros());
+        ctrlKakuro = new CtrlKakuro(dataKakuros());
         ArrayList<String> users = dataUsers();
-        ctrlUser = new CtrlUser(this, users);
+        ctrlUser = new CtrlUser(users);
         ctrlGame = new CtrlGame(this);
         dataGame(users);
 
@@ -61,20 +61,27 @@ public class CtrlDomain {
         }
     }
 
-
-        //welcome to the system
-//        iniExecution();
-
-
-
+    /**
+     * Consultant function
+     * @return It returns a ArrayList of the information of all the kakuros
+     */
     private ArrayList<String[][]> dataKakuros(){
         return ctrlPersistence.loadKakuros();
     }
 
+    /**
+     * Consultant function
+     * @return It returns a ArrayList of the information of all the users
+     */
     private ArrayList<String> dataUsers(){
         return ctrlPersistence.loadUsers();
     }
 
+
+
+    /**
+     * Function that saves de data Games of the active user in the system.
+     */
     private void dataGame(ArrayList<String> users){
         for (String u: users){
             String[] kakuros = ctrlPersistence.startedKakuros(u);
@@ -104,228 +111,6 @@ public class CtrlDomain {
     }
 
     //CLASS METHODS
-
-    //primer panell
-    private void iniExecution() {
-        boolean exit = false;
-        while (!exit) {
-            System.out.println("1 - create or enter user");
-            System.out.println("2 - exit system");
-
-            System.out.print("\nCHOOSE ONE OPTION: ");
-            Scanner sca = new Scanner(System.in);
-            int option = sca.nextInt();
-
-            switch (option) {
-                case 1:
-                    System.out.println("\nEnter your user name:");
-                    sca = new Scanner(System.in);
-                    logInUser(sca.nextLine());
-                    //contExecution();
-                    break;
-
-                case 2:
-                    exit = true;
-                    break;
-            }
-
-        }
-    }
-/*
-    //segon panell
-    private void contExecution(){
-        boolean exit = false;
-        while(!exit){
-            System.out.println("\n1 - Create Kakuro");
-            System.out.println("2 - Play Game");
-            System.out.println("3 - Personal Stats");
-            System.out.println("4 - Global Ranking");
-            System.out.println("5 - Delete User");
-            System.out.println("6 - Exit");
-
-            System.out.print("\nCHOOSE ONE OPTION: ");
-            Scanner sca = new Scanner(System.in);
-            int option = sca.nextInt();
-
-            switch (option) {
-                case 1:
-                    createKakuro();
-                    break;
-                case 2:
-                    playGames();
-                    break;
-                case 3:
-                    personalStats();
-                    break;
-                case 4:
-                    globalRanking();
-                    break;
-                case 5:
-                    deleteUser(); //sense implementar del tot
-                    exit = true;
-                    break;
-                case 6:
-                    exit = true;
-                    break;
-            }
-        }
-    }
-*//*
-    // tercer panell
-    private void createKakuro(){
-        boolean exit = false;
-        while(!exit) {
-
-
-            System.out.println("\n1 - Automatic Generation");
-            System.out.println("2 - Propose Kakuro");
-            System.out.println("3 - Exit");
-
-            System.out.print("\nCHOOSE ONE OPTION: ");
-            Scanner sca = new Scanner(System.in);
-            int option = sca.nextInt();
-            int col, fil;
-            switch (option) {
-                case 1:
-                    System.out.println("\nGive the following info about the kakuro: width height diff(1, 2 or 3) filled_cells");
-                    sca = new Scanner(System.in);
-                    col = sca.nextInt();
-                    fil = sca.nextInt();
-                    int diff = sca.nextInt();
-                    int fc = sca.nextInt();
-                    generateKakuro(fil, col, diff, fc); //falta la diff i les fc
-                    System.out.println("Kakuro added to the collection");
-                    exit = true;
-                    break;
-                case 2:
-                    System.out.println("\nGive the following info about the kakuro: width height");
-                    sca = new Scanner(System.in);
-                    col = sca.nextInt();
-                    fil = sca.nextInt();
-                    String[][] kakuro = Main.readKakuro();
-                    if(proposeKakuro(fil, col, kakuro) != -1) { //falta asignar una dificultat
-                        System.out.println("Kakuro added to the collection");
-                        exit = true;
-                    } else{
-                        System.out.println("Error: Kakuro not valid");
-                    }
-                    break;
-                case 3:
-                    exit = true;
-                    break;
-            }
-        }
-    }
-    */
-/*
-    // cuart panell
-    private void playGames(){
-        boolean exit = false;
-        while(!exit) {
-
-            System.out.println("1 - Play");
-            System.out.println("2 - Exit");
-
-            System.out.print("\nCHOOSE ONE OPTION: ");
-            Scanner sca = new Scanner(System.in);
-            int option = sca.nextInt();
-
-            switch (option) {
-                case 1:
-                    System.out.print("\nSelect the kakuro by its ID (from 1 to " + ctrlKakuro.listIdKakuro() + ")");
-                    int k = sca.nextInt();
-                    System.out.println("1 - Play new game");
-                    System.out.println("2 - See games");
-                    System.out.print("\nCHOOSE ONE OPTION: ");
-                    option = sca.nextInt();
-
-                    switch (option){
-                        case 1:
-                            createNewGame(k);
-                            gameExecution();
-                            break;
-                        case 2:
-                            getGames(k);
-
-                            System.out.println("1 - Continue game");
-                            System.out.println("2 - Delete Game");
-
-                            System.out.print("\nCHOOSE ONE OPTION: ");
-                            sca = new Scanner(System.in);
-                            option = sca.nextInt();
-
-                            int idGame;
-                            sca = new Scanner(System.in);
-                            idGame = sca.nextInt();
-
-                            switch (option) {
-                                case 1:
-                                    getGameScenario(idGame);
-                                    gameExecution();
-                                    break;
-                                case 2:
-                                    deleteGame(idGame);
-                                    break;
-                            }
-                            break;
-                    }
-                    break;
-                case 2:
-                    exit = true;
-                    break;
-            }
-        }
-    }
-*/
-    // cinquè panell
-    private void gameExecution() {
-        boolean exit = false;
-        while (!exit) {
-            System.out.println("1 - Fill cell");
-            System.out.println("2 - Ask hint");
-            System.out.println("3 - Save and exit");
-            System.out.println("4 - Exit");
-
-            System.out.print("\nCHOOSE ONE OPTION: ");
-            Scanner sca = new Scanner(System.in);
-            int option = sca.nextInt();
-
-            switch (option) {
-                case 1:
-//                    fillCell();
-                    //donada una posició (x,y) i un valor (v), s'omple la casella x,y amb v, retorna true si el joc esta completat
-                    //es guarda el joc
-                    break;
-                case 2:
-//                    askHint();
-                    //demanar pista random
-                    break;
-                case 3:
-                    //guardar joc
-                    saveGame(0, 0, null);
-                    exit = true;
-                    break;
-                case 4:
-                    exit = true;
-                    break;
-            }
-        }
-    }
-
-
-    /**
-     * Consultant function of the ranking of punctuations that all the different users made in their games.
-     */
-    public String[][] listGlobalRanking(){
-        return ctrlGame.listRankingOrStats("", true);
-    }
-
-    /**
-     * Consultant function of the personal ranking of punctuations for one user from all his games.
-     */
-    public String[][] listPersonalStats(){
-        return ctrlGame.listRankingOrStats(getActiveUser(), false);
-    }
 
 
     /**
@@ -447,7 +232,8 @@ public class CtrlDomain {
 
     /**
      * This method will recieve the current status of the game being played and it will return a hint to solve it.
-     * @param field Contains all the information of the game Scenario being played.
+     * @param game Contains all the information of the game Scenario being played.
+     * @param idKakuro Is the id of the game Scenario being played.
      * @return It returns the value of the Hint and the position X and Y as well as the number of current hints
      * in a formatted string like: "value:posX:posY:numHints". If it fails it will return the error message.
      */
@@ -465,12 +251,12 @@ public class CtrlDomain {
         String[][] solution = ctrlKakuro.listKakuro(idKakuro).getSolution();
         return solution[g.get(random).first()][g.get(random).second()]+":"+g.get(random).first()+":"+g.get(random).second();
     }
-    
+
     /**
      * This method updates the current state of the gameScenario being played.
-     * @param time 
-     * @param hints
-     * @param newState
+     * @param time Indicates the time the user has been solving the kakuro
+     * @param hints Indicates the number of hints that the user has used
+     * @param newState Indicates the state of the Game
      */
     public void saveGame(int time, int hints, String [][] newState){
         ctrlPersistence.saveGame(getActiveUser(), ctrlGame.getActiveGame().getKakuroId(), ctrlGame.getActiveGame().getGameId(), time, hints, newState);
@@ -480,10 +266,9 @@ public class CtrlDomain {
     /**
      * This method checks if a specific game solution is correct. If it is the score is calculated.
      * @param idKakuro Identifies the kakuro that is the gameScenario to check.
-     * @param idGame Identifies the game that is being checked.
      * @param time Indicates the value of the time passed playing the game.
      * @param hints Indicates the number of hints asked while playing.
-     * @param kakuro It contains the solution provided by the user.
+     * @param game It contains the solution provided by the user.
      */
 
     public boolean validateGame (int idKakuro, int time, int hints, String [][] game) {
@@ -518,6 +303,7 @@ public class CtrlDomain {
         ctrlGame.deleteGames(user);
     }
 
+
     /**
      * This method deletes a specified game from the active user.
      * @param idGame Identifies the game to delete.
@@ -526,6 +312,20 @@ public class CtrlDomain {
         String user = getActiveUser();
         ctrlPersistence.deleteGame(user, idKakuro, idGame);
         if (actDomini) ctrlGame.deleteGame(user, idKakuro, idGame);
+    }
+
+    /**
+     * Consultant function of the ranking of punctuations that all the different users made in their games.
+     */
+    public String[][] listGlobalRanking(){
+        return ctrlGame.listRankingOrStats("", true);
+    }
+
+    /**
+     * Consultant function of the personal ranking of punctuations for one user from all his games.
+     */
+    public String[][] listPersonalStats(){
+        return ctrlGame.listRankingOrStats(getActiveUser(), false);
     }
 
 }

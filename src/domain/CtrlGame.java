@@ -41,12 +41,28 @@ public class CtrlGame {
         this.numGames = 0;
     }
 
+    /**
+     * This method is responsible of adding a new game into the repository.
+     * @param u Username of the player.
+     * @param idk Identifier of the kakuro scenario.
+     * @param idg Identifier of the game.
+     * @param game Information of the current state of the game.
+     * @param stats Information of the stats of a game.
+     */
     public void loadGame(String u, int idk, int idg, String[][] game, String stats){
         ++numGames;
         Game g = new Game(u, idk, idg, game, stats);
         this.games.add(g);
     }
 
+    /**
+     * This method is in charge of adding a new entry in the ranking repository.
+     * @param idk Identifier of the kakuro.
+     * @param u Username of the player.
+     * @param time Time needed to complete the game.
+     * @param hints Hints needed to complete the game.
+     * @param scores Final score of the game.
+     */
     public void loadRanking(int idk, String u, int time, int hints, int scores) {
         ++numGames;
         Game g = new Game(idk, u, time, hints, scores);
@@ -66,24 +82,38 @@ public class CtrlGame {
         return numGames;
     }
 
-    /*
+    /**
      * The execution of a Game it stops and the current state is saved.
-     * @param idGame is the identification of the current game.
+     * @param time New time to save.
+     * @param hints New number of hints to save.
+     * @param state New field state to save.
      */
-    public void saveGame(int time, int hints, String[][] new_state){
-        activeGame.updateStats(time, hints, new_state);
+    public void saveGame(int time, int hints, String[][] state){
+        activeGame.updateStats(time, hints, state);
     }
 
-    public ArrayList<Integer> getGames(String username, int id_kakuro){
+    /**
+     * This method is in charge of getting all the games of an existing user for a kakuro.
+     * @param username Player of the games.
+     * @param idKakuro Scenario of the games.
+     * @return A list with all the games id.
+     */
+    public ArrayList<Integer> getGames(String username, int idKakuro){
         ArrayList<Integer> list = new ArrayList<>();
         for(Game g : games){
-            if (g.getKakuroId() == id_kakuro && g.getPlayer().equals(username) && g.getGameId() > 0) {
+            if (g.getKakuroId() == idKakuro && g.getPlayer().equals(username) && g.getGameId() > 0) {
                 list.add(g.getGameId());
             }
         }
         return list;
     }
 
+    /**
+     * This method sets the active game to the one specified in the parameters.
+     * @param username Username of the player of the active game.
+     * @param idKakuro Identifier of the scenario from the active game.
+     * @param idGame Identifier of the active game.
+     */
     public void setActiveGame(String username, int idKakuro, int idGame) {
         for (Game g : games) {
             if (g.getPlayer().equals(username) && g.getKakuroId() == idKakuro && g.getGameId() == idGame) {
@@ -93,13 +123,22 @@ public class CtrlGame {
         }
     }
 
+    /**
+     * Getter of activeGame
+     * @return activeGame
+     */
     public Game getActiveGame(){
         return activeGame;
     }
 
-    public Game getGame(int id_game){
+    /**
+     * Getter of a single game
+     * @param idGame Identifier of the game to get
+     * @return If exists it returns a instance of game, if not it returns null.
+     */
+    public Game getGame(int idGame){
         for (Game g : games) {
-            if ((g.getGameId() == id_game)) {
+            if ((g.getGameId() == idGame)) {
                 return g;
             }
         }
@@ -108,9 +147,9 @@ public class CtrlGame {
 
     /**
      * It returns the global ranking or the personal stats depending on the parameter global
-     * @param username
-     * @param global
-     * @return
+     * @param username Indicates the username of the player.
+     * @param global Indicates whether the listing is from the personal ranking or the global ranking.
+     * @return A list of all the entries of the personal or global ranking.
      */
     public String [][] listRankingOrStats(String username, boolean global) {
         ArrayList<Ranking> rankingList = new ArrayList<>();
@@ -154,6 +193,13 @@ public class CtrlGame {
         else return null;
     }
 
+    /**
+     * This method it returns all the information of a single game.
+     * @param username Username of the player.
+     * @param idKakuro Identifier of the scenario.
+     * @param idGame Identifier of the game to obtain.
+     * @return The information in a formatted string of the started game.
+     */
     public String getGameScenario (String username, int idKakuro, int idGame) {
         for (Game g : games) {
             if (g.getPlayer().equals(username) && g.getKakuroId() == idKakuro && g.getGameId() == idGame)
@@ -162,15 +208,25 @@ public class CtrlGame {
         return null;
     }
 
-    public void deleteGame(String user, int id_kakuro, int id_game) {
+    /**
+     * This method is in charge of deleting the entry of the specified Game.
+     * @param user Username of the player.
+     * @param idKakuro Identifier of the scenario.
+     * @param idGame Identifier of the game to delete.
+     */
+    public void deleteGame(String user, int idKakuro, int idGame) {
         for (int i = 0; i < games.size(); ++i) {
             Game g = games.get(i);
-            if (g.getPlayer().equals(user) && g.getKakuroId() == id_kakuro && g.getGameId() == id_game) {
+            if (g.getPlayer().equals(user) && g.getKakuroId() == idKakuro && g.getGameId() == idGame) {
                 games.remove(g);
             }
         }
     }
 
+    /**
+     * This method deletes all entries for an specific user.
+     * @param user Username to delete.
+     */
     public void deleteGames(String user) {
         for (Game g : games) {
             if (g.getPlayer().equals(user)) {
@@ -180,6 +236,11 @@ public class CtrlGame {
         }
     }
 
+    /**
+     * This method updates the stats of the active Game.
+     * @param time Updated time.
+     * @param numHints Updated number of hints.
+     */
     public void updateGameInfo(int time, int numHints) {
         for (Game g : games) {
             if (activeGame.getPlayer().equals(g.getPlayer()) && activeGame.getKakuroId() == g.getKakuroId() && activeGame.getGameId() == g.getGameId()) {

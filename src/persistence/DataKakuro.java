@@ -1,23 +1,23 @@
 package persistence;
 
-import domain.Pair;
-
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Scanner;
 
+/**
+ * This class has the responsibility of scrapping through the kakuro data stored in the persistence layer. It communicates with the Persistence Controller.
+ */
 public class DataKakuro {
 
 
-
-
+    /**
+     * Default empty class constructor
+     */
     public DataKakuro() {
 
     }
@@ -53,14 +53,13 @@ public class DataKakuro {
 
             return true;
 
-        } catch (IOException e){
-            System.out.println("\nError occurred during file writing");
+        } catch (IOException ignored){
             return false;
         }
     }
 
     /**
-     * returns the kakuro or the solution of the kakuro with ID = id
+     * Returns the kakuro or the solution of the kakuro with ID = id
      */
     public String[][] showKakuro(File k){
         try {
@@ -83,11 +82,9 @@ public class DataKakuro {
                 return kakuro;
             }
             else {
-                System.out.println("Kakuro not existed");
                 return null;
             }
-        } catch (IOException e){
-            System.out.println("\nError occurred during file reading");
+        } catch (IOException ignored){
         }
         return null;
     }
@@ -104,9 +101,7 @@ public class DataKakuro {
                 wr.close();
                 return true;
             }
-            else System.out.println("\nThe kakuro of the game or the user is not existed!!!");
-        } catch (IOException e){
-            System.out.println("\nError occurred during file writing");
+        } catch (IOException ignored){
         }
         return false;
     }
@@ -133,30 +128,31 @@ public class DataKakuro {
             gameSavedStats.close();
 
             return true;
-        } catch (IOException e){
-            System.out.println("\nError occurred during file writing");
+        } catch (IOException ignored){
         }
         return false;
     }
 
+//    /**
+//     *
+//     * @param solution
+//     * @param f
+//     * @param fStats
+//     * @param kakuro
+//     * @return
+//     */
+//    public boolean validateCorrectnessGame (String [][] solution, File f, File fStats, String [][] kakuro) {
+//        if (Arrays.deepEquals(solution, kakuro)) {
+//            f.delete();
+//            fStats.delete();
+//            return true;
+//        }
+//        else return false;
+//    }
+
     /**
-     *
-     * @param solution
-     * @param f
-     * @param fStats
-     * @param kakuro
-     * @return
+     * This method returns all the game stats of a single game.
      */
-    public boolean validateCorrectnessGame (String [][] solution, File f, File fStats, String [][] kakuro) {
-        if (Arrays.deepEquals(solution, kakuro)) {
-            f.delete();
-            fStats.delete();
-            return true;
-        }
-        else return false;
-    }
-
-
     public String showGameStats(File fStats) {
         try {
             if (fStats.exists()) {
@@ -167,7 +163,7 @@ public class DataKakuro {
                 if(mr.hasNextLine()) hints = mr.nextLine();
                 return time + ":" + hints;
             }
-        } catch (IOException e) {
+        } catch (IOException ignored) {
 
         }
         return null;

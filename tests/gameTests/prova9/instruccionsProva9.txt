@@ -1,0 +1,7 @@
+1. Iniciar el programa
+2. Introdir un nom o alias al camp d'USERNAME.
+3. Fer clic al botó ENTER.
+4. Fer clic al botó CREATE KAKURO.
+5. Fer clic al botó READ FROM FILE.
+6. Navegar fins aquesta carpeta i llegir el fitxer kakuroSmall.txt .
+7. Comprovar que no s'ha pogut representar

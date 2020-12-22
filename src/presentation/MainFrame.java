@@ -1,7 +1,5 @@
 package presentation;
 
-import domain.Main;
-
 import javax.swing.*;
 import java.awt.*;
 
@@ -113,7 +111,7 @@ public class MainFrame extends JFrame {
 
     /**
      * This method sets the playGameView for an specific idGame to visible.
-     * @param idGame Indicates the identifier of the game to play.
+     * @param game Indicates the identifier of the game to play.
      */
     public void makePlayGameViewVisible(String game){
         playGameView.setVisible(true, game);

@@ -8,10 +8,6 @@ import java.util.ArrayList;
 public class CtrlKakuro {
 
     //ATTRIBUTES
-    /**
-     * Domain controller. Used to communicate back the result of the class methods.
-     */
-    private final CtrlDomain ctrlDomain;
 
     /**
      * Collection of the kakuros on the system.
@@ -31,24 +27,27 @@ public class CtrlKakuro {
     //CONSTRUCTORS
     /**
      * Default Kakuro Controller constructor.
-     * @param ctrlDomain Is the reference of the Domain Controller.
      */
-    public CtrlKakuro(CtrlDomain ctrlDomain, ArrayList<String[][]> kakuros) {
-        this.ctrlDomain = ctrlDomain;
+    public CtrlKakuro(ArrayList<String[][]> kakuros) {
         this.kakuros = new ArrayList<>();
         for (int i = 0; i < kakuros.size(); i += 2) {
             ++numKakuros;
-            String[][] k_string = kakuros.get(i);
+            String[][] kString = kakuros.get(i);
             String[][] sol = kakuros.get(i + 1);
             Kakuro k = new Kakuro();
             k.setSolution(sol);
-            k.setCells(k_string);
+            k.setCells(kString);
             k.setIdKakuro(numKakuros);
             this.kakuros.add(k);
         }
     }
 
     //GETTERS AND SETTERS
+
+    /**
+     * This method returns the number of Kakuros created in the system.
+     * @return Number of kakuros created.
+     */
     public int listIdKakuro () {
         return this.numKakuros;
     }
@@ -95,7 +94,7 @@ public class CtrlKakuro {
             ++numKakuros;
             kakuroCreated.setIdKakuro(numKakuros);
             kakuros.add(kakuroCreated);
-            System.out.println("\nProposed Successfully");
+//            System.out.println("\nProposed Successfully");
             return numKakuros;
         }
         return -1;
@@ -112,6 +111,10 @@ public class CtrlKakuro {
         return null;
     }
 
+    /**
+     * This method returns a list of all the existing kakuro identifiers in the system.
+     * @return A list with all the identifiers.
+     */
     public int [] listIdKakuros () {
         if (numKakuros == 0) return null;
 

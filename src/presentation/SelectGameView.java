@@ -64,7 +64,7 @@ public class SelectGameView {
 
     /**
      * This method indicates to the presentation controller to set the specified game view visible.
-     * @param idGame Indicates whether the view must show or not.
+     * @param game Indicates whether the view must show or not.
      */
     public void setGameVisible(String game) {ctrlPresentation.makePlayGameViewVisible(game);}
 

@@ -38,6 +38,11 @@ public class Stat {
         this.completed = false;
     }
 
+    /**
+     * Alternative constructor with parameters
+     * @param time Indicates the time passed.
+     * @param hints Indicates the number of hints.
+     */
     public Stat(int time, int hints){
         this.time = time;
         this.numHints = hints;
@@ -51,6 +56,12 @@ public class Stat {
         this.completed = false;
     }
 
+    /**
+     * Alternative constructor for completed games.
+     * @param time Indicates the finishing time.
+     * @param hints Indicates the final number of hints asked.
+     * @param scores Indicates the final score obtained.
+     */
     public Stat (int time, int hints, int scores) {
         if (scores == -1) updateStats(time, hints);
         else {
@@ -61,22 +72,41 @@ public class Stat {
         this.completed = true;
     }
 
+    /**
+     * Getter of time
+     * @return time
+     */
     public int getTime() {
         return time;
     }
 
+    /**
+     * Getter of numHints
+     * @return numHints
+     */
     public int getNumHints() {
         return numHints;
     }
 
+    /**
+     * Getter of score
+     * @return score
+     */
     public int getScores() {
         return score;
     }
 
+    /**
+     * Getter of completed
+     * @return completed
+     */
     public boolean isCompleted() {
         return completed;
     }
 
+    /**
+     * This method it calculates the current score of a game and sets the new time and hints.
+     */
     public void updateStats (int time, int hints) {
         this.time = time;
         this.numHints = hints;

@@ -26,7 +26,7 @@ public class KakuroGrid extends JPanel {
         setBorder(BorderFactory.createEmptyBorder(10,10, 10, 10));
         for (int i= 0; i<numRows; ++i){
             for(int j=0; j<numCols; ++j){
-                if (field == null) add(new KakuroCell(-1,i,j,enabled,this));
+                if (field == null) add(new KakuroCell(-1,-1));
                 else  {
                     String[] parts = field[i][j].split("(?<=\\D)(?=\\d)|(?<=\\d)(?=\\D)");
                     if (field[i][j].equals("?") || field[i][j].equals("0")) add(new KakuroCell(-1,i,j,enabled,this));

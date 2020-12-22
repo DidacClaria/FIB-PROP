@@ -62,7 +62,6 @@ public class StartedGameView {
 
     /**
      * This method initializes a new game with the kakuro indicated
-     * @param idKakuro Indicates the identifier of the kakuro referenced.
      */
     public void iniPlayGameView () {
         ctrlPresentation.iniPlayGameView(idKakuro);
@@ -70,7 +69,7 @@ public class StartedGameView {
 
     /**
      * This method indicates to the presentation controller to set the specified game view visible.
-     * @param idGame Indicates whether the view must show or not.
+     * @param game Indicates whether the view must show or not.
      */
     public void setGameVisible(String game) {ctrlPresentation.makePlayGameViewVisible(game);}
 
@@ -118,7 +117,7 @@ public class StartedGameView {
             GOBACKButton.setFocusPainted(false);
             GOBACKButton.setContentAreaFilled(false);
         } catch (IOException ex) {
-            System.out.println("The file does not exists");
+//            System.out.println("The file does not exists");
         }
     }
 

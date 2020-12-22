@@ -125,7 +125,8 @@ public class CtrlPersistence {
             File pathOri = new File(routek + "/" + "model_" + idKakuro + ".txt");
             File pathUser = new File(route + "/" + user);
             File kakuro = new File(route + "/" + user + "/" + "kakuro_" + idKakuro);
-
+            if (!kakuro.exists()) kakuro.mkdir();
+            
             File pathDes = new File(route + "/" + user + "/" + "kakuro_" + idKakuro + "/" + "game_" + idGame + ".txt");
             FileWriter wr = new FileWriter(route + "/" + user + "/" + "kakuro_" + idKakuro + "/" +"game_" + idGame + "_stats.txt");
             return dataKakuro.newGame(pathOri, pathUser, pathDes, wr);

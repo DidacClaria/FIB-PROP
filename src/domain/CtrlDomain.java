@@ -324,7 +324,6 @@ public class CtrlDomain {
         return ctrlGame.listRankingOrStats(getActiveUser(), false);
     }
 
-
     /**
      * If the proposed Kakuro by the User at the Presentation Layer is valid, it is saved at the Persistence Layer and it's added to the collection of Kakuros that a User has.
      * @param numRows indicates the number of rows that the field has
@@ -402,7 +401,7 @@ public class CtrlDomain {
      * @param idKakuro Indicates the id of the Kakuro gameScenario.
      * @return It returns either the id of the kakuro or -1 if it failed.
      */
-    public String createNewGame(int idKakuro) {
+    public int createNewGame(int idKakuro) {
         String username = getActiveUser();
         int idGame = ctrlPersistence.newGame(username,idKakuro);
 
@@ -442,12 +441,26 @@ public class CtrlDomain {
 
     /**
      * This method will recieve the current status of the game being played and it will return a hint to solve it.
-     * @param field Contains all the information of the game Scenario being played.
+     * @param game Contains all the information of the game Scenario being played.
+     * @param idGame Is the id of the game Scenario being played.
      * @return It returns the value of the Hint and the position X and Y as well as the number of current hints
      * in a formatted string like: "value:posX:posY:numHints". If it fails it will return the error message.
      */
-    public String askHint(String[][] field){
-        return "No hints available";
+    public String askHint(String[][] game, String idGame) {
+        int cont = 0;
+        ArrayList<Pair> g = new ArrayList<Pair>();
+        for (int i = 0; i < game.length; ++i) {
+            for (int j = 0; j < game[i].length; ++j) {
+                if (game[i][j] == "?"){
+                    g.add(new Pair(i, j));
+                    ++cont;
+                }
+            }
+        }
+        int random = (int)(Math.random()*cont+1);
+        String[][] solution = ctrlKakuro.listKakuro(idGame).getSolution();
+        String r = solution[g.get(random-1).first()]+":"+solution[g.get(random-1).second()]+":"+g.get(random-1).first()+":"+g.get(random-1).second();
+        return r;
     }
     
     /**
@@ -499,8 +512,28 @@ public class CtrlDomain {
      */
     public void deleteGame (int idKakuro, int idGame) {
         String user = getActiveUser();
-        ctrlPersistence.deleteGame(user, idKakuro, idGame);
-        ctrlGame.deleteGame(user, idKakuro, idGame);
+        ctrlPersistence.deleteGame(user, ctrlGame.getGame(idGame).getKakuroId(), idGame);
+        ctrlGame.deleteGame(idGame);
+        ctrlGame.setActiveGame(-1);
+    }
+
+    /**
+     * Consultant function of the ranking of punctuations that all the different users made in their games.
+     */
+    public String[][] listGlobalRanking(){
+        //HAURIA DE CONSULTAR EL RANKING A CTRL GAME
+//        return ctrlPersistence.listRankingOrStats(null, true);
+        return null;
+    }
+
+    /**
+     * Consultant function of the personal ranking of punctuations for one user from all his games.
+     */
+    public String[][] listPersonalStats(){
+        String user = getActiveUser();
+        //HAURIA DE CONSULTAR EL RANKING A CTRL GAME
+//        return ctrlPersistence.listRankingOrStats(user, false);
+        return null;
     }
 
 }

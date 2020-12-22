@@ -255,11 +255,6 @@ public class CtrlPersistence {
         return dataStats.listRankingOrStats(s);
     }
 
-    public String[] getKakurosGlobals () {
-        File f = new File(routek);
-        return f.list();
-    }
-
     public String[] getGames (String user, int idKakuro) {
         File f = new File(route + "/" + user + "/" + "kakuro_" + idKakuro);
         if (!f.exists()) return null;

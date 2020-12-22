@@ -703,14 +703,7 @@ public class Kakuro {
             }
         }
 
-        boolean aux;
-        long startTime, endTime, timeElapsed;
-        startTime=System.currentTimeMillis();
-        aux = solveKakuro();
-        endTime=System.currentTimeMillis();
-        timeElapsed = endTime - startTime;
-//        System.out.println("Solver Execution --> time in milliseconds: " + timeElapsed);
-        return aux;
+        return solveKakuro();
     }
 
     /**

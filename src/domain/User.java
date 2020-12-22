@@ -12,14 +12,24 @@ public class User {
      */
     private String name;
 
+    private int gamesStarted;
+
     //CONSTRUCTORS
 
     /**
+     * Default empty User constructor.
+     */
+    public User() {
+        this.gamesStarted = 0;
+    }
+
+    /**
      * Default User creator
-      * @param n
+     * @param n Username
      */
     public User(String n) {
         this.name = n;
+        this.gamesStarted = 0;
     }
 
     /**
@@ -30,5 +40,20 @@ public class User {
         return this.name;
     }
 
+    /**
+     * Getter of gamesStarted
+     * @return gamesStarted
+     */
+    public int getGSuser () {
+        return gamesStarted;
+    }
+
+    /**
+     * Setter of gamesStarted
+     * @param x gamesStarted
+     */
+    public void setGSuser (int x) {
+        this.gamesStarted += x;
+    }
 
 }

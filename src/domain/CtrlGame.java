@@ -89,12 +89,6 @@ public class CtrlGame {
      * @param state New field state to save.
      */
     public void saveGame(int time, int hints, String[][] state){
-        String user = ctrlDomain.getActiveUser();
-        Game g = getActiveGame();
-        games.remove(g);
-        String stats = time + ":" + hints;
-        g = new Game(user, g.getKakuroId(), g.getGameId(), state, stats);
-        games.add(g);
         activeGame.updateStats(time, hints, state);
     }
 
@@ -107,7 +101,7 @@ public class CtrlGame {
     public ArrayList<Integer> getGames(String username, int idKakuro){
         ArrayList<Integer> list = new ArrayList<>();
         for(Game g : games){
-            if (g.getKakuroId() == idKakuro && g.getPlayer().equals(username)) {
+            if (g.getKakuroId() == idKakuro && g.getPlayer().equals(username) && g.getGameId() > 0) {
                 list.add(g.getGameId());
             }
         }
@@ -121,7 +115,6 @@ public class CtrlGame {
      * @param idGame Identifier of the active game.
      */
     public void setActiveGame(String username, int idKakuro, int idGame) {
-        if (idGame == -1) this.activeGame = null;
         for (Game g : games) {
             if (g.getPlayer().equals(username) && g.getKakuroId() == idKakuro && g.getGameId() == idGame) {
                 this.activeGame = g;
@@ -161,9 +154,12 @@ public class CtrlGame {
     public String [][] listRankingOrStats(String username, boolean global) {
         ArrayList<Ranking> rankingList = new ArrayList<>();
         for (Game g : games) {
-            if (global) rankingList.add(new Ranking(g.getKakuroId(), g.getPlayer(), g.getTime(), g.getNumHints(), g.getScores()));
-            else if (g.getPlayer().equals(username))
-                rankingList.add(new Ranking(g.getKakuroId(), username, g.getTime(), g.getNumHints(), g.getScores()));
+            if (g.isCompleted()) {
+                if (global)
+                    rankingList.add(new Ranking(g.getKakuroId(), g.getPlayer(), g.getTime(), g.getNumHints(), g.getScores()));
+                else if (g.getPlayer().equals(username))
+                    rankingList.add(new Ranking(g.getKakuroId(), username, g.getTime(), g.getNumHints(), g.getScores()));
+            }
         }
 
         Collections.sort(rankingList);
@@ -240,5 +236,14 @@ public class CtrlGame {
         }
     }
 
-
+    public void updateGameInfo(int time, int numHints) {
+        for (Game g : games) {
+            if (activeGame.getPlayer().equals(g.getPlayer()) && activeGame.getKakuroId() == g.getKakuroId() && activeGame.getGameId() == g.getGameId()) {
+                Game newg = new Game(activeGame.getKakuroId(), activeGame.getPlayer(), time, numHints, -1);
+                games.remove(g);
+                games.add(newg);
+                break;
+            }
+        }
+    }
 }

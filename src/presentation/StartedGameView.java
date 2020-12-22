@@ -127,7 +127,6 @@ public class StartedGameView {
      */
     private void createListGames () {
 
-        String username = ctrlPresentation.getActiveUser();
         ArrayList<Integer> files = ctrlPresentation.getGames(idKakuro);
         if (files == null) mygames = new JScrollPane();
         else {

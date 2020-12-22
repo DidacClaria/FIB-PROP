@@ -90,18 +90,18 @@ public class DataKakuro {
     /**
      * Starts a new game for User = user
      */
-    public int newGame (File pathOri, File pathUser, File pathDes, FileWriter wr, int idGame){
+    public boolean newGame (File pathOri, File pathUser, File pathDes, FileWriter wr){
         try {
             if (pathOri.exists() && pathUser.exists()) {
                 Files.copy(Paths.get(pathOri.getAbsolutePath()), Paths.get(pathDes.getAbsolutePath()), StandardCopyOption.REPLACE_EXISTING);
                 wr.write("Execution Time: 0\n");
                 wr.write("Hints asked: 0\n");
                 wr.close();
-                return idGame;
+                return true;
             }
         } catch (IOException ignored){
         }
-        return -1;
+        return false;
     }
 
     /**

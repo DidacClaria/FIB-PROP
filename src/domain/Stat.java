@@ -63,9 +63,12 @@ public class Stat {
      * @param scores Indicates the final score obtained.
      */
     public Stat (int time, int hints, int scores) {
-        this.time = time;
-        this.numHints = hints;
-        this.score = scores;
+        if (scores == -1) updateStats(time, hints);
+        else {
+            this.time = time;
+            this.numHints = hints;
+            this.score = scores;
+        }
         this.completed = true;
     }
 
@@ -91,6 +94,14 @@ public class Stat {
      */
     public int getScores() {
         return score;
+    }
+
+    /**
+     * Getter of completed
+     * @return completed
+     */
+    public boolean isCompleted() {
+        return completed;
     }
 
     /**

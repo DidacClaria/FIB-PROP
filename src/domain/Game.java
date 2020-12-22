@@ -88,6 +88,10 @@ public class Game {
         return stat.getScores();
     }
 
+    public boolean isCompleted() {
+        return stat.isCompleted();
+    }
+
     public String getStat() {
         return stat.getTime() + ":" + stat.getNumHints();
     }
@@ -111,4 +115,5 @@ public class Game {
         stat.updateStats(time, hints);
         this.gameScenario = newStats;
     }
+
 }

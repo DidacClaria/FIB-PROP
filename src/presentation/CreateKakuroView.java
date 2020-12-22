@@ -125,8 +125,17 @@ public class CreateKakuroView {
                     int height = Integer.parseInt(heightField.getText());
                     int difficulty = difficultyComboBox.getSelectedIndex();
                     int numFilledCells = Integer.parseInt(numFilledCellsField.getText());
-//                int kakuroID = ctrlPresentation.generateKakuro(width,height,difficulty,numFilledCells);
-//                JOptionPane.showMessageDialog(null,"The kakuro with id #"+kakuroID+"was created succesfully!");
+                    int kakuroID = ctrlPresentation.generateKakuro(width,height,difficulty,numFilledCells);
+
+                    kakuroPanel.removeAll();
+                    kakuroPanel.repaint();
+                    kakuroPanel.revalidate();
+
+                    kakuroPanel.add(new KakuroGrid(rows,cols,field,false));
+                    kakuroPanel.repaint();
+                    kakuroPanel.revalidate();
+
+                    JOptionPane.showMessageDialog(null,"The kakuro with id #"+kakuroID+"was created succesfully!");
                     setVisible(false);
                     ctrlPresentation.makeUserMenuViewVisible();
                 }

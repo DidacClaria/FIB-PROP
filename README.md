@@ -21,24 +21,3 @@ In order to execute and try the program there is provided a Makefile. The output
 **/out:** In this folder there are always some files used by the drivers in order to read different Kakuros format, but the main utility of this folder is that is where all the compiled classes and executables goes to.
 
 **/lib:** It contains the jar of external libraries.
-
-## How to run and compile
-
-In order to execute the main functionallity of the program you can run either:
-```
-make mainRun
-```
-or
-```
-make mainRunjar
-```
-
-Then if you also want to test the drivers or the unit tests from the JUNIT (version 4.12) library, you can do it with the following commands:
-
-```
-make driverWhiteCellRunjar
-make driverCtrlKakuroRunjar
-make testWhiteCellRun
-make testBlackCellRun
-make testKakuroRun
-```

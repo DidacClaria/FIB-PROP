@@ -123,7 +123,7 @@ public class CtrlDomain {
     public int proposeKakuro(int numRows, int numColumns, String[][] field){
         int idKakuro = ctrlKakuro.proposeKakuro(numRows,numColumns,field);
         if (idKakuro!=-1) {
-            ctrlPersistence.newKakuro(ctrlKakuro.listIdKakuro(), ctrlKakuro.listKakuro(idKakuro).listKakuro());
+            ctrlPersistence.newKakuro(ctrlKakuro.listIdKakuro(), ctrlKakuro.listKakuro(idKakuro).getSolution());
             return idKakuro;
         }
         return -1;
@@ -139,7 +139,7 @@ public class CtrlDomain {
      */
     public String [][] generateKakuro(int numRows, int numColumns, String diff, int fc){
         String [][] result = ctrlKakuro.generateKakuro(numRows, numColumns, diff, fc);
-        ctrlPersistence.newKakuro(ctrlKakuro.listIdKakuro(), ctrlKakuro.listKakuro(ctrlKakuro.listIdKakuro()).listKakuro());
+        ctrlPersistence.newKakuro(ctrlKakuro.listIdKakuro(), ctrlKakuro.listKakuro(ctrlKakuro.listIdKakuro()).getSolution());
         return result;
     }
 
@@ -196,7 +196,6 @@ public class CtrlDomain {
         int idGame = ctrlUser.getGSuser() + 1;
 
         if(ctrlPersistence.newGame(username, idKakuro, idGame)) {
-
             String[][] kakuro = ctrlKakuro.listKakuro(idKakuro).listKakuro();
 
             ctrlUser.setGSuser(username, 1);

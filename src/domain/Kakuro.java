@@ -232,6 +232,12 @@ public class Kakuro {
         }
         solveKakuro();
         this.solution = listKakuro();
+
+        for (int i = 0; i<solution.length; ++i) {
+            for (int j = 0; j<solution[0].length; ++j) {
+                if (solution[i][j].length() == 1 && !solution[i][j].equals("*")) cells[i][j].setValue(0);
+            }
+        }
     }
 
     //GETTERS & SETTERS

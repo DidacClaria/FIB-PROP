@@ -295,7 +295,6 @@ public class CtrlDomain {
      * This method deletes the user from the system.
      */
     public void deleteUser () {
-        // FALTA ESBORRAR DEL CONJUNT DE USERS QUE TE CTRL USER I ESBORRAR TOTS ELS GAMES QUE TINGUI A CTRL GAME
         String user = getActiveUser();
         ctrlPersistence.deleteUser(user);
         ctrlUser.deleteUser(user);

@@ -127,6 +127,9 @@ public class CreateKakuroView {
                     if (Integer.parseInt(heightField.getText())<3 || Integer.parseInt(widthField.getText())<3){
                         ERRORdisplay.setText("The size of the field is too small");
                     }
+                    else if (Integer.parseInt(heightField.getText())>10 || Integer.parseInt(widthField.getText())>10) {
+                        ERRORdisplay.setText("The size of the field is too big");
+                    }
                     else {
                         ERRORdisplay.setText("");
 

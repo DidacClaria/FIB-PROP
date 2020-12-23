@@ -9,7 +9,6 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.Scanner;
-import java.util.concurrent.ExecutionException;
 
 /**
  * This class represents the CreateKakuroView and with all the components added into the createKakuroPanel it is represented. It communicates with the Presentation Controller.
@@ -117,6 +116,13 @@ public class CreateKakuroView {
         AUTOMATICGENERATIONButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                int numFilledCells;
+                try{
+                    numFilledCells = Integer.parseInt(numFilledCellsField.getText());
+                }
+                catch (Exception ignored){
+                    numFilledCells = 0;
+                }
                 try {
                     if (Integer.parseInt(heightField.getText())<3 || Integer.parseInt(widthField.getText())<3){
                         ERRORdisplay.setText("The size of the field is too small");
@@ -127,26 +133,31 @@ public class CreateKakuroView {
                         int width = Integer.parseInt(widthField.getText());
                         int height = Integer.parseInt(heightField.getText());
                         String difficulty = (String) difficultyComboBox.getItemAt(difficultyComboBox.getSelectedIndex());
-                        int numFilledCells = Integer.parseInt(numFilledCellsField.getText());
+
                         String[][] field = ctrlPresentation.generateKakuro(width, height, difficulty, numFilledCells);
+                        if (field == null ){
+                            ERRORdisplay.setText("Invalid generation.");
+                        }
+                        else {
 
-                        kakuroPanel.removeAll();
-                        kakuroPanel.repaint();
-                        kakuroPanel.revalidate();
+                            kakuroPanel.removeAll();
+                            kakuroPanel.repaint();
+                            kakuroPanel.revalidate();
 
-                        kakuroPanel.add(new KakuroGrid(width, height, field, false));
-                        kakuroPanel.repaint();
-                        kakuroPanel.revalidate();
+                            kakuroPanel.add(new KakuroGrid(width, height, field, false));
+                            kakuroPanel.repaint();
+                            kakuroPanel.revalidate();
 
-                        widthField.setText("");
-                        heightField.setText("");
-                        numFilledCellsField.setText("");
+                            widthField.setText("");
+                            heightField.setText("");
+                            numFilledCellsField.setText("");
 
-                        int aux [] = ctrlPresentation.getKakurosGlobals();
-                        int kakuroID = aux.length;
-                        JOptionPane.showMessageDialog(null, "The kakuro with id #" + kakuroID + "was created succesfully!");
-                        setVisible(false);
-                        ctrlPresentation.makeUserMenuViewVisible();
+                            int aux [] = ctrlPresentation.getKakurosGlobals();
+                            int kakuroID = aux.length;
+                            JOptionPane.showMessageDialog(null, "The kakuro with id #" + kakuroID + "was created succesfully!");
+                            setVisible(false);
+                            ctrlPresentation.makeUserMenuViewVisible();
+                        }
 
                     }
                 }
